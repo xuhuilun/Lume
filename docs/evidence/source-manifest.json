@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-01",
+  "scope": "source files and locked dependencies checked in this release",
+  "files": [
+    {
+      "path": "backend/src/lume/__init__.py",
+      "sha256": "a8048bd04d37a75ca5cbd2df6949c8a280c8577d08a8a9980bb6e9ff65b4be07"
+    },
+    {
+      "path": "backend/src/lume/agent.py",
+      "sha256": "a817e5930f681ec36fe612ec5de9d5e5eee6fa2fd2e55e6f03343f5ffc5aa47e"
+    },
+    {
+      "path": "backend/src/lume/api.py",
+      "sha256": "2812b5447c2f88acb2a12fd49b590981f05f8f4bfebfe02b98a6c8ef02aa747b"
+    },
+    {
+      "path": "backend/src/lume/cli.py",
+      "sha256": "b6eefc392283b65bb31654d81cf87ec0fb402d59a422aa086bc96bcc7b2530e4"
+    },
+    {
+      "path": "backend/src/lume/config.py",
+      "sha256": "75da9bde2d06b817cfd02483845fe3493a465125a6532199b8e1122ca4e10d8f"
+    },
+    {
+      "path": "backend/src/lume/db.py",
+      "sha256": "928a8266711dc13902c79f0d38e77c06fe5afeee28f8efc3388fac9d88d71272"
+    },
+    {
+      "path": "backend/src/lume/demo.py",
+      "sha256": "eb209c79960855e8f50b96b6903d526d1bbd7827377d16bb8189f7b1cfee484d"
+    },
+    {
+      "path": "backend/src/lume/knowledge.py",
+      "sha256": "72fa0838133dbce30b3e35b1f0f6fb324710c1d95f13cdcc9ea05aa301c200cb"
+    },
+    {
+      "path": "backend/src/lume/leases.py",
+      "sha256": "1e1fe00eee7b43007ea8b6fb32636b218023d4d40112af5bc53ccb4b09755702"
+    },
+    {
+      "path": "backend/src/lume/models.py",
+      "sha256": "5fb468bce1cd31217f68a076d9706a00dc88027e98b5b3ff15cb5fc2954af16b"
+    },
+    {
+      "path": "backend/src/lume/processing.py",
+      "sha256": "bb4cbe22040108126a40c634d829b24568f837da76a04e81fd49c9f80dc847e6"
+    },
+    {
+      "path": "backend/src/lume/providers.py",
+      "sha256": "99037a7a3b7d116ae02f9360564b380d1c73be54b0c600ec9d246dfb36a990c0"
+    },
+    {
+      "path": "backend/src/lume/qq.py",
+      "sha256": "36b8aa237483b96663409631d5ad5b27d31007d38394bf53d4dd4f04616cf5a2"
+    },
+    {
+      "path": "backend/src/lume/schemas.py",
+      "sha256": "d3c67928530b3888cf84779d406e439aa74db501b53718a68241c2f887eaa90e"
+    },
+    {
+      "path": "backend/src/lume/security.py",
+      "sha256": "42d20345c48944cc1b4a294fb2b02a3f9525ddda1d151e7b2dcd4b4b6daadcb5"
+    },
+    {
+      "path": "backend/src/lume/storage.py",
+      "sha256": "f4abdc3ebd93aae3310bc3e9a14f2f0cf617f646dc3015d7e06ab5f113c079ff"
+    },
+    {
+      "path": "backend/tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "sha256": "9b6e813111f18bd2fb80a6a9e156112a878e82db9043b432886cea75cd707367"
+    },
+    {
+      "path": "backend/tests/test_contracts.py",
+      "sha256": "9dbb128945167065e07e5c8bad0a69a6a712cf8850667442ad920b28356cfab7"
+    },
+    {
+      "path": "backend/tests/test_integration.py",
+      "sha256": "b3bbe657506f129dfb89f145ff526d1dd4f787fbefd6afe1d2da72250756e570"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "sha256": "a5b5a2b4445e0597875d86b652f86c2d669a525a286be85e704c5dfb6702cfc0"
+    },
+    {
+      "path": "frontend/package.json",
+      "sha256": "9ba49b311e52fea0401590742429499653ff738d97461f3ee41d1ae76563aca7"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "sha256": "84300de51f35cd53e43ac1091fec4d0b8f739cf053ee68de3b403203fa5d01db"
+    },
+    {
+      "path": "frontend/src/protocol.ts",
+      "sha256": "d742929f74a904ee2392439442237540ca161d78aee60bc0854eb9bfa2814e01"
+    },
+    {
+      "path": "frontend/src/style.css",
+      "sha256": "930e1f88545128d614d5346c1c86b828376c72d9d24376398d5746e9918da863"
+    },
+    {
+      "path": "frontend/tests/workbench.spec.ts",
+      "sha256": "f1c287586793a3768c46a9b682e0c91c421a61c31ab3093405464bb4273663b3"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "58dd3828ec990028e07f3bb90c3ffed49815107fbdfad9bb3c794dd87bee7510"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "100d24db0854538c6b199d78cfa4c2690ec9175b6aad233f94fae68baa944162"
+    }
+  ]
+}

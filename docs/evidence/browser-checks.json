@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-01",
+  "record_type": "Transcribed from completed local Playwright output; not a model evaluation",
+  "browser": "Playwright Chromium",
+  "backend": "real FastAPI + independent worker + PostgreSQL/pgvector",
+  "provider": "demo",
+  "tests": [
+    {"name": "real API → worker → answer → source and image workbench", "result": "passed", "includes": ["reopen same task", "1440x960 desktop", "390x844 mobile", "real image fetch"]},
+    {"name": "late history response cannot cross an identity change", "result": "passed"},
+    {"name": "late submit response cannot cross an identity change", "result": "passed"}
+  ],
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "real_qq_integration": "not executed",
+  "real_ollama_inference": "not executed"
+}
