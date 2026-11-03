@@ -1,8 +1,10 @@
+import json
 import math
 
 import pytest
+from lume.config import Settings
 from lume.models import Observation, Task
-from lume.providers import OllamaProvider
+from lume.providers import OllamaProvider, action_schema
 from sqlalchemy import select
 
 from .conftest import prepare
@@ -51,3 +53,68 @@ async def test_ollama_embedding_contract_rejects_invalid_vectors(system, monkeyp
 
     monkeypatch.setattr(provider, "_post", valid)
     assert await provider.embed("test") == [0.25, 0.75]
+
+
+async def test_ollama_first_decision_cannot_generate_an_invented_image_target(monkeypatch):
+    provider = OllamaProvider(Settings(_env_file=None))
+
+    async def reply(endpoint, payload):
+        assert endpoint == "/api/chat" and payload["think"] is False
+        variants = payload["format"]["oneOf"]
+        assert len(variants) == 1
+        assert variants[0]["properties"]["kind"]["const"] == "search"
+        assert "query" in variants[0]["required"]
+        assert variants[0]["additionalProperties"] is False
+        return {"message": {"content": json.dumps({"kind": "search", "query": "E_CONN_42"})}}
+
+    monkeypatch.setattr(provider, "_post", reply)
+    assert (await provider.plan("E_CONN_42如何处理", [], []))["kind"] == "search"
+
+
+def test_generation_targets_and_citations_use_distinct_current_observation_id_sets():
+    observations = [
+        {
+            "id": "candidate-observation",
+            "kind": "candidate_only",
+            "content": {
+                "candidates": [{"message_id": "m1"}, {"message_id": "m2"}],
+            },
+        },
+        {
+            "id": "read-observation",
+            "kind": "message_context",
+            "content": {
+                "messages": [{"message_id": "m1", "images": [{"id": "i1"}, {"id": "i2"}]}],
+            },
+        },
+        {"id": "visual-observation", "kind": "image_observation", "content": {"image_id": "i1"}},
+    ]
+    variants = action_schema(observations)["oneOf"]
+    by_kind = {v["properties"]["kind"]["const"]: v for v in variants}
+    assert by_kind["read_context"]["properties"]["target_id"]["enum"] == ["m2"]
+    assert by_kind["inspect_image"]["properties"]["target_id"]["enum"] == ["i2"]
+    for variant in variants:
+        if variant["properties"]["kind"]["const"] == "final":
+            assert variant["properties"]["citation_ids"]["items"]["enum"] == [
+                "read-observation",
+                "visual-observation",
+            ]
+
+
+def test_unread_candidates_allow_only_an_insufficient_final_and_no_image_tool():
+    variants = action_schema(
+        [
+            {
+                "id": "candidate-observation",
+                "kind": "candidate_only",
+                "content": {
+                    "candidates": [{"message_id": "m1"}],
+                },
+            }
+        ]
+    )["oneOf"]
+    kinds = [v["properties"]["kind"]["const"] for v in variants]
+    assert kinds == ["search", "read_context", "final"]
+    final = variants[-1]["properties"]
+    assert final["insufficient"]["const"] is True
+    assert final["citation_ids"]["maxItems"] == 0
