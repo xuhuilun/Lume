@@ -24,4 +24,10 @@
 
 新增库均服务于空仓库的明确职责：FastAPI/uvicorn提供API，SQLAlchemy/psycopg/pgvector提供关系及向量访问，httpx提供模型/附件调用，cryptography提供Ed25519，Pillow验证图片，pydantic-settings读取配置；React/Vite/TypeScript提供工作台。pytest/pytest-asyncio/ruff用于必要测试和静态检查。
 
-以隔离的真实PostgreSQL/pgvector验证接入去重、版本失效、范围隔离、融合、引用/传递依赖、取消/过期租约、QQ验签及重放；服务替身验证模型异常，不冒充真实模型质量。前端编译并验证实际API链路，真实QQ及Ollama未联调项目单列。
+以隔离的真实PostgreSQL/pgvector验证接入去重、版本失效、范围隔离、融合、引用/传递依赖、取消/过期租约、QQ验签及重放；服务替身验证模型异常，不冒充真实模型质量。2026-11-03新增固定权重的Ollama合成资料联调及浏览器核图记录；真实QQ、独立质量与负载仍单列缺口。
+
+## 模型动作与显式原图要求
+
+Ollama依据当前观察生成动作schema：无候选先search，有非空候选且尚未读原文则read_context；目标只能取当前候选或已读图片，引用只能取已读观察。每轮提示写明已经完成的阶段，避免将首次检索指令误读为重复搜索。此生成辅助不代替Runner的运行时授权、预算和条件发布。
+
+资料处理将OCR及视觉描述写入检索索引；供Ollama回答的消息视图只显示原文与图片身份，不传入这些派生文字或文件处理状态。任务可由用户显式设置require_image，冻结于Task.config；此时尚未核查的已读图片触发受约束inspect_image，正常答案必须引用当前任务的实际图像观察。文件和数据库结构不变。视觉非空返回和来源归属均不证明语义支持性，仍需评价和人工核对。

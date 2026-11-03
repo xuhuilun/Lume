@@ -1,0 +1,9 @@
+{
+  "http_status": 200,
+  "done": true,
+  "done_reason": "stop",
+  "eval_count": 29,
+  "prompt_eval_count": 38,
+  "content": "{\n  \"kind\": \"search\",\n  \"query\": \"E_CONN_42 in v1.8 handling method\"\n}",
+  "elapsed_seconds": 0.878
+}

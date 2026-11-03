@@ -1,0 +1,29 @@
+{
+  "source_run": "run-04-progress-aware.json",
+  "probes": [
+    {
+      "stage": "image_task",
+      "action": {
+        "kind": "final",
+        "answer": "图中pool_size为20，status为healthy。",
+        "citation_ids": [
+          "d307f90a276c4599a1f5dd34c439ba4a"
+        ],
+        "insufficient": false
+      },
+      "elapsed_seconds": 3.637
+    },
+    {
+      "stage": "unanswerable_task",
+      "action": {
+        "kind": "final",
+        "answer": "v9.9环境的GPU显存容量信息在现有资料中未被记录。",
+        "citation_ids": [
+          "986f04f9658340b5a7c0526a924452be"
+        ],
+        "insufficient": false
+      },
+      "elapsed_seconds": 3.233
+    }
+  ]
+}

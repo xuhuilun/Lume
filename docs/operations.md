@@ -26,7 +26,11 @@ API负责认证与任务受理，worker独立领取资料处理或查证。默�
 | GET /api/answers/{id} | 检查全部直接/传递来源依赖后返回答案 |
 | GET /api/observations/{id}、/api/images/{id} | 按归属、版本与当前资格读取证据 |
 
-任务提交示例：`{"question":"E_CONN_42如何处理","space_ids":["获准空间ID"],"history_ids":[]}`。返回202及任务身份只表示受理。`history_ids`是已有答案ID；当前范围不能覆盖其全部依赖时拒绝回用。
+任务提交示例：`{"question":"E_CONN_42如何处理","space_ids":["获准空间ID"],"history_ids":[],"require_image":false}`。返回202及任务身份只表示受理。`history_ids`是已有答案ID；当前范围不能覆盖其全部依赖时拒绝回用。
+
+`require_image`默认为false；在工作台选中“核查原图”即提交true，并冻结到该任务config。此时正常答案必须引用本任务semantic=true的image_observation，普通消息/候选或演示模式不具备此资格；拒绝为IMAGE_EVIDENCE_REQUIRED时没有答案发布。该标记表示已取得视觉服务的非空返回，不证明图像事实正确。没有可用原图时可返回insufficient，不放宽条件。普通模式保留由模型选择核图的路径，自动视觉意图识别仍待独立评价。
+
+Ollama输入的message_context仅保留消息原文及图片id/filename，不把OCR、视觉描述或图片处理状态当作已核原图事实；它们仍保留在受控API、持久观察和检索索引中。Ollama生成schema按实际观察限制可用动作和目标，非空候选先读取原文；Runner仍独立校验资格、目标、预算及引用。请求使用think=false，该设置在本轮服务和权重上实际返回，不能假设任意模型均兼容。
 
 接入格式示例：
 
@@ -42,4 +46,6 @@ API负责认证与任务受理，worker独立领取资料处理或查证。默�
 
 向量检索采用精确距离，没有HNSW/IVFFlat索引或查询计划优化。模型或查询路径失败当前结束任务，未实现论文设想的单路降级。配置身份包含模型名称和操作员版本标识，不能据此宣称自动锁定了远程权重。
 
-图像观察与回答属于模型输出，程序仅检查结构、来源和资格，不证明语义正确。演示模式不作视觉判断；真实Ollama尚未在本轮加载权重联调。无真实企业数据、模型准确率、生产用户、QPS或响应时间达标结论。
+图像观察与回答属于模型输出，程序检查结构、来源、资格和显式任务要求，不证明语义正确。演示模式不作视觉判断；真实Ollama已完成2026-11-03固定合成资料联调，见real-model-validation.md。无真实企业数据、模型准确率、生产用户、QPS或响应时间达标结论。
+
+本次Ollama规则身份升为v2，演示模式继续v1。更新已有Ollama安装后停止API/worker，执行`lume reindex`、`lume worker --drain`后重启；旧规则任务不会静默沿用新提示或协议。实验脚本按实际权重摘要生成版本标识，普通安装仍需操作员维护MODEL_REVISION。

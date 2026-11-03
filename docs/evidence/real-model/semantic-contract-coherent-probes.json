@@ -1,0 +1,29 @@
+{
+  "source_run": "run-04-progress-aware.json",
+  "probes": [
+    {
+      "stage": "image_task",
+      "action": {
+        "kind": "final",
+        "answer": "图中pool_size为20，status为'ready'。该信息来源于消息ID为3c46839042e345598f53bc4fc0418f19的连接池参数示意图，其中明确标注了pool_size=20且status=ready。",
+        "citation_ids": [
+          "d307f90a276c4599a1f5dd34c439ba4a"
+        ],
+        "insufficient": false
+      },
+      "elapsed_seconds": 4.689
+    },
+    {
+      "stage": "unanswerable_task",
+      "action": {
+        "kind": "final",
+        "answer": "v9.9环境的GPU显存容量信息在现有资料中未明确记录。",
+        "citation_ids": [
+          "986f04f9658340b5a7c0526a924452be"
+        ],
+        "insufficient": true
+      },
+      "elapsed_seconds": 3.393
+    }
+  ]
+}

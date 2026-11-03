@@ -1,0 +1,175 @@
+{
+  "source_run": "run-03-read-before-search.json",
+  "question": "E_CONN_42在v1.8环境如何处理，复测结果是什么？",
+  "observations": [
+    {
+      "id": "5309228626594521ad3857cd6ef68604",
+      "kind": "candidate_only",
+      "content": {
+        "channels": {
+          "vector": "ok",
+          "lexical": "ok"
+        },
+        "candidates": [
+          {
+            "ranks": {
+              "vector": 2,
+              "lexical": 1
+            },
+            "score": 0.03252247488101534,
+            "version": 1,
+            "source_id": "demo-3",
+            "message_id": "59c7520183604ab0b6b5bfc1068896a8"
+          },
+          {
+            "ranks": {
+              "vector": 1,
+              "lexical": 3
+            },
+            "score": 0.032266458495966696,
+            "version": 1,
+            "source_id": "demo-1",
+            "message_id": "b584e6c0854d4a208e2e2614f4ad26da"
+          },
+          {
+            "ranks": {
+              "vector": 3,
+              "lexical": 2
+            },
+            "score": 0.03200204813108039,
+            "version": 1,
+            "source_id": "demo-2",
+            "message_id": "04bf9a9b372c4e7c8cddea145b242a73"
+          },
+          {
+            "ranks": {
+              "vector": 4,
+              "lexical": 4
+            },
+            "score": 0.03125,
+            "version": 1,
+            "source_id": "demo-4",
+            "message_id": "63dcc90e81b14552abb781fe783e6461"
+          }
+        ]
+      },
+      "dependencies": [
+        {
+          "version": 1,
+          "message_id": "59c7520183604ab0b6b5bfc1068896a8"
+        },
+        {
+          "version": 1,
+          "message_id": "b584e6c0854d4a208e2e2614f4ad26da"
+        },
+        {
+          "version": 1,
+          "message_id": "04bf9a9b372c4e7c8cddea145b242a73"
+        },
+        {
+          "version": 1,
+          "message_id": "63dcc90e81b14552abb781fe783e6461"
+        }
+      ]
+    },
+    {
+      "id": "2206564720dc4b0884750868652c3a18",
+      "kind": "message_context",
+      "content": {
+        "window": "explicit_parent_and_up_to_6_children",
+        "messages": [
+          {
+            "text": "排查发现pool_size=5，建议调整为20；需要复测确认。",
+            "author": "演示·支持",
+            "images": [],
+            "sent_at": "2026-11-01T16:00:00+08:00",
+            "version": 1,
+            "reply_to": "demo-1",
+            "space_id": "7d27c6d2ff564d149e408a04ba7c8c1e",
+            "source_id": "demo-2",
+            "message_id": "04bf9a9b372c4e7c8cddea145b242a73"
+          },
+          {
+            "text": "连接池参数示意图。此图为人工构造测试资料。",
+            "author": "演示·维护",
+            "images": [
+              {
+                "id": "cc12a1ce2bac4b86bd2a7f6d095034b1",
+                "error": null,
+                "status": "ready",
+                "filename": "synthetic-config.png",
+                "ocr_text": "SYNTHETIC TEST FIXTURE\nconnection pool\n\npool_size = 20\n\nstatus = healthy\n\nNot a production screenshot\n",
+                "description": "可见的文字包括：\n\n- SYNTHETIC TEST FIXTURE\n- connection pool\n- pool_size = 20\n- status = healthy\n- Not a production screenshot\n\n布局和状态如下：\n\n- 文字以段落形式排列，每段文字之间有空行。\n- 文字内容清晰，易于阅读。\n- 最后一行“Not a production screenshot”表明这不是一个生产截图。"
+              }
+            ],
+            "sent_at": "2026-11-01T16:00:00+08:00",
+            "version": 1,
+            "reply_to": "demo-3",
+            "space_id": "7d27c6d2ff564d149e408a04ba7c8c1e",
+            "source_id": "demo-4",
+            "message_id": "63dcc90e81b14552abb781fe783e6461"
+          },
+          {
+            "text": "已将pool_size调整为20，复测连接恢复；适用环境为v1.8。",
+            "author": "演示·研发",
+            "images": [],
+            "sent_at": "2026-11-01T16:00:00+08:00",
+            "version": 1,
+            "reply_to": "demo-2",
+            "space_id": "7d27c6d2ff564d149e408a04ba7c8c1e",
+            "source_id": "demo-3",
+            "message_id": "59c7520183604ab0b6b5bfc1068896a8"
+          }
+        ]
+      },
+      "dependencies": [
+        {
+          "version": 1,
+          "message_id": "04bf9a9b372c4e7c8cddea145b242a73"
+        },
+        {
+          "version": 1,
+          "message_id": "63dcc90e81b14552abb781fe783e6461"
+        },
+        {
+          "version": 1,
+          "message_id": "59c7520183604ab0b6b5bfc1068896a8"
+        }
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "mode": "unchanged",
+      "action": {
+        "kind": "search",
+        "query": "E_CONN_42 v1.8 复测结果"
+      },
+      "elapsed_seconds": 3.172
+    },
+    {
+      "mode": "explicit_state",
+      "action": {
+        "kind": "final",
+        "answer": "在v1.8环境中，E_CONN_42问题的复测结果为：已将pool_size从5调整为20，连接恢复，且该方案适用于v1.8环境。",
+        "citation_ids": [
+          "2206564720dc4b0884750868652c3a18"
+        ],
+        "insufficient": false
+      },
+      "elapsed_seconds": 5.258
+    },
+    {
+      "mode": "final_schema_only",
+      "action": {
+        "kind": "final",
+        "answer": "在v1.8环境中，E_CONN_42问题的处理方案是将连接池大小（pool_size）从5调整为20。复测结果显示，调整后连接恢复，且该方案适用于v1.8环境。",
+        "citation_ids": [
+          "2206564720dc4b0884750868652c3a18"
+        ],
+        "insufficient": false
+      },
+      "elapsed_seconds": 2.882
+    }
+  ]
+}

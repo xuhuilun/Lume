@@ -1,0 +1,10 @@
+{
+  "temporary_ui_database_removed": true,
+  "remaining_modelcheck_schemas": 0,
+  "synthetic_api_token_removed": true,
+  "api_stopped": true,
+  "worker_stopped": true,
+  "original_database_preserved": true,
+  "model_weights_retained": true,
+  "isolated_ollama_stopped": true
+}
