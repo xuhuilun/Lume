@@ -290,7 +290,10 @@ class OllamaProvider:
                 ],
             },
         )
-        return {"text": data["message"]["content"], "semantic": True}
+        content = data["message"]["content"]
+        if not isinstance(content, str) or not content.strip():
+            raise ValueError("Empty vision response")
+        return {"text": content, "semantic": True}
 
 
 def provider_for(settings):

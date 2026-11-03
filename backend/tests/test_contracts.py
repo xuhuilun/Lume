@@ -190,3 +190,14 @@ async def test_model_context_excludes_index_text_and_file_processing_state(monke
     monkeypatch.setattr(provider, "_post", reply)
     await provider.plan("核对图中细节", observations, [], require_image=True)
     assert image["ocr_text"] == "secret OCR marker" and image["status"] == "ready"
+
+
+async def test_empty_vision_response_is_not_a_usable_image_observation(monkeypatch):
+    provider = OllamaProvider(Settings(_env_file=None))
+
+    async def empty(endpoint, payload):
+        return {"message": {"content": "   "}}
+
+    monkeypatch.setattr(provider, "_post", empty)
+    with pytest.raises(ValueError, match="Empty vision response"):
+        await provider.vision("synthetic question", b"synthetic-image")
