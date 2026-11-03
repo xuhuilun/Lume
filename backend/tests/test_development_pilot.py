@@ -63,7 +63,7 @@ async def test_recording_keeps_final_content_and_excludes_private_model_trace(
 def fake_audit_input(root, category, groups, messages, image_observed=False, image_cited=False):
     root.mkdir(exist_ok=True)
     dump(root / "manifest.json", {})
-    jsonl(root / "queries-dev.jsonl", [{"id": "q-dev-001"}])
+    jsonl(root / "queries-dev.jsonl", [{"id": "q-dev-001", "question": "synthetic question"}])
     jsonl(
         root / "references.jsonl",
         [
@@ -104,6 +104,7 @@ def fake_audit_input(root, category, groups, messages, image_observed=False, ima
             {
                 "query_id": "q-dev-001",
                 "status": {"state": "completed"},
+                "question": "synthetic question",
                 "observations": observations,
                 "answer": {
                     "citation_ids": ["vision" if image_cited else "context"],
@@ -136,6 +137,13 @@ def test_audit_requires_all_members_of_one_alternative_set(tmp_path, messages, c
     run = fake_audit_input(tmp_path, "context", [["s1", "s2"], ["s3"]], messages)
     row = audit_report(run, tmp_path)["rows"][0]
     assert row["draft_set_observed"] is complete
+
+
+def test_audit_rejects_answer_associated_with_a_different_question(tmp_path):
+    run = fake_audit_input(tmp_path, "context", [["s1"]], ["m1"])
+    run["tasks"][0]["question"] = "a different question"
+    with pytest.raises(ValueError, match="audit question differs"):
+        audit_report(run, tmp_path)
 
 
 async def test_changed_model_digest_is_rejected_before_inference(tmp_path, monkeypatch):

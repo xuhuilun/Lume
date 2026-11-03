@@ -411,11 +411,19 @@ def audit_report(run, dataset):
     require(
         all(t["query_id"] in queries for t in run["tasks"]), "audit contains non-development tasks"
     )
+    require(
+        len({t["query_id"] for t in run["tasks"]}) == len(run["tasks"]),
+        "duplicate query executions must be kept in separate runs",
+    )
     source_ids = {s["message_id"]: s["source_id"] for s in run.get("sources", [])}
     asset_ids = {i["id"]: i["asset_id"] for i in run.get("images", [])}
     rows = []
     for task in run["tasks"]:
         reference = refs[task["query_id"]]
+        require(
+            task["question"] == queries[task["query_id"]]["question"],
+            "audit question differs from frozen query",
+        )
         read, observed_images, cited = set(), set(), set()
         observations = {o["id"]: o for o in task.get("observations", [])}
 
@@ -441,6 +449,7 @@ def audit_report(run, dataset):
         rows.append(
             {
                 "query_id": task["query_id"],
+                "question": task["question"],
                 "category": reference["category"],
                 "state": task.get("status", {}).get("state"),
                 "draft_expected_state": reference["expected_state"],
@@ -479,6 +488,8 @@ def write_audit_markdown(audit, path):
         lines.extend(
             [
                 f"## {row['query_id']} / {row['category']}",
+                "",
+                row["question"],
                 "",
                 f"实际状态：{row['state']}；草稿预期：{row['draft_expected_state']}。",
                 "",
