@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-03",
+  "run_source_commit": "a54e2f5089caa5e40523e4a69bc25b05de5f1306",
+  "audit_source_commit": "e4ef185fa62e3b57d1ca8eaab27dc8b848b98840",
+  "queries_executed": 16,
+  "heldout_queries_executed": 0,
+  "imported_messages": 24,
+  "imported_images": 4,
+  "external_calls": 100,
+  "processing_calls": 28,
+  "task_calls": 72,
+  "model_calls_returned": 100,
+  "backend_and_offline_tests_passed": 61,
+  "pilot_tests_passed": 10,
+  "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+  "script_snapshot_matches_commit": true,
+  "application_changed": false,
+  "per_query_structure": [
+    {
+      "query_id": "q-dev-001",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-002",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-003",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 1
+    },
+    {
+      "query_id": "q-dev-004",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-005",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-006",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-007",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 1
+    },
+    {
+      "query_id": "q-dev-008",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-009",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-010",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-011",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 1
+    },
+    {
+      "query_id": "q-dev-012",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-013",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-014",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    },
+    {
+      "query_id": "q-dev-015",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 1
+    },
+    {
+      "query_id": "q-dev-016",
+      "scope_violations_in_observation_dependencies": [],
+      "read_context_count": 1,
+      "inspect_image_count": 0
+    }
+  ],
+  "human_reviewed_queries": 0,
+  "semantic_accuracy_computed": false,
+  "pdf_generated": false,
+  "thesis_manuscript_changed": false,
+  "isolated_ollama_stopped": true,
+  "isolated_schema_removed": true,
+  "cited_observation_kind_counts": {
+    "message_context": 12,
+    "image_observation": 4
+  }
+}
