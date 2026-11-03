@@ -80,6 +80,7 @@ function App() {
   const [answer, setAnswer] = useState<Answer | null>(null);
   const [evidence, setEvidence] = useState<Evidence | null>(null);
   const [question, setQuestion] = useState("");
+  const [requireImage, setRequireImage] = useState(false);
   const [error, setError] = useState("");
   const [provider, setProvider] = useState("正在连接");
   const [events, setEvents] = useState<{ id: number; kind: string }[]>([]);
@@ -109,6 +110,7 @@ function App() {
     setEvidence(null);
     setEvents([]);
     setQuestion("");
+    setRequireImage(false);
     setError("");
     setImportText("");
     setImporting(false);
@@ -245,7 +247,11 @@ function App() {
     try {
       const result = await api<Task>("/tasks", {
         method: "POST",
-        body: JSON.stringify({ question: text, space_ids: selected }),
+        body: JSON.stringify({
+          question: text,
+          space_ids: selected,
+          require_image: requireImage,
+        }),
       });
       if (!valid(g)) return;
       await openTask({ ...result, question: text });
@@ -549,7 +555,15 @@ function App() {
             rows={2}
           />
           <div>
-            <small>{selected.length} 个资料源 · 只读查证</small>
+            <label>
+              <input
+                type="checkbox"
+                checked={requireImage}
+                onChange={(e) => setRequireImage(e.target.checked)}
+              />{" "}
+              核查原图
+              <small> · {selected.length} 个资料源</small>
+            </label>
             <button
               className="primary"
               disabled={!question.trim() || !selected.length || busy}

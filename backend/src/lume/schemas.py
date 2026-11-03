@@ -58,6 +58,7 @@ class TaskInput(Input):
     question: str = Field(min_length=1, max_length=2000)
     space_ids: list[str] = Field(min_length=1, max_length=30)
     history_ids: list[str] = Field(default_factory=list, max_length=5)
+    require_image: bool = False
 
 
 class AgentAction(Input):

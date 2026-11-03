@@ -239,6 +239,7 @@ def create_app(settings=None, sessions=None):
                 )
             }
             config["rules_id"] = settings.rules_id
+            config["require_image"] = body.require_image
             task = Task(
                 owner_id=actor.id,
                 question=body.question,

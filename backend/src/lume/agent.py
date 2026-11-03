@@ -233,6 +233,7 @@ class Runner:
             task = session.get(Task, task_id, with_for_update=True)
             self.guard(task, epoch)
             check_dependencies(session, task.owner_id, dependencies)
+            image_cited = False
             for citation_id in action.citation_ids:
                 observation = session.get(Observation, citation_id)
                 if (
@@ -241,8 +242,13 @@ class Runner:
                     or observation.kind not in {"message_context", "image_observation"}
                 ):
                     raise DomainError("INVALID_CITATION", "引用不属于已读取证据")
+                image_cited |= observation.kind == "image_observation" and bool(
+                    observation.content.get("semantic")
+                )
             if not action.insufficient and not action.citation_ids:
                 raise DomainError("INVALID_CITATION", "正常答案需要实际证据引用")
+            if task.config.get("require_image") and not action.insufficient and not image_cited:
+                raise DomainError("IMAGE_EVIDENCE_REQUIRED", "本任务需要实际原图观察引用")
             session.add(
                 Answer(
                     task_id=task_id,
@@ -259,7 +265,8 @@ class Runner:
             task, observations, history, dependencies = self.inputs(task_id, epoch)
             model_attempt = self.reserve(task_id, epoch, "model")
             self.inputs(task_id, epoch)  # Recheck immediately before external input transmission.
-            raw = await self.provider.plan(task.question, observations, history)
+            requirements = {"require_image": True} if task.config.get("require_image") else {}
+            raw = await self.provider.plan(task.question, observations, history, **requirements)
             self.mark_action(model_attempt)
             try:
                 action = AgentAction.model_validate(raw)

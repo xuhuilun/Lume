@@ -133,3 +133,60 @@ def test_empty_search_allows_reformulation_or_insufficient_without_citations():
     final = by_kind["final"]["properties"]
     assert final["insufficient"]["const"] is True
     assert final["citation_ids"]["maxItems"] == 0
+
+
+def test_required_image_mode_generates_inspection_before_a_normal_final():
+    context = {
+        "id": "read",
+        "kind": "message_context",
+        "content": {
+            "messages": [{"message_id": "m1", "images": [{"id": "image-1"}]}],
+        },
+    }
+    variants = action_schema([context], require_image=True)["oneOf"]
+    assert len(variants) == 1
+    assert variants[0]["properties"]["kind"]["const"] == "inspect_image"
+    unavailable = {
+        "id": "visual",
+        "kind": "image_observation",
+        "content": {
+            "image_id": "image-1",
+            "semantic": False,
+        },
+    }
+    variants = action_schema([context, unavailable], require_image=True)["oneOf"]
+    final = next(v for v in variants if v["properties"]["kind"]["const"] == "final")
+    assert final["properties"]["insufficient"]["const"] is True
+
+
+async def test_model_context_excludes_index_text_and_file_processing_state(monkeypatch):
+    provider = OllamaProvider(Settings(_env_file=None))
+    image = {
+        "id": "image-1",
+        "filename": "synthetic.png",
+        "status": "ready",
+        "ocr_text": "secret OCR marker",
+        "description": "derived description",
+    }
+    observations = [
+        {
+            "id": "read",
+            "kind": "message_context",
+            "content": {
+                "messages": [{"message_id": "m1", "images": [image]}],
+            },
+        }
+    ]
+
+    async def reply(endpoint, payload):
+        content = json.loads(payload["messages"][1]["content"])
+        assert content["require_image"] is True
+        assert content["observations"][0]["content"]["messages"][0]["images"] == [
+            {"id": "image-1", "filename": "synthetic.png"},
+        ]
+        assert "secret OCR marker" not in payload["messages"][1]["content"]
+        return {"message": {"content": '{"kind":"inspect_image","target_id":"image-1"}'}}
+
+    monkeypatch.setattr(provider, "_post", reply)
+    await provider.plan("核对图中细节", observations, [], require_image=True)
+    assert image["ocr_text"] == "secret OCR marker" and image["status"] == "ready"

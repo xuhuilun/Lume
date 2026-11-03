@@ -51,8 +51,8 @@ class RecordingProvider(OllamaProvider):
         super().__init__(settings)
         self.decisions = []
 
-    async def plan(self, question, observations, history):
-        action = await super().plan(question, observations, history)
+    async def plan(self, question, observations, history, **requirements):
+        action = await super().plan(question, observations, history, **requirements)
         self.decisions.append(action)
         return action
 
@@ -240,13 +240,14 @@ async def validate(args, path, report):
                     ("unanswerable_task", "v9.9环境的GPU显存容量是多少GB？资料未记录时明确说明。"),
                 ]:
 
-                    async def ask(question=question):
+                    async def ask(question=question, require_image=name == "image_task"):
                         provider.decisions.clear()
                         response = await client.post(
                             "/api/tasks",
                             json={
                                 "question": question,
                                 "space_ids": [space.id],
+                                "require_image": require_image,
                             },
                         )
                         response.raise_for_status()
@@ -256,6 +257,7 @@ async def validate(args, path, report):
                         response.raise_for_status()
                         result = response.json()
                         result["question"] = question
+                        result["require_image"] = require_image
                         result["model_decisions"] = list(provider.decisions)
                         if result["answer_id"]:
                             answer = await client.get("/api/answers/" + result["answer_id"])

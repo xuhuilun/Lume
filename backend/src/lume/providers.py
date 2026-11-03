@@ -3,13 +3,14 @@ import hashlib
 import json
 import math
 import re
+from copy import deepcopy
 
 import httpx
 
 from .schemas import AgentAction
 
 
-def action_schema(observations: list[dict]) -> dict:
+def action_schema(observations: list[dict], require_image: bool = False) -> dict:
     """Constrain generation to available observations; Runner still authorizes every action."""
     properties = AgentAction.model_json_schema()["properties"]
 
@@ -40,6 +41,32 @@ def action_schema(observations: list[dict]) -> dict:
         elif observation["kind"] == "image_observation":
             citations.add(observation["id"])
             inspected.add(content["image_id"])
+    visual_ready = any(
+        o["kind"] == "image_observation" and o["content"].get("semantic") for o in observations
+    )
+    if require_image and not visual_ready:
+        if images - inspected:
+            return {
+                "oneOf": [
+                    variant(
+                        "inspect_image",
+                        {
+                            "target_id": {"type": "string", "enum": sorted(images - inspected)},
+                        },
+                    )
+                ]
+            }
+        if candidates - read_ids:
+            return {
+                "oneOf": [
+                    variant(
+                        "read_context",
+                        {
+                            "target_id": {"type": "string", "enum": sorted(candidates - read_ids)},
+                        },
+                    )
+                ]
+            }
     if observations:
         citation_schema = {
             **properties["citation_ids"],
@@ -48,17 +75,19 @@ def action_schema(observations: list[dict]) -> dict:
             else {"type": "string"},
             "maxItems": properties["citation_ids"]["maxItems"] if citations else 0,
         }
-        for insufficient in [False, True] if citations else [True]:
-            variants.append(
-                variant(
-                    "final",
-                    {
-                        "answer": nonempty("answer"),
-                        "citation_ids": {**citation_schema, "minItems": 0 if insufficient else 1},
-                        "insufficient": {"type": "boolean", "const": insufficient},
-                    },
-                )
+        insufficient = {"type": "boolean", "description": "所问事实缺资料或拒答时必须true。"}
+        if not citations or (require_image and not visual_ready):
+            insufficient["const"] = True
+        variants.append(
+            variant(
+                "final",
+                {
+                    "answer": nonempty("answer"),
+                    "citation_ids": {**citation_schema, "minItems": 0},
+                    "insufficient": insufficient,
+                },
             )
+        )
     for kind, targets in [
         ("read_context", candidates - read_ids),
         ("inspect_image", images - inspected),
@@ -96,7 +125,9 @@ class DemoProvider:
             vector[0], norm = 1.0, 1.0
         return [x / norm for x in vector]
 
-    async def plan(self, question: str, observations: list[dict], history: list[dict]) -> dict:
+    async def plan(
+        self, question: str, observations: list[dict], history: list[dict], *, require_image=False
+    ) -> dict:
         searches = [o for o in observations if o["kind"] == "candidate_only"]
         contexts = [o for o in observations if o["kind"] == "message_context"]
         if not searches:
@@ -108,7 +139,7 @@ class DemoProvider:
                 return {"kind": "read_context", "target_id": candidate["message_id"]}
         if not contexts:
             return {"kind": "final", "answer": "当前范围没有可核查依据。", "insufficient": True}
-        if re.search(r"图片|截图|图中|颜色", question):
+        if require_image or re.search(r"图片|截图|图中|颜色", question):
             images = [i for o in contexts for m in o["content"]["messages"] for i in m["images"]]
             inspected = [o for o in observations if o["kind"] == "image_observation"]
             if images and not inspected:
@@ -166,8 +197,19 @@ class OllamaProvider:
             raise ValueError("Zero embedding is not usable for cosine retrieval")
         return [float(v) for v in values]
 
-    async def plan(self, question: str, observations: list[dict], history: list[dict]) -> dict:
-        schema = action_schema(observations)
+    async def plan(
+        self, question: str, observations: list[dict], history: list[dict], *, require_image=False
+    ) -> dict:
+        schema = action_schema(observations, require_image)
+        # Index-derived visual text and file processing state are not original-image evidence.
+        model_observations = deepcopy(observations)
+        for observation in model_observations:
+            if observation["kind"] == "message_context":
+                for message in observation["content"]["messages"]:
+                    message["images"] = [
+                        {"id": image["id"], "filename": image.get("filename", "")}
+                        for image in message["images"]
+                    ]
         if any(o["kind"] == "message_context" for o in observations):
             progress = (
                 "本任务已经执行search和read_context。现有消息上下文可直接阅读，"
@@ -196,6 +238,13 @@ class OllamaProvider:
             + json.dumps(schema, ensure_ascii=False)
             + "当前阶段："
             + progress
+            + (
+                "本任务要求核查原图。正常回答必须引用image_observation的观察id。"
+                if require_image
+                else ""
+            )
+            + "final.insufficient表示所问事实是否缺资料。无法提供所问事实即true，"
+            "引用其他消息不等于能够回答。"
         )
         data = await self._post(
             "/api/chat",
@@ -213,7 +262,8 @@ class OllamaProvider:
                             {
                                 "question": question,
                                 "history": history,
-                                "observations": observations,
+                                "require_image": require_image,
+                                "observations": model_observations,
                             },
                             ensure_ascii=False,
                         ),

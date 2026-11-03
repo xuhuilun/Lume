@@ -126,6 +126,60 @@ async def test_candidate_only_cannot_be_cited(client, system):
     assert task["id"] == task_id
 
 
+async def test_required_image_task_rejects_context_and_nonsemantic_image_citations(client, system):
+    imported = await prepare(client, system)
+    created = await client.post(
+        "/api/tasks",
+        json={
+            "question": "核查原图",
+            "space_ids": [system.a],
+            "require_image": True,
+        },
+    )
+    assert created.status_code == 202
+    task_id, epoch = system.runner.claim()
+    deps = [{"message_id": imported[0]["id"], "version": 1}]
+    with system.sessions.begin() as session:
+        assert session.get(Task, task_id).config["require_image"] is True
+        context = Observation(
+            task_id=task_id, kind="message_context", content={}, dependencies=deps
+        )
+        # Synthetic observations test the publication contract, not actual visual inference.
+        visual = Observation(
+            task_id=task_id,
+            kind="image_observation",
+            content={"semantic": False},
+            dependencies=deps,
+        )
+        session.add_all([context, visual])
+        session.flush()
+    for citation in [context.id, visual.id]:
+        with pytest.raises(DomainError, match="IMAGE_EVIDENCE_REQUIRED"):
+            system.runner.publish(
+                task_id,
+                epoch,
+                AgentAction(
+                    kind="final",
+                    answer="合成检查",
+                    citation_ids=[citation],
+                ),
+                deps,
+            )
+    with system.sessions.begin() as session:
+        session.get(Observation, visual.id).content = {"semantic": True}
+    system.runner.publish(
+        task_id,
+        epoch,
+        AgentAction(
+            kind="final",
+            answer="合成检查",
+            citation_ids=[visual.id],
+        ),
+        deps,
+    )
+    assert (await client.get("/api/tasks/" + task_id)).json()["state"] == "completed"
+
+
 class BadPlanner(DemoProvider):
     async def plan(self, question, observations, history):
         return {"kind": "run_shell", "command": "ignored"}
