@@ -10,6 +10,7 @@ import hashlib
 import json
 import math
 import os
+import platform
 import subprocess
 import tempfile
 import time
@@ -89,7 +90,10 @@ async def validate(args, path, report):
         response = await client.get("/api/tags")
         response.raise_for_status()
         selected = {"embeddinggemma:latest", "qwen3:4b", "qwen2.5vl:3b"}
-        models = [m for m in response.json()["models"] if m["name"] in selected]
+        models = sorted(
+            [m for m in response.json()["models"] if m["name"] in selected],
+            key=lambda model: model["name"],
+        )
         if {m["name"] for m in models} != selected:
             raise ValueError("Pull all three documented models first")
         report["models"] = [
@@ -167,7 +171,11 @@ async def validate(args, path, report):
         created = False
         try:
             with admin.begin() as connection:
+                report["postgres_version"] = connection.scalar(text("SELECT version()"))
                 connection.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+                report["pgvector_version"] = connection.scalar(
+                    text("SELECT extversion FROM pg_extension WHERE extname='vector'")
+                )
                 connection.execute(text(f"CREATE SCHEMA {schema}"))
                 created = True
             engine = create_engine(
@@ -344,6 +352,11 @@ def main():
     ).stdout.strip()
     report = {
         "started_at": datetime.now(UTC).isoformat(),
+        "platform": {
+            "system": platform.system(),
+            "machine": platform.machine(),
+            "python": platform.python_version(),
+        },
         "source_commit": revision,
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "source_dirty": bool(
