@@ -1,0 +1,832 @@
+{
+  "scenarios": [
+    {
+      "id": "d-cache",
+      "family": "cache-expiry",
+      "split": "dev",
+      "title": "Atlas cache board",
+      "messages": [
+        {
+          "source_id": "d-cache-m0",
+          "text": "合成事件 CACHE_TTL_17：atlas-staging-r3 的配置缓存仍返回旧条目，本地记录显示 TTL 为30秒。",
+          "sent_at": "2026-11-03T01:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "d-cache-m1",
+          "text": "建议把 TTL 改为90秒来减少刷新；这是尚未执行、尚未验证的建议。",
+          "sent_at": "2026-11-03T01:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "d-cache-m0",
+          "images": []
+        },
+        {
+          "source_id": "d-cache-m2",
+          "text": "核查发现旧条目源于缓存代次键未同步。修订方案是切换 generation_key=g17，再把 TTL 设为73秒，不能仅延长 TTL。",
+          "sent_at": "2026-11-03T01:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "d-cache-m1",
+          "images": []
+        },
+        {
+          "source_id": "d-cache-m3",
+          "text": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+          "sent_at": "2026-11-03T01:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "d-cache-m2",
+          "images": []
+        },
+        {
+          "source_id": "d-cache-m4",
+          "text": "Atlas cache board 是本事件的合成观察面板。请核查图中 Canary 卡片圆点；文字消息不描述其颜色或位置。",
+          "sent_at": "2026-11-03T01:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "d-cache-m3",
+          "images": [
+            {
+              "asset_id": "d-cache-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "d-cache-m5",
+          "text": "旧环境 atlas-staging-r2 的历史配置为 TTL=48秒、generation_key=g12，不能作为 r3 的验证结论。",
+          "sent_at": "2026-11-03T01:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "d-cache-panel",
+          "message_source_id": "d-cache-m4",
+          "path": "assets/d-cache-panel.png",
+          "filename": "panel.png",
+          "sha256": "a97979262184a5e83164a66405d9c13e14717c6076f5c6a6794cc70dbd55c131"
+        }
+      ]
+    },
+    {
+      "id": "d-upload",
+      "family": "multipart-upload",
+      "split": "dev",
+      "title": "Harbor upload board",
+      "messages": [
+        {
+          "source_id": "d-upload-m0",
+          "text": "合成事件 UPLOAD_PART_06：harbor-integration-r4 的分片合并校验失败，故障样例使用4 MiB分片。",
+          "sent_at": "2026-11-03T01:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "d-upload-m1",
+          "text": "有人建议统一改成8 MiB分片；该建议尚未通过网关边界用例。",
+          "sent_at": "2026-11-03T01:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "d-upload-m0",
+          "images": []
+        },
+        {
+          "source_id": "d-upload-m2",
+          "text": "边界用例要求当前链路采用6 MiB分片，并携带 part_digest。问题修订为同时调整分片尺寸和校验字段，不是只扩大分片。",
+          "sent_at": "2026-11-03T01:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "d-upload-m1",
+          "images": []
+        },
+        {
+          "source_id": "d-upload-m3",
+          "text": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+          "sent_at": "2026-11-03T01:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "d-upload-m2",
+          "images": []
+        },
+        {
+          "source_id": "d-upload-m4",
+          "text": "Harbor upload board 是本事件的人工合成面板，附有 Upload 卡片；卡片圆点信息只在原图中给出。",
+          "sent_at": "2026-11-03T01:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "d-upload-m3",
+          "images": [
+            {
+              "asset_id": "d-upload-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "d-upload-m5",
+          "text": "旧环境 harbor-integration-r2 曾使用12 MiB分片和可选摘要；旧配置不适用于 r4 的边界用例。",
+          "sent_at": "2026-11-03T01:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "d-upload-panel",
+          "message_source_id": "d-upload-m4",
+          "path": "assets/d-upload-panel.png",
+          "filename": "panel.png",
+          "sha256": "64d02a8ea304b047415ae83246ae4f1f83a5c50cc6771dbd14ab6f11a93dbcf3"
+        }
+      ]
+    },
+    {
+      "id": "d-backoff",
+      "family": "queue-backoff",
+      "split": "dev",
+      "title": "Cedar retry board",
+      "messages": [
+        {
+          "source_id": "d-backoff-m0",
+          "text": "合成事件 QUEUE_RETRY_23：cedar-qa-r6 的任务在重试时被重复消费；记录中缺少幂等键。",
+          "sent_at": "2026-11-03T02:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "d-backoff-m1",
+          "text": "最初建议固定等待2秒后无限重试。该建议未执行，不是已通过方案。",
+          "sent_at": "2026-11-03T02:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "d-backoff-m0",
+          "images": []
+        },
+        {
+          "source_id": "d-backoff-m2",
+          "text": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+          "sent_at": "2026-11-03T02:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "d-backoff-m1",
+          "images": []
+        },
+        {
+          "source_id": "d-backoff-m3",
+          "text": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+          "sent_at": "2026-11-03T02:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "d-backoff-m2",
+          "images": []
+        },
+        {
+          "source_id": "d-backoff-m4",
+          "text": "Cedar retry board 是合成面板，Worker 卡片的圆点需从附件原图核查，正文没有颜色说明。",
+          "sent_at": "2026-11-03T02:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "d-backoff-m3",
+          "images": [
+            {
+              "asset_id": "d-backoff-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "d-backoff-m5",
+          "text": "旧环境 cedar-qa-r4 的 base_delay=5秒、max_attempts=2，未覆盖 r6 的幂等样例。",
+          "sent_at": "2026-11-03T02:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "d-backoff-panel",
+          "message_source_id": "d-backoff-m4",
+          "path": "assets/d-backoff-panel.png",
+          "filename": "panel.png",
+          "sha256": "20bc96e4129cb655db1aaf85e265dbea2cd08d1f8eed10484203dc6d48d4e44a"
+        }
+      ]
+    },
+    {
+      "id": "d-config",
+      "family": "configuration-rollout",
+      "split": "dev",
+      "title": "Maple rollout board",
+      "messages": [
+        {
+          "source_id": "d-config-m0",
+          "text": "合成事件 CFG_ROLLOUT_31：maple-sandbox-r2 的配置版本混用，部分样例仍读取旧发布快照。",
+          "sent_at": "2026-11-03T02:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "d-config-m1",
+          "text": "最初建议直接切换50%的样例租户；这项建议还没有执行记录。",
+          "sent_at": "2026-11-03T02:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "d-config-m0",
+          "images": []
+        },
+        {
+          "source_id": "d-config-m2",
+          "text": "核查后改为 rollout_ratio=15%，并同时开启 cfg_gate；旧快照必须先隔离，不能把扩大比例当作修复。",
+          "sent_at": "2026-11-03T02:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "d-config-m1",
+          "images": []
+        },
+        {
+          "source_id": "d-config-m3",
+          "text": "合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+          "sent_at": "2026-11-03T02:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "d-config-m2",
+          "images": []
+        },
+        {
+          "source_id": "d-config-m4",
+          "text": "Maple rollout board 为合成发布面板，Beta 卡片的圆点由原图表达，不在文字中标注。",
+          "sent_at": "2026-11-03T02:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "d-config-m3",
+          "images": [
+            {
+              "asset_id": "d-config-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "d-config-m5",
+          "text": "旧环境 maple-sandbox-r1 的 rollout_ratio=35%、cfg_rev=19，不是 r2 的发布依据。",
+          "sent_at": "2026-11-03T02:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "d-config-panel",
+          "message_source_id": "d-config-m4",
+          "path": "assets/d-config-panel.png",
+          "filename": "panel.png",
+          "sha256": "466a458d825d5ea242a301f6de122c43139f2db9d81f5db99bede83edae8b2fe"
+        }
+      ]
+    },
+    {
+      "id": "h-timezone",
+      "family": "daily-aggregation",
+      "split": "heldout",
+      "title": "Nova day board",
+      "messages": [
+        {
+          "source_id": "h-timezone-m0",
+          "text": "合成事件 ANALYTICS_DAY_41：nova-qa-r5 的日报把边界事件归入前一天，聚合表达式仍按 UTC 截日。",
+          "sent_at": "2026-11-03T03:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-timezone-m1",
+          "text": "最初建议只修改应用服务器的 TZ 环境变量；该建议没有数据库聚合验证记录。",
+          "sent_at": "2026-11-03T03:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-timezone-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-timezone-m2",
+          "text": "修订是在聚合表达式中显式使用 Asia/Shanghai，再截取业务日期，不能依赖服务器本地时区。",
+          "sent_at": "2026-11-03T03:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-timezone-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-timezone-m3",
+          "text": "合成验证单 HV-T01：nova-qa-r5 按 Asia/Shanghai 聚合，样例 2026-10-05T16:30:00Z 被归入2026-10-06；未证明其他业务时区都适用。",
+          "sent_at": "2026-11-03T03:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-timezone-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-timezone-m4",
+          "text": "Nova day board 是此边界样例的合成面板，Timezone 卡片圆点的位置和颜色仅见附件原图。",
+          "sent_at": "2026-11-03T03:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-timezone-m3",
+          "images": [
+            {
+              "asset_id": "h-timezone-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-timezone-m5",
+          "text": "旧环境 nova-qa-r3 仍按 UTC 归档，该样例日期为2026-10-05，不能替代 r5 业务时区验证。",
+          "sent_at": "2026-11-03T03:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-timezone-panel",
+          "message_source_id": "h-timezone-m4",
+          "path": "assets/h-timezone-panel.png",
+          "filename": "panel.png",
+          "sha256": "4a2fc814e1362e0b18116b4ec49b5e72cea3f671fcbd4610d7bbcba5d6e2e4e3"
+        }
+      ]
+    },
+    {
+      "id": "h-auth",
+      "family": "callback-allowlist",
+      "split": "heldout",
+      "title": "Orbit return board",
+      "messages": [
+        {
+          "source_id": "h-auth-m0",
+          "text": "合成事件 OAUTH_CALLBACK_52：orbit-sandbox-r8 的登录回跳被拒绝，配置中仍保留旧路径。域名均为不可用的合成占位域名。",
+          "sent_at": "2026-11-03T03:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-auth-m1",
+          "text": "初步建议给整个路径加通配放行；该建议没有审批和执行记录。",
+          "sent_at": "2026-11-03T03:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-auth-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-auth-m2",
+          "text": "修订只精确放行 https://orbit.example.invalid/oidc/return，不扩大到其他路径；测试使用合成应用身份。",
+          "sent_at": "2026-11-03T03:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-auth-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-auth-m3",
+          "text": "合成验证单 HV-A02：orbit-sandbox-r8 只允许 /oidc/return 的精确回跳，指定合成回调样例通过；不包含生产应用或真实凭据。",
+          "sent_at": "2026-11-03T03:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-auth-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-auth-m4",
+          "text": "Orbit return board 是合成回跳面板，Redirect 卡片的圆点样式必须核查原图。",
+          "sent_at": "2026-11-03T03:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-auth-m3",
+          "images": [
+            {
+              "asset_id": "h-auth-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-auth-m5",
+          "text": "旧环境 orbit-sandbox-r6 曾使用 /oauth/return，不能据此断言 r8 允许同一路径。",
+          "sent_at": "2026-11-03T03:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-auth-panel",
+          "message_source_id": "h-auth-m4",
+          "path": "assets/h-auth-panel.png",
+          "filename": "panel.png",
+          "sha256": "bc5ad72b51116a30e895e24f8a2078809435d6de67c6e96a507b794e69420c27"
+        }
+      ]
+    },
+    {
+      "id": "h-index",
+      "family": "index-alias",
+      "split": "heldout",
+      "title": "Alder index board",
+      "messages": [
+        {
+          "source_id": "h-index-m0",
+          "text": "合成事件 INDEX_ALIAS_64：alder-qa-r9 的手册查询仍命中旧索引，别名和正文映射未同时更新。",
+          "sent_at": "2026-11-03T04:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-index-m1",
+          "text": "最初有人建议删除全部索引后重建；没有授权或执行记录，不能认定为实际处理。",
+          "sent_at": "2026-11-03T04:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-index-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-index-m2",
+          "text": "修订只原子切换 manuals_active 到 manuals_r9，并把正文映射设为 body_text；不删除其他索引。",
+          "sent_at": "2026-11-03T04:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-index-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-index-m3",
+          "text": "合成验证单 HV-I03：alder-qa-r9 的 manuals_active 指向 manuals_r9，正文使用 body_text，样例 DOC-Q17 可被检索到；不报告准确率。",
+          "sent_at": "2026-11-03T04:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-index-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-index-m4",
+          "text": "Alder index board 为索引切换合成面板，Alias 卡片圆点的颜色和位置需读取原图。",
+          "sent_at": "2026-11-03T04:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-index-m3",
+          "images": [
+            {
+              "asset_id": "h-index-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-index-m5",
+          "text": "旧环境 alder-qa-r7 的 manuals_active 指向 manuals_r7，正文为 content；旧记录不能替代 r9 映射。",
+          "sent_at": "2026-11-03T04:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-index-panel",
+          "message_source_id": "h-index-m4",
+          "path": "assets/h-index-panel.png",
+          "filename": "panel.png",
+          "sha256": "e24ea3400a786e31d01b41bcd5508412fb90ef7db5c1057dd9f5f80ff97ee3c2"
+        }
+      ]
+    },
+    {
+      "id": "h-table",
+      "family": "merged-table",
+      "split": "heldout",
+      "title": "Linden table board",
+      "messages": [
+        {
+          "source_id": "h-table-m0",
+          "text": "合成事件 TABLE_MERGE_75：linden-test-r4 导出的本地表格出现合并单元格重复展开，行数与样例不符。",
+          "sent_at": "2026-11-03T04:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-table-m1",
+          "text": "最初建议对所有空格做前向填充；该建议未通过合并区域边界检查。",
+          "sent_at": "2026-11-03T04:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-table-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-table-m2",
+          "text": "修订对 layout_rev=12 使用 merged_cell_policy=anchor_only，只保留合并区域锚点，不对普通空格统一填充。",
+          "sent_at": "2026-11-03T04:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-table-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-table-m3",
+          "text": "合成验证单 HV-M04：linden-test-r4 的 layout_rev=12 使用 anchor_only，样例 TBL-S7 导出7行；未验证扫描PDF或其他布局版本。",
+          "sent_at": "2026-11-03T04:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-table-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-table-m4",
+          "text": "Linden table board 是本地表格的合成面板，Anchor 卡片内圆点的视觉信息保存在附件中。",
+          "sent_at": "2026-11-03T04:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-table-m3",
+          "images": [
+            {
+              "asset_id": "h-table-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-table-m5",
+          "text": "旧环境 linden-test-r2 使用 forward_fill 且导出9行，不是 r4 的边界验证结果。",
+          "sent_at": "2026-11-03T04:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-table-panel",
+          "message_source_id": "h-table-m4",
+          "path": "assets/h-table-panel.png",
+          "filename": "panel.png",
+          "sha256": "654ecac66ea6785b7352f3d0a4254721f8c8ab173a7235916d3fd667d96c9445"
+        }
+      ]
+    },
+    {
+      "id": "h-route",
+      "family": "notification-routing",
+      "split": "heldout",
+      "title": "Iris route board",
+      "messages": [
+        {
+          "source_id": "h-route-m0",
+          "text": "合成事件 NOTIFY_DUP_86：iris-qa-r7 对同一事件重复通知，测试记录没有按团队区分去重范围。",
+          "sent_at": "2026-11-03T05:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-route-m1",
+          "text": "最初建议关闭全部通知通道；该建议未执行，也不能用来证明去重成功。",
+          "sent_at": "2026-11-03T05:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-route-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-route-m2",
+          "text": "修订设置 route_key=team_id:event_type，并在事件ID维度保留120秒去重窗口，不能跨团队共用去重键。",
+          "sent_at": "2026-11-03T05:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-route-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-route-m3",
+          "text": "合成验证单 HV-N05：iris-qa-r7 按 team_id:event_type 分路，事件ID去重窗口120秒，单团队的同一合成事件只投递一次；未测试跨区域复制。",
+          "sent_at": "2026-11-03T05:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-route-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-route-m4",
+          "text": "Iris route board 是路由合成面板，Route 卡片圆点的颜色与位置只在图片中展示。",
+          "sent_at": "2026-11-03T05:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-route-m3",
+          "images": [
+            {
+              "asset_id": "h-route-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-route-m5",
+          "text": "旧环境 iris-qa-r5 使用30秒窗口且没有团队维度；不是 r7 的多团队修订记录。",
+          "sent_at": "2026-11-03T05:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-route-panel",
+          "message_source_id": "h-route-m4",
+          "path": "assets/h-route-panel.png",
+          "filename": "panel.png",
+          "sha256": "3e70b8acc4cc871f76d3c4008b52d75c8972094298396001c5bb010bac31b0a7"
+        }
+      ]
+    },
+    {
+      "id": "h-reconcile",
+      "family": "batch-reconciliation",
+      "split": "heldout",
+      "title": "Quartz ledger board",
+      "messages": [
+        {
+          "source_id": "h-reconcile-m0",
+          "text": "合成事件 RECON_BATCH_97：quartz-sandbox-r6 合并两份不同版本合成台账，批次身份发生混淆；没有真实财务数据。",
+          "sent_at": "2026-11-03T05:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-reconcile-m1",
+          "text": "最初建议自动抵消全部差异；该建议被搁置，没有记账或转账执行记录。",
+          "sent_at": "2026-11-03T05:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-reconcile-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-reconcile-m2",
+          "text": "修订以 source_file_id:statement_date 标识批次，先执行 dry_run=true 的结构核对，不自动抵消差异。",
+          "sent_at": "2026-11-03T05:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-reconcile-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-reconcile-m3",
+          "text": "合成验证单 HV-R06：quartz-sandbox-r6 使用 batch_key=source_file_id:statement_date、dry_run=true，两份指定合成文件的行身份匹配；不证明真实账目正确。",
+          "sent_at": "2026-11-03T05:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-reconcile-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-reconcile-m4",
+          "text": "Quartz ledger board 是结构核对合成面板，Ledger 卡片内圆点需要在原图中定位。",
+          "sent_at": "2026-11-03T05:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-reconcile-m3",
+          "images": [
+            {
+              "asset_id": "h-reconcile-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-reconcile-m5",
+          "text": "旧环境 quartz-sandbox-r3 用文件名充当批次键且 dry_run=false；不适用于 r6 的合成核对。",
+          "sent_at": "2026-11-03T05:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-reconcile-panel",
+          "message_source_id": "h-reconcile-m4",
+          "path": "assets/h-reconcile-panel.png",
+          "filename": "panel.png",
+          "sha256": "1e05f6b1f917344b17333002413488d2e250c5b909ac441774908082efe0df29"
+        }
+      ]
+    },
+    {
+      "id": "h-audit",
+      "family": "attachment-lifecycle",
+      "split": "heldout",
+      "title": "Willow archive board",
+      "messages": [
+        {
+          "source_id": "h-audit-m0",
+          "text": "合成事件 AUDIT_KEEP_108：willow-test-r3 的审计附件在清理后仍被旧目录链接引用，附件与目录状态未同步。",
+          "sent_at": "2026-11-03T06:00:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-audit-m1",
+          "text": "最初建议把所有消息与附件一起立即删除；该建议没有执行记录。",
+          "sent_at": "2026-11-03T06:01:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-audit-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-audit-m2",
+          "text": "修订仅针对测试审计附件：保留27天后先标记 soft_deleted，再移除目录链接；不涉及聊天消息或客户日志的保存政策。",
+          "sent_at": "2026-11-03T06:02:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-audit-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-audit-m3",
+          "text": "合成验证单 HV-K07：willow-test-r3 的审计附件采用 retention_days=27、soft_deleted=true，指定过期附件的目录链接已移除；不是法律或客户政策结论。",
+          "sent_at": "2026-11-03T06:03:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-audit-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-audit-m4",
+          "text": "Willow archive board 是附件生命周期合成面板，Archive 卡片的圆点属性只存在于原图。",
+          "sent_at": "2026-11-03T06:04:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-audit-m3",
+          "images": [
+            {
+              "asset_id": "h-audit-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-audit-m5",
+          "text": "旧环境 willow-test-r1 的附件保留45天且直接移除文件；旧配置不是 r3 的生命周期验证。",
+          "sent_at": "2026-11-03T06:05:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-audit-panel",
+          "message_source_id": "h-audit-m4",
+          "path": "assets/h-audit-panel.png",
+          "filename": "panel.png",
+          "sha256": "5035a9e7de5c37e3a0a6c03349b43047440ac637815ad1549bbe6bf4811a5c82"
+        }
+      ]
+    },
+    {
+      "id": "h-heartbeat",
+      "family": "websocket-heartbeat",
+      "split": "heldout",
+      "title": "Spruce socket board",
+      "messages": [
+        {
+          "source_id": "h-heartbeat-m0",
+          "text": "合成事件 WS_IDLE_119：spruce-qa-r10 的长连接在静默样例中关闭，客户端没有发送心跳。",
+          "sent_at": "2026-11-03T06:30:00+00:00",
+          "author": "合成·值班",
+          "reply_to": null,
+          "images": []
+        },
+        {
+          "source_id": "h-heartbeat-m1",
+          "text": "最初建议固定15秒重连而不发心跳；这项建议没有执行或稳定性验证。",
+          "sent_at": "2026-11-03T06:31:00+00:00",
+          "author": "合成·建议",
+          "reply_to": "h-heartbeat-m0",
+          "images": []
+        },
+        {
+          "source_id": "h-heartbeat-m2",
+          "text": "修订为 heartbeat_interval=11秒、miss_threshold=3，并把心跳失败与普通业务空闲分开处理。",
+          "sent_at": "2026-11-03T06:32:00+00:00",
+          "author": "合成·核查",
+          "reply_to": "h-heartbeat-m1",
+          "images": []
+        },
+        {
+          "source_id": "h-heartbeat-m3",
+          "text": "合成验证单 HV-W08：spruce-qa-r10 使用 heartbeat_interval=11秒、miss_threshold=3，指定静默样例不再因缺少心跳关闭；不报告可用率或生产丢包率。",
+          "sent_at": "2026-11-03T06:33:00+00:00",
+          "author": "合成·验证",
+          "reply_to": "h-heartbeat-m2",
+          "images": []
+        },
+        {
+          "source_id": "h-heartbeat-m4",
+          "text": "Spruce socket board 是长连接合成面板，Socket 卡片圆点的颜色及位置应由原图核查。",
+          "sent_at": "2026-11-03T06:34:00+00:00",
+          "author": "合成·维护",
+          "reply_to": "h-heartbeat-m3",
+          "images": [
+            {
+              "asset_id": "h-heartbeat-panel"
+            }
+          ]
+        },
+        {
+          "source_id": "h-heartbeat-m5",
+          "text": "旧环境 spruce-qa-r8 使用20秒心跳、miss_threshold=2，不能替代 r10 的指定样例。",
+          "sent_at": "2026-11-03T06:35:00+00:00",
+          "author": "合成·旧环境",
+          "reply_to": null,
+          "images": []
+        }
+      ],
+      "assets": [
+        {
+          "id": "h-heartbeat-panel",
+          "message_source_id": "h-heartbeat-m4",
+          "path": "assets/h-heartbeat-panel.png",
+          "filename": "panel.png",
+          "sha256": "001201c85ea94f7f5c857e94375004612c7df9e66c97dbde6a7bf635383fc5e1"
+        }
+      ]
+    }
+  ]
+}

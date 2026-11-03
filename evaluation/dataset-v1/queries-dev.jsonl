@@ -1,0 +1,16 @@
+{"id": "q-dev-001", "question": "CACHE_TTL_17 在 atlas-staging-r3 最后验证的 TTL 和代次键分别是什么？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-002", "question": "梳理 CACHE_TTL_17 的起始现象、最初建议、修订依据及已验证结果，说明结论适用于哪里。", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-003", "question": "在 Atlas cache board 原图中，Canary 卡片的圆点是什么颜色，位于卡片左端还是右端？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": true}
+{"id": "q-dev-004", "question": "atlas-staging-r3 单实例支持的最大并发请求数是多少？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-005", "question": "在 harbor-integration-r4，UPLOAD_PART_06 最终验证了多大分片，摘要字段有什么要求？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-006", "question": "UPLOAD_PART_06 为什么不能只沿用最初的扩大片建议？请串起故障、建议、边界修订及验证范围。", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-007", "question": "请看 Harbor upload board 的 Upload 卡片：圆点为哪种颜色，在卡片内靠左还是靠右？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": true}
+{"id": "q-dev-008", "question": "生产上传网关允许的单文件最大容量是多少 GiB？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-009", "question": "QUEUE_RETRY_23 在 cedar-qa-r6 通过验证的初始退避时间和最大尝试次数是多少？前提是什么？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-010", "question": "请说明 QUEUE_RETRY_23 从重复消费到修订验证的过程，区分未执行建议与需要满足的前提。", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-011", "question": "Cedar retry board 里 Worker 卡片的圆点是什么颜色，位于卡片的哪一端？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": true}
+{"id": "q-dev-012", "question": "cedar-prod 的重试初始等待时间已经配置成多少秒？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-013", "question": "CFG_ROLLOUT_31 在 maple-sandbox-r2 最后确认的发布比例、配置版本和开关是什么？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-014", "question": "CFG_ROLLOUT_31 最初为什么要排查快照？请连同早期建议、最终修订及验证范围一起回答。", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": false}
+{"id": "q-dev-015", "question": "Maple rollout board 的 Beta 卡片圆点是什么颜色，位于左端还是右端？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff", "d-config"], "require_image": true}
+{"id": "q-dev-016", "question": "在本次允许读取的范围中，maple-sandbox-r2 已验证的 cfg_rev 是多少？", "scope_scenarios": ["d-cache", "d-upload", "d-backoff"], "require_image": false}

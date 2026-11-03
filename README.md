@@ -110,5 +110,8 @@ LUME_UI_SECOND_TOKEN_FILE=../.runtime/browser-bob-token \
 - [运行与接口](docs/operations.md)
 - [验证记录](docs/validation.md)、[源码与论文证据审校](docs/thesis-evidence-audit.md)
 - [真实模型联调计划](docs/real-model-validation-plan.md)、[实际记录与复现](docs/real-model-validation.md)
+- [48题合成参考证据集说明](docs/evaluation-dataset.md)、[逐题审阅册](docs/evaluation-reference-review.md)、[人工复核记录](docs/evaluation-human-review.md)
+
+参考证据集包含12情景、72条消息和12张合成原图，按情景划为16题开发/32题保留。参考标签由助手编制，全部待人工复核；本阶段没有在这些问题上运行目标模型或计算质量分数。查询与离线标签分开，任务转换只传问题、范围和核图要求。构建、完整性检查及使用限制见上述说明；不能把结构检查通过称为人工标注完成。
 
 首版尚无SSO、密码/会话登录、自动孤立文件清理、近似向量索引、检索单路降级或完整运行管理界面；历史回用通过API显式传入`history_ids`，首版界面每次独立提问。实现与论文方案的差异需要保留，后续以实际代码及测试改写对应章节。

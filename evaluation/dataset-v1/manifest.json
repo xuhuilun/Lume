@@ -1,0 +1,48 @@
+{
+  "dataset_id": "lume-synthetic-evidence-v1",
+  "date": "2026-11-03",
+  "baseline_commit": "7b7f649a2f46f695ef39be836bf5b2cbf40b7ce4",
+  "human_review_status": "pending",
+  "human_reviewed_queries": 0,
+  "target_model_calls_during_build": 0,
+  "counts": {
+    "scenarios": 12,
+    "messages": 72,
+    "images": 12,
+    "queries": 48,
+    "splits": {
+      "dev": 16,
+      "heldout": 32
+    },
+    "answerable": 36,
+    "unanswerable": 12
+  },
+  "generator": {
+    "pillow": "13.0.0",
+    "image_size": [
+      960,
+      520
+    ]
+  },
+  "files": {
+    "assets/d-backoff-panel.png": "20bc96e4129cb655db1aaf85e265dbea2cd08d1f8eed10484203dc6d48d4e44a",
+    "assets/d-cache-panel.png": "a97979262184a5e83164a66405d9c13e14717c6076f5c6a6794cc70dbd55c131",
+    "assets/d-config-panel.png": "466a458d825d5ea242a301f6de122c43139f2db9d81f5db99bede83edae8b2fe",
+    "assets/d-upload-panel.png": "64d02a8ea304b047415ae83246ae4f1f83a5c50cc6771dbd14ab6f11a93dbcf3",
+    "assets/h-audit-panel.png": "5035a9e7de5c37e3a0a6c03349b43047440ac637815ad1549bbe6bf4811a5c82",
+    "assets/h-auth-panel.png": "bc5ad72b51116a30e895e24f8a2078809435d6de67c6e96a507b794e69420c27",
+    "assets/h-heartbeat-panel.png": "001201c85ea94f7f5c857e94375004612c7df9e66c97dbde6a7bf635383fc5e1",
+    "assets/h-index-panel.png": "e24ea3400a786e31d01b41bcd5508412fb90ef7db5c1057dd9f5f80ff97ee3c2",
+    "assets/h-reconcile-panel.png": "1e05f6b1f917344b17333002413488d2e250c5b909ac441774908082efe0df29",
+    "assets/h-route-panel.png": "3e70b8acc4cc871f76d3c4008b52d75c8972094298396001c5bb010bac31b0a7",
+    "assets/h-table-panel.png": "654ecac66ea6785b7352f3d0a4254721f8c8ab173a7235916d3fd667d96c9445",
+    "assets/h-timezone-panel.png": "4a2fc814e1362e0b18116b4ec49b5e72cea3f671fcbd4610d7bbcba5d6e2e4e3",
+    "qrels.tsv": "61a33ca1ff10a93e8394b46a184be4e977f82d23bcbf108297162fea7e963988",
+    "queries-dev.jsonl": "e0a6fa8a1800d8e3a0cceab4415f1abb10df68fe8749765905e5dcfb816fd4b7",
+    "queries-heldout.jsonl": "f4a6a9ed9ccf4e15fb730f0a33a084dccf13206185d03bfd8bdb6ace336a67b0",
+    "references.jsonl": "18e1994fe5fc2b7e6d8805b4303d33b5652e2e3aee8c8db1c7d5bf537f8c9264",
+    "review.md": "f271dd7da7bba79a4ca191af05908f3d0bf656472b8d6f019301ff1ebdd0ecb6",
+    "scenarios.json": "aaf54f887074d1d833c39aa9aa6003482b33e0ea428c63775aed6458d02ecfbb",
+    "source.json": "289ec045a5586d98a8a2a6e26dcf9d05ebdc8b43453ac9ca1c134eba3dfa09aa"
+  }
+}
