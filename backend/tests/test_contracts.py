@@ -101,7 +101,7 @@ def test_generation_targets_and_citations_use_distinct_current_observation_id_se
             ]
 
 
-def test_unread_candidates_allow_only_an_insufficient_final_and_no_image_tool():
+def test_nonempty_unread_candidates_require_reading_before_search_or_final():
     variants = action_schema(
         [
             {
@@ -114,7 +114,22 @@ def test_unread_candidates_allow_only_an_insufficient_final_and_no_image_tool():
         ]
     )["oneOf"]
     kinds = [v["properties"]["kind"]["const"] for v in variants]
-    assert kinds == ["search", "read_context", "final"]
-    final = variants[-1]["properties"]
+    assert kinds == ["read_context"]
+    assert variants[0]["properties"]["target_id"]["enum"] == ["m1"]
+
+
+def test_empty_search_allows_reformulation_or_insufficient_without_citations():
+    variants = action_schema(
+        [
+            {
+                "id": "empty-search",
+                "kind": "candidate_only",
+                "content": {"candidates": []},
+            }
+        ]
+    )["oneOf"]
+    by_kind = {v["properties"]["kind"]["const"]: v for v in variants}
+    assert set(by_kind) == {"search", "final"}
+    final = by_kind["final"]["properties"]
     assert final["insufficient"]["const"] is True
     assert final["citation_ids"]["maxItems"] == 0

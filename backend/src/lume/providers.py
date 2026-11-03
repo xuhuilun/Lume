@@ -25,7 +25,8 @@ def action_schema(observations: list[dict]) -> dict:
     def nonempty(field):
         return {**properties[field]["anyOf"][0], "minLength": 1}
 
-    variants = [variant("search", {"query": nonempty("query")})]
+    search_action = variant("search", {"query": nonempty("query")})
+    variants = []
     candidates, read_ids, images, inspected, citations = set(), set(), set(), set(), set()
     for observation in observations:
         content = observation["content"]
@@ -39,14 +40,6 @@ def action_schema(observations: list[dict]) -> dict:
         elif observation["kind"] == "image_observation":
             citations.add(observation["id"])
             inspected.add(content["image_id"])
-    for kind, targets in [
-        ("read_context", candidates - read_ids),
-        ("inspect_image", images - inspected),
-    ]:
-        if targets:
-            variants.append(
-                variant(kind, {"target_id": {"type": "string", "enum": sorted(targets)}})
-            )
     if observations:
         citation_schema = {
             **properties["citation_ids"],
@@ -66,6 +59,17 @@ def action_schema(observations: list[dict]) -> dict:
                     },
                 )
             )
+    for kind, targets in [
+        ("read_context", candidates - read_ids),
+        ("inspect_image", images - inspected),
+    ]:
+        if targets:
+            action = variant(kind, {"target_id": {"type": "string", "enum": sorted(targets)}})
+            if kind == "read_context" and not citations:
+                # A candidate list contains no original text. Read it before another search.
+                return {"oneOf": [action]}
+            variants.append(action)
+    variants.append(search_action)
     return {"oneOf": variants}
 
 
@@ -169,7 +173,8 @@ class OllamaProvider:
             "每次仅返回一个符合所给schema的动作JSON，不输出内部思维过程。"
             "search的query填写简短检索词；read_context的target_id填写候选message_id；"
             "inspect_image的target_id填写已读消息images中的id。不得自行编造ID。"
-            "先search再读取候选。读到直接相关的充分证据后final，不要反复读取相同内容。"
+            "先search再读取候选。候选只有定位信息，不包含原文，不能靠反复search确认事实。"
+            "读到直接相关的充分证据后final；缺少结论时继续读取其他候选或改写检索词。"
             "图片的description和ocr_text是索引线索；问题要求核对图中细节时，"
             "必须inspect_image取得本任务image_observation后再回答，并引用该观察id。"
             "final用中文作答；citation_ids填写观察最外层id，不是message_id或图片id。"
