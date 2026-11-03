@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-03",
+  "verified_source_commit": "3bf4b43fadbece8f65a893b038c50ff5f58ca26b",
+  "source_tree_clean_at_full_test_start": true,
+  "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+  "python": "3.12.13",
+  "pillow": "13.0.0",
+  "same_environment_two_builds_identical": true,
+  "backend_and_offline_tests_passed": 51,
+  "existing_program_tests": 33,
+  "offline_dataset_tests": 18,
+  "dataset_check": {
+    "dataset_id": "lume-synthetic-evidence-v1",
+    "scenarios": 12,
+    "messages": 72,
+    "images": 12,
+    "queries": 48,
+    "splits": {
+      "dev": 16,
+      "heldout": 32
+    },
+    "answerable": 36,
+    "unanswerable": 12,
+    "human_review_status": "pending",
+    "human_reviewed_queries": 0,
+    "structural_validation": "passed",
+    "message_input_checks": 72,
+    "this_check_calls_models": false,
+    "quality_scores_computed": false
+  },
+  "application_runtime_changed": false,
+  "visual_check": "Primary agent viewed all 12 panels in contact sheet and 2 at original size; not human review",
+  "human_reviewed_queries": 0,
+  "target_model_calls_this_stage": 0,
+  "quality_scores_computed": false,
+  "pdf_generated": false,
+  "thesis_manuscript_changed": false,
+  "initial_failure": "pytest could not import repo-local scripts; explicit pytest pythonpath fixed collection",
+  "input_revision": "Removed category and category-bearing query ids from model-facing query files before freezing"
+}

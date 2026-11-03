@@ -43,3 +43,7 @@ macOS arm64；Python 3.12.13；PostgreSQL 17.11；数据库pgvector扩展0.8.7�
 实际加载固定digest的embeddinggemma、qwen3:4b、qwen2.5vl:3b，完成三条合成问题的API/数据库/模型链路，并通过1项真实模型浏览器核图案例。新增生成阶段约束、显式require_image发布条件、原始消息模型视图与非空视觉返回检查；后端共33项通过，无跳过。Ruff、格式、TypeScript/Vite和Prettier通过。
 
 完整记录与首次四轮失败见[real-model-validation.md](real-model-validation.md)。这些是调试和协议流程验证，不能替代独立参考证据集、34项目验收、质量/负载、真实QQ或生产授权同步。旧3项Demo浏览器检查为历史证据，本轮只执行新的真实模型浏览器用例。
+
+## 2026-11-03参考证据集续行
+
+编制48题合成标签草稿和72条消息/12图，按情景分为16题开发与32题保留。新增18项离线数据回归后，全套51项通过；这些新增案例不等于新增模型质量实验。当前应用业务逻辑未改，资料尚无人审、未送入目标模型、没有质量分数。方法、逐题材料和检查证据见[evaluation-dataset.md](evaluation-dataset.md)、[evaluation-dataset-validation.md](evaluation-dataset-validation.md)。

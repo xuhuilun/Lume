@@ -1,0 +1,19 @@
+{
+  "dataset_id": "lume-synthetic-evidence-v1",
+  "scenarios": 12,
+  "messages": 72,
+  "images": 12,
+  "queries": 48,
+  "splits": {
+    "dev": 16,
+    "heldout": 32
+  },
+  "answerable": 36,
+  "unanswerable": 12,
+  "human_review_status": "pending",
+  "human_reviewed_queries": 0,
+  "structural_validation": "passed",
+  "message_input_checks": 72,
+  "this_check_calls_models": false,
+  "quality_scores_computed": false
+}
