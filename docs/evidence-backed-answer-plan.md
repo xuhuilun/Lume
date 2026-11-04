@@ -28,3 +28,9 @@ PostgreSQL数组重叠操作符与string_to_array用于已分词技术标识的�
 - https://www.postgresql.org/docs/17/functions-string.html
 
 依据只支持相应数据库语义，不支持本次检索质量效果；效果必须由实际执行记录说明。
+
+## run-02后的小修订
+
+982b20b的完整16题运行已保存：11个completed、4个failed、1个insufficient。4个核图任务都已取得真实图像观察，但生成answer只选消息说明，发布层正确拒绝IMAGE_EVIDENCE_REQUIRED。先以动态schema缺少必选图像字段的测试复现失败，再增加核图专用image_evidence字段，evidence保留至多3项额外依据；适配器合并为内部选择，Runner原图发布门槛继续独立执行。该结构同时允许需要消息背景的核图问题，不把全部依据限制成图片。
+
+本修订使Ollama协议升为v4，Demo仍v2；独立提交后再次完整运行同16题、同权重/预算/4096上下文，run-02原样保留。资料不足语义仍有剩余缺口：q-dev-004/008/012选择了仅测试环境的消息，未正确拒答；这次修订仅修复图像依据生成约束，不声称解决这些问题。

@@ -71,6 +71,18 @@ class EvidenceAnswer(Input):
     evidence: list[EvidenceSelection] = Field(min_length=1, max_length=4)
 
 
+class ImageEvidenceAnswer(Input):
+    kind: Literal["answer"]
+    image_evidence: EvidenceSelection
+    evidence: list[EvidenceSelection] = Field(default_factory=list, max_length=3)
+
+    @model_validator(mode="after")
+    def image_has_no_message(self):
+        if self.image_evidence.message_id is not None:
+            raise ValueError("Image evidence must select an image observation")
+        return self
+
+
 class InsufficientAnswer(Input):
     kind: Literal["insufficient"]
 

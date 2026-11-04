@@ -48,7 +48,7 @@ Ollama输入的message_context仅保留消息原文及图片id/filename，不把
 
 图像观察与回答属于模型输出，程序检查结构、来源、资格和显式任务要求，不证明语义正确。演示模式不作视觉判断；真实Ollama已完成2026-11-03固定合成资料联调，见real-model-validation.md。无真实企业数据、模型准确率、生产用户、QPS或响应时间达标结论。
 
-证据选择改进将Ollama规则身份升为v3、演示模式升为v2。更新任一已有安装后停止API/worker，执行`lume reindex`、`lume worker --drain`后重启；旧规则任务不会静默沿用新提示或协议。实验脚本按实际权重摘要生成版本标识，普通安装仍需操作员维护MODEL_REVISION。
+证据选择改进将Ollama规则身份升为v4、演示模式升为v2。更新任一已有安装后停止API/worker，执行`lume reindex`、`lume worker --drain`后重启；旧规则任务不会静默沿用新提示或协议。实验脚本按实际权重摘要生成版本标识，普通安装仍需操作员维护MODEL_REVISION。
 
 
 ## 原文依据展示与开发复测
@@ -58,3 +58,6 @@ Ollama输入的message_context仅保留消息原文及图片id/filename，不把
 read_context现返回window对象，含max_messages=12、max_hops=4、truncated及ambiguous_links；不再是一层父子窗口标记。检索观察包含exact_anchors，表示本次字面过滤。技术标识不存在时两路不回退到无关来源；没有标识的查询仍可宽召回。
 
 开发复测入口可显式指定--application-baseline提交，默认仍指向旧冻结基线；程序会拒绝应用目录与该提交不一致的执行。每次输出必须新建文件，保留旧失败记录。执行阶段不解析参考标签或保留题，离线审计只读取开发标签。需要复现时使用本轮记录内source_commit及模型摘要，不能以当前main替代历史执行版本。
+
+
+核图专用answer结构必含image_evidence，evidence容纳至多3项额外消息/图像选择；普通answer保持至多4项选择。两者均转换为内部选择后重新绑定持久来源，不能绕过require_image。v3开发运行的图像选择遗漏及失败保留，修正后的最终规则为Ollama v4 / Demo v2。

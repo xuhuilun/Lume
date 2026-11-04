@@ -8,7 +8,7 @@ from copy import deepcopy
 import httpx
 
 from .evidence import INSUFFICIENT_TEXT
-from .schemas import AgentAction, EvidenceAnswer, InsufficientAnswer
+from .schemas import AgentAction, EvidenceAnswer, ImageEvidenceAnswer, InsufficientAnswer
 
 
 def action_schema(observations: list[dict], require_image: bool = False) -> dict:
@@ -23,7 +23,7 @@ def action_schema(observations: list[dict], require_image: bool = False) -> dict
             "additionalProperties": False,
         }
 
-    variants, selections = [], []
+    variants, selections, visual_selections = [], [], []
     candidates, read_ids, images, inspected = set(), set(), set(), set()
     visual_ready = False
     for observation in observations:
@@ -61,6 +61,7 @@ def action_schema(observations: list[dict], require_image: bool = False) -> dict
                         "additionalProperties": False,
                     }
                 )
+                visual_selections.append(selections[-1])
     if require_image and not visual_ready:
         if images - inspected:
             return {
@@ -87,19 +88,18 @@ def action_schema(observations: list[dict], require_image: bool = False) -> dict
     if observations:
         variants.append(variant("insufficient", {}))
         if selections and (not require_image or visual_ready):
-            variants.append(
-                variant(
-                    "answer",
-                    {
-                        "evidence": {
-                            "type": "array",
-                            "items": {"oneOf": selections},
-                            "minItems": 1,
-                            "maxItems": 4,
-                        }
-                    },
-                )
-            )
+            fields = {
+                "evidence": {
+                    "type": "array",
+                    "items": {"oneOf": selections},
+                    "minItems": 0 if require_image else 1,
+                    "maxItems": 3 if require_image else 4,
+                }
+            }
+            if require_image:
+                # A required slot makes omission impossible in valid constrained generation.
+                fields = {"image_evidence": {"oneOf": visual_selections}, **fields}
+            variants.append(variant("answer", fields))
     for kind, targets in [
         ("read_context", candidates - read_ids),
         ("inspect_image", images - inspected),
@@ -267,7 +267,11 @@ class OllamaProvider:
             "缺少所问事实或无法确定时返回insufficient；引用相关材料不等于能回答。"
             "图片描述与OCR索引不能作为原图证据。要求图中细节时先inspect_image；"
             "若原图观察未覆盖所问细节，应返回insufficient。"
-            + ("本题必须选择实际image_observation作为依据。" if require_image else "")
+            + (
+                "本题image_evidence必须填实际图像观察，evidence可为空或选择额外消息依据。"
+                if require_image
+                else ""
+            )
             + "允许动作："
             + json.dumps(schema, ensure_ascii=False)
             + "当前阶段："
@@ -300,11 +304,15 @@ class OllamaProvider:
         )
         decision = json.loads(data["message"]["content"])
         if decision.get("kind") == "answer":
-            selection = EvidenceAnswer.model_validate(decision)
+            if require_image:
+                selection = ImageEvidenceAnswer.model_validate(decision)
+                selected = [selection.image_evidence, *selection.evidence]
+            else:
+                selected = EvidenceAnswer.model_validate(decision).evidence
             return {
                 "kind": "final",
                 "answer": "由程序展示所选原文依据",
-                "evidence": [e.model_dump() for e in selection.evidence],
+                "evidence": [e.model_dump() for e in selected],
             }
         if decision.get("kind") == "insufficient":
             InsufficientAnswer.model_validate(decision)

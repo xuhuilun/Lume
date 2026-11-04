@@ -209,3 +209,39 @@ async def test_empty_vision_response_is_not_a_usable_image_observation(monkeypat
     monkeypatch.setattr(provider, "_post", empty)
     with pytest.raises(ValueError, match="Empty vision response"):
         await provider.vision("synthetic question", b"synthetic-image")
+
+
+def test_required_image_answer_has_a_required_actual_image_selection():
+    observations = [
+        {
+            "id": "context",
+            "kind": "message_context",
+            "content": {
+                "messages": [
+                    {
+                        "message_id": "m1",
+                        "text": "这是图片附件说明，不能证明像素事实",
+                        "images": [{"id": "i1"}],
+                    },
+                ]
+            },
+        },
+        {
+            "id": "visual",
+            "kind": "image_observation",
+            "content": {
+                "image_id": "i1",
+                "semantic": True,
+                "text": "原图中的圆点为蓝色，位于卡片左端。",
+            },
+        },
+    ]
+    answer = next(
+        v
+        for v in action_schema(observations, require_image=True)["oneOf"]
+        if v["properties"]["kind"]["const"] == "answer"
+    )
+    assert "image_evidence" in answer["required"]
+    variants = answer["properties"]["image_evidence"]["oneOf"]
+    assert all(v["properties"]["observation_id"]["const"] == "visual" for v in variants)
+    assert all(v["properties"]["message_id"]["type"] == "null" for v in variants)

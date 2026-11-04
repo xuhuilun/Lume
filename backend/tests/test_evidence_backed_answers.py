@@ -307,3 +307,30 @@ async def test_wire_answers_convert_only_to_selections_and_insufficient(monkeypa
     }
     with pytest.raises(ValueError):
         await provider.plan("资料", [], [])
+
+
+async def test_required_image_wire_selection_is_kept_with_additional_text(monkeypatch):
+    import json
+
+    from lume.config import Settings
+    from lume.providers import OllamaProvider
+
+    provider = OllamaProvider(Settings(_env_file=None))
+    decision = {
+        "kind": "answer",
+        "image_evidence": {"observation_id": "image", "message_id": None},
+        "evidence": [{"observation_id": "context", "message_id": "m"}],
+    }
+
+    async def reply(endpoint, payload):
+        return {"message": {"content": json.dumps(decision)}}
+
+    monkeypatch.setattr(provider, "_post", reply)
+    action = AgentAction.model_validate(await provider.plan("核对原图", [], [], require_image=True))
+    assert [(e.observation_id, e.message_id) for e in action.evidence] == [
+        ("image", None),
+        ("context", "m"),
+    ]
+    del decision["image_evidence"]
+    with pytest.raises(ValueError):
+        await provider.plan("核对原图", [], [], require_image=True)

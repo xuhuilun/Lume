@@ -39,6 +39,9 @@ Ollama依据当前观察生成动作schema：无候选先search，有非空候�
 
 read_context沿同空间的显式回复图双向遍历，最多12条消息、4跳，循环去重；停用来源不作为桥梁，歧义native_index不推断边，返回截断及歧义标志。所有返回消息仍进入来源依赖检查。
 
-Ollama正常回答改为选择最多4个已读消息/原图观察，程序从持久观察中展示完整原文，保留建议、未执行、环境及版本限定；不发布模型自由总结。insufficient动作没有可自由生成的正文。Task.config由服务端冻结answer_contract=source-excerpts-v1，Runner独立验证选择归属、消息成员及非空图像观察，重建引用；require_image门槛继续有效。Demo维持旧抽取回放。协议版本分别升为Ollama v3、Demo v2，无数据库列或第三方依赖变更。
+Ollama正常回答改为选择最多4个已读消息/原图观察，程序从持久观察中展示完整原文，保留建议、未执行、环境及版本限定；不发布模型自由总结。insufficient动作没有可自由生成的正文。Task.config由服务端冻结answer_contract=source-excerpts-v1，Runner独立验证选择归属、消息成员及非空图像观察，重建引用；require_image门槛继续有效。Demo维持旧抽取回放。协议版本最终为Ollama v4、Demo v2（v3开发试跑的遗漏原图选择失败保留），无数据库列或第三方依赖变更。
 
 原文选择仍可能不切题或遗漏阶段，视觉观察仍可能错误。来源摘录约束不能替代语义评测或人工审阅。旧联调记录对应旧提交，不能直接当作新协议浏览器验收。
+
+
+核图任务在已取得实际图像观察后，answer schema使用必选image_evidence与至多3项附加evidence。普通任务仍为至多4项evidence。该结构解决已观察却遗漏图像引用的生成路径，发布层仍独立检查实际图像观察；它不校正视觉识别文字。
