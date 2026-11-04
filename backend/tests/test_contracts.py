@@ -84,21 +84,31 @@ def test_generation_targets_and_citations_use_distinct_current_observation_id_se
             "id": "read-observation",
             "kind": "message_context",
             "content": {
-                "messages": [{"message_id": "m1", "images": [{"id": "i1"}, {"id": "i2"}]}],
+                "messages": [
+                    {"message_id": "m1", "text": "已读原文", "images": [{"id": "i1"}, {"id": "i2"}]}
+                ],
             },
         },
-        {"id": "visual-observation", "kind": "image_observation", "content": {"image_id": "i1"}},
+        {
+            "id": "visual-observation",
+            "kind": "image_observation",
+            "content": {"image_id": "i1", "semantic": True, "text": "实际原图观察"},
+        },
     ]
     variants = action_schema(observations)["oneOf"]
     by_kind = {v["properties"]["kind"]["const"]: v for v in variants}
     assert by_kind["read_context"]["properties"]["target_id"]["enum"] == ["m2"]
     assert by_kind["inspect_image"]["properties"]["target_id"]["enum"] == ["i2"]
-    for variant in variants:
-        if variant["properties"]["kind"]["const"] == "final":
-            assert variant["properties"]["citation_ids"]["items"]["enum"] == [
-                "read-observation",
-                "visual-observation",
-            ]
+    selections = by_kind["answer"]["properties"]["evidence"]["items"]["oneOf"]
+    assert [
+        (v["properties"]["observation_id"]["const"], v["properties"]["message_id"].get("const"))
+        for v in selections
+    ] == [
+        ("read-observation", "m1"),
+        ("visual-observation", None),
+    ]
+    assert set(by_kind["answer"]["properties"]) == {"kind", "evidence"}
+    assert set(by_kind["insufficient"]["properties"]) == {"kind"}
 
 
 def test_nonempty_unread_candidates_require_reading_before_search_or_final():
@@ -129,10 +139,8 @@ def test_empty_search_allows_reformulation_or_insufficient_without_citations():
         ]
     )["oneOf"]
     by_kind = {v["properties"]["kind"]["const"]: v for v in variants}
-    assert set(by_kind) == {"search", "final"}
-    final = by_kind["final"]["properties"]
-    assert final["insufficient"]["const"] is True
-    assert final["citation_ids"]["maxItems"] == 0
+    assert set(by_kind) == {"search", "insufficient"}
+    assert set(by_kind["insufficient"]["properties"]) == {"kind"}
 
 
 def test_required_image_mode_generates_inspection_before_a_normal_final():
@@ -155,8 +163,8 @@ def test_required_image_mode_generates_inspection_before_a_normal_final():
         },
     }
     variants = action_schema([context, unavailable], require_image=True)["oneOf"]
-    final = next(v for v in variants if v["properties"]["kind"]["const"] == "final")
-    assert final["properties"]["insufficient"]["const"] is True
+    kinds = {v["properties"]["kind"]["const"] for v in variants}
+    assert "insufficient" in kinds and "answer" not in kinds
 
 
 async def test_model_context_excludes_index_text_and_file_processing_state(monkeypatch):

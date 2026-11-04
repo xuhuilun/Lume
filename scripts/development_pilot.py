@@ -30,6 +30,7 @@ from lume.models import (
     Observation,
     ProcessingJob,
     RuntimeSetting,
+    Task,
     TaskEvent,
 )
 from lume.processing import Processor
@@ -330,6 +331,9 @@ async def execute(args, report):
                         row["status"] = response.json()
                         row["model_decisions"] = list(provider.decisions)
                         with sessions() as session:
+                            frozen_task = session.get(Task, task_id)
+                            row["task_configuration"] = frozen_task.config
+                            row["requested_scope"] = frozen_task.requested_scope
                             row["observations"] = [
                                 {
                                     "id": o.id,
@@ -445,6 +449,28 @@ def audit_report(run, dataset):
         for cid in task.get("answer", {}).get("citation_ids", []):
             require(cid in observations, "answer citation outside task observations")
             cited.update(ids_for(observations[cid]))
+        selected = None
+        if task.get("task_configuration", {}).get("answer_contract") == "source-excerpts-v1":
+            selected = set()
+            decisions = task.get("model_decisions", [])
+            if task.get("status", {}).get("state") == "completed" and decisions:
+                for selection in decisions[-1].get("evidence", []):
+                    observation = observations[selection["observation_id"]]
+                    require(
+                        observation["id"] in task["answer"]["citation_ids"],
+                        "selected evidence was not published",
+                    )
+                    if selection.get("message_id"):
+                        require(
+                            selection["message_id"]
+                            in {
+                                m["message_id"] for m in observation["content"].get("messages", [])
+                            },
+                            "selected message is not in cited context",
+                        )
+                        selected.add(source_ids[selection["message_id"]])
+                    else:
+                        selected.update(ids_for(observation))
         groups = reference["minimal_evidence_sets"]
         rows.append(
             {
@@ -456,6 +482,10 @@ def audit_report(run, dataset):
                 "read_message_ids": sorted(read),
                 "observed_image_ids": sorted(observed_images),
                 "cited_evidence_ids": sorted(cited),
+                "selected_evidence_ids": sorted(selected) if selected is not None else None,
+                "draft_set_selected": any(set(g) <= selected for g in groups)
+                if groups and selected is not None
+                else None,
                 "draft_minimal_sets": groups,
                 "draft_set_observed": any(set(g) <= read | observed_images for g in groups)
                 if groups
@@ -497,11 +527,13 @@ def write_audit_markdown(audit, path):
                 "",
                 "已读消息：" + json.dumps(row["read_message_ids"], ensure_ascii=False),
                 "原图观察：" + json.dumps(row["observed_image_ids"], ensure_ascii=False),
-                "实际引用证据：" + json.dumps(row["cited_evidence_ids"], ensure_ascii=False),
+                "引用容器所含证据：" + json.dumps(row["cited_evidence_ids"], ensure_ascii=False),
+                "实际选择展示：" + json.dumps(row["selected_evidence_ids"], ensure_ascii=False),
                 "",
                 "草稿最小集合：" + json.dumps(row["draft_minimal_sets"], ensure_ascii=False),
                 f"草稿集合已观察：{row['draft_set_observed']}；已引用：{row['draft_set_cited']}。",
                 "",
+                f"草稿集合已选中展示：{row['draft_set_selected']}。",
                 "人工语义复核：待完成。",
                 "",
             ]
@@ -520,6 +552,7 @@ def main():
         "--model-manifest", type=Path, default=Path("docs/evidence/real-model/model-manifest.json")
     )
     runner.add_argument("--output", type=Path, required=True)
+    runner.add_argument("--application-baseline", default=BASELINE)
     auditor = commands.add_parser("audit")
     auditor.add_argument("--run", type=Path, required=True)
     auditor.add_argument("--dataset", type=Path, default=Path("evaluation/dataset-v1"))
@@ -541,21 +574,23 @@ def main():
     )
     require(args.database_url, "LUME_TEST_DATABASE_URL required")
     require(
-        not subprocess.check_output(["git", "diff", BASELINE, "--", "backend/src/lume"], text=True),
+        not subprocess.check_output(
+            ["git", "diff", args.application_baseline, "--", "backend/src/lume"], text=True
+        ),
         "application behavior differs from frozen pilot baseline",
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("x"):
         pass
     report = {
-        "date": "2026-11-03",
+        "date": datetime.now(UTC).date().isoformat(),
         "started_at": datetime.now(UTC).isoformat(),
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "source_dirty": bool(
             subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
         ),
         "script_sha256": digest(Path(__file__)),
-        "application_baseline": BASELINE,
+        "application_baseline": args.application_baseline,
         "dataset_manifest_sha256": digest(args.dataset / "manifest.json"),
         "platform": {
             "system": platform.system(),
