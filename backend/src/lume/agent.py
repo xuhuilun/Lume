@@ -5,7 +5,7 @@ from datetime import timedelta
 from pydantic import ValidationError
 from sqlalchemy import and_, or_, select
 
-from .evidence import INSUFFICIENT_TEXT, render_evidence
+from .evidence import INSUFFICIENT_TEXT, render_evidence, selected_sources
 from .knowledge import current_message, read_context, search
 from .leases import maintain_lease
 from .models import (
@@ -21,6 +21,7 @@ from .models import (
 )
 from .schemas import AgentAction
 from .security import DomainError, check_dependencies, dependency_union
+from .sufficiency import CONTRACT, review_binding, scope_constraints, validate_assessment
 
 TERMINAL = {"completed", "insufficient", "limited", "failed", "cancelled"}
 
@@ -58,7 +59,7 @@ class Runner:
             task = session.get(Task, task_id, with_for_update=True)
             self.guard(task, epoch)
             check_dependencies(session, task.owner_id, [])
-            if kind in {"model", "vision", "embedding"}:
+            if kind in {"model", "vision", "embedding", "support_review"}:
                 if task.model_calls >= task.config["max_model_calls"]:
                     raise BudgetEnded
                 task.model_calls += 1
@@ -224,18 +225,68 @@ class Runner:
             task = session.get(Task, task_id, with_for_update=True)
             self.guard(task, epoch)
             check_dependencies(session, task.owner_id, dependencies)
-            session.add(
-                Observation(task_id=task_id, kind=kind, content=content, dependencies=dependencies)
+            observation = Observation(
+                task_id=task_id, kind=kind, content=content, dependencies=dependencies
             )
+            session.add(observation)
             session.add(TaskEvent(task_id=task_id, kind=f"observed:{kind}"))
+            session.flush()
+            return observation.id
 
-    def publish(self, task_id, epoch, action, dependencies):
+    async def review_answer(self, task_id, epoch, action):
+        task, _, _, dependencies = self.inputs(task_id, epoch)
+        with self.sessions() as session:
+            observations = {
+                s.observation_id: session.get(Observation, s.observation_id)
+                for s in action.evidence
+            }
+            # Validate original selection and answer length before spending a model attempt.
+            render_evidence(task_id, action.evidence, observations)
+            sources = selected_sources(task_id, action.evidence, observations)
+        if task.config.get("require_image") and not any(
+            s["kind"] == "image_observation" for s in sources
+        ):
+            raise DomainError("IMAGE_EVIDENCE_REQUIRED", "本任务需要实际原图观察引用")
+        attempt = self.reserve(task_id, epoch, "support_review")
+        self.inputs(task_id, epoch)  # Reauthorize immediately before the extra model input.
+        try:
+            raw = await self.provider.assess_support(
+                task.question, sources, require_image=task.config.get("require_image", False)
+            )
+        except ValueError:
+            raw = None
+        self.mark_action(attempt)
+        task, _, _, dependencies = self.inputs(task_id, epoch)
+        assessment, issues, accepted = validate_assessment(raw, sources, task.question)
+        review_id = self.save_observation(
+            task_id,
+            epoch,
+            "support_review",
+            {
+                "binding": review_binding(
+                    task.question, task.config.get("require_image", False), sources
+                ),
+                "contract": CONTRACT,
+                "assessment": assessment,
+                "scope_constraints": scope_constraints(task.question, sources),
+                "valid": not issues,
+                "accepted": accepted,
+                "issues": issues,
+                "selections": [s.model_dump() for s in action.evidence],
+            },
+            dependencies,
+        )
+        if issues:
+            raise DomainError("SUPPORT_REVIEW_INVALID", "证据核查结构或引文无效")
+        return review_id, accepted
+
+    def publish(self, task_id, epoch, action, dependencies, review_id=None):
         with self.sessions.begin() as session:
             task = session.get(Task, task_id, with_for_update=True)
             self.guard(task, epoch)
             check_dependencies(session, task.owner_id, dependencies)
             answer_text, citation_ids = action.answer, action.citation_ids
-            if task.config.get("answer_contract") == "source-excerpts-v1":
+            if task.config.get("answer_contract") in {"source-excerpts-v1", CONTRACT}:
                 if action.insufficient:
                     answer_text, citation_ids = INSUFFICIENT_TEXT, []
                 else:
@@ -246,6 +297,28 @@ class Runner:
                     answer_text, citation_ids = render_evidence(
                         task_id, action.evidence, observations
                     )
+                    if task.config.get("answer_contract") == CONTRACT:
+                        review = session.get(Observation, review_id) if review_id else None
+                        if not review:
+                            raise DomainError("SUPPORT_REVIEW_REQUIRED", "正常答案需要独立证据核查")
+                        sources = selected_sources(task_id, action.evidence, observations)
+                        binding = review_binding(
+                            task.question, task.config.get("require_image", False), sources
+                        )
+                        if (
+                            review.task_id != task_id
+                            or review.kind != "support_review"
+                            or review.content.get("contract") != CONTRACT
+                            or review.content.get("binding") != binding
+                        ):
+                            raise DomainError(
+                                "INVALID_SUPPORT_REVIEW", "核查不属于本次问题及所选依据"
+                            )
+                        _, issues, accepted = validate_assessment(
+                            review.content.get("assessment"), sources, task.question
+                        )
+                        if issues or not accepted:
+                            raise DomainError("SUPPORT_NOT_ESTABLISHED", "独立核查未确认依据充分")
             image_cited = False
             for citation_id in citation_ids:
                 observation = session.get(Observation, citation_id)
@@ -289,7 +362,15 @@ class Runner:
                 continue  # The already spent model-call allowance is never refunded.
             task, observations, history, dependencies = self.inputs(task_id, epoch)
             if action.kind == "final":
-                self.publish(task_id, epoch, action, dependencies)
+                review_id = None
+                if not action.insufficient and task.config.get("answer_contract") == CONTRACT:
+                    review_id, accepted = await self.review_answer(task_id, epoch, action)
+                    if not accepted:
+                        action = AgentAction(
+                            kind="final", answer=INSUFFICIENT_TEXT, insufficient=True
+                        )
+                    task, _, _, dependencies = self.inputs(task_id, epoch)
+                self.publish(task_id, epoch, action, dependencies, review_id=review_id)
                 return
             tool_action = self.reserve(task_id, epoch, action.kind)
             if action.kind == "search":

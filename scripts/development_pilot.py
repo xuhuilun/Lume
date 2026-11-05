@@ -32,6 +32,7 @@ from lume.models import (
     RuntimeSetting,
     Task,
     TaskEvent,
+    now,
 )
 from lume.processing import Processor
 from lume.security import create_user
@@ -102,9 +103,25 @@ class PilotProvider(RecordingProvider):
         super().__init__(settings)
         self.report, self.output, self.calls = report, output, []
         self.phase, self.query_id = "processing", None
+        self.purpose = None
+
+    async def assess_support(self, question, sources, **requirements):
+        self.purpose = "support_review"
+        try:
+            return await super().assess_support(question, sources, **requirements)
+        finally:
+            self.purpose = None
 
     async def _post(self, endpoint, payload):
+        purpose = self.purpose or (
+            "embedding"
+            if endpoint == "/api/embed"
+            else "vision"
+            if any(m.get("images") for m in payload.get("messages", []))
+            else "planning"
+        )
         row = {
+            "purpose": purpose,
             "phase": self.phase,
             "query_id": self.query_id,
             "endpoint": endpoint,
@@ -171,6 +188,35 @@ async def model_metadata(url, frozen_manifest):
     return version.json()["version"], [
         {k: m[k] for k in ["name", "digest", "size", "details"]} for m in models
     ]
+
+
+async def drive_task(runner, sessions, task_id):
+    """Use normal claims after expired leases; never extend deadlines or steal live work."""
+    recoveries = []
+    for _ in range(4):  # Initial claim plus bounded recoveries/exhaustion under existing defaults.
+        await runner.run_once()
+        with sessions() as session:
+            task = session.get(Task, task_id)
+            if task.state in TERMINAL:
+                return recoveries
+            nonterminal = session.scalars(select(Task.id).where(~Task.state.in_(TERMINAL))).all()
+            require(nonterminal == [task_id], "unexpected pending task; recovery refused")
+            require(
+                task.state in {"running", "cancel_requested"}
+                and task.lease_until is not None
+                and task.lease_until <= now(),
+                "cannot recover a nonexpired execution lease",
+            )
+            recoveries.append(
+                {
+                    "observed_at": now().isoformat(),
+                    "epoch": task.epoch,
+                    "model_calls": task.model_calls,
+                    "deadline": task.deadline.isoformat(),
+                    "reason": "expired_lease_normal_reclaim",
+                }
+            )
+    raise ValueError("pilot recovery safety bound exceeded")
 
 
 async def execute(args, report):
@@ -325,7 +371,7 @@ async def execute(args, report):
                         response.raise_for_status()
                         task_id = response.json()["id"]
                         row["task_id"] = task_id
-                        await runner.run_once()
+                        row["recovery_observations"] = await drive_task(runner, sessions, task_id)
                         response = await client.get("/api/tasks/" + task_id)
                         response.raise_for_status()
                         row["status"] = response.json()
@@ -375,6 +421,12 @@ async def execute(args, report):
                         row["harness_error"] = type(error).__name__
                         if isinstance(error, httpx.HTTPStatusError):
                             row["http_status"] = error.response.status_code
+                    row["wall_elapsed_seconds"] = round(
+                        (
+                            datetime.now(UTC) - datetime.fromisoformat(row["started_at"])
+                        ).total_seconds(),
+                        3,
+                    )
                     row["elapsed_seconds"] = round(time.monotonic() - started, 3)
                     save(args.output, report)
                     print(
@@ -450,7 +502,10 @@ def audit_report(run, dataset):
             require(cid in observations, "answer citation outside task observations")
             cited.update(ids_for(observations[cid]))
         selected = None
-        if task.get("task_configuration", {}).get("answer_contract") == "source-excerpts-v1":
+        if task.get("task_configuration", {}).get("answer_contract") in {
+            "source-excerpts-v1",
+            "reviewed-excerpts-v1",
+        }:
             selected = set()
             decisions = task.get("model_decisions", [])
             if task.get("status", {}).get("state") == "completed" and decisions:
@@ -471,6 +526,17 @@ def audit_report(run, dataset):
                         selected.add(source_ids[selection["message_id"]])
                     else:
                         selected.update(ids_for(observation))
+        proposed = set()
+        support_reviews = [
+            o["content"] for o in observations.values() if o["kind"] == "support_review"
+        ]
+        for review in support_reviews:
+            for selection in review.get("selections", []):
+                observation = observations[selection["observation_id"]]
+                if selection.get("message_id"):
+                    proposed.add(source_ids[selection["message_id"]])
+                else:
+                    proposed.update(ids_for(observation))
         groups = reference["minimal_evidence_sets"]
         rows.append(
             {
@@ -486,6 +552,8 @@ def audit_report(run, dataset):
                 "draft_set_selected": any(set(g) <= selected for g in groups)
                 if groups and selected is not None
                 else None,
+                "support_reviews": support_reviews,
+                "proposed_evidence_ids": sorted(proposed),
                 "draft_minimal_sets": groups,
                 "draft_set_observed": any(set(g) <= read | observed_images for g in groups)
                 if groups
@@ -529,11 +597,30 @@ def write_audit_markdown(audit, path):
                 "原图观察：" + json.dumps(row["observed_image_ids"], ensure_ascii=False),
                 "引用容器所含证据：" + json.dumps(row["cited_evidence_ids"], ensure_ascii=False),
                 "实际选择展示：" + json.dumps(row["selected_evidence_ids"], ensure_ascii=False),
+                "送入核查的提议来源："
+                + json.dumps(row["proposed_evidence_ids"], ensure_ascii=False),
                 "",
                 "草稿最小集合：" + json.dumps(row["draft_minimal_sets"], ensure_ascii=False),
                 f"草稿集合已观察：{row['draft_set_observed']}；已引用：{row['draft_set_cited']}。",
                 "",
                 f"草稿集合已选中展示：{row['draft_set_selected']}。",
+                "发布前核查："
+                + json.dumps(
+                    [
+                        {
+                            k: review.get(k)
+                            for k in [
+                                "valid",
+                                "accepted",
+                                "issues",
+                                "scope_constraints",
+                                "assessment",
+                            ]
+                        }
+                        for review in row["support_reviews"]
+                    ],
+                    ensure_ascii=False,
+                ),
                 "人工语义复核：待完成。",
                 "",
             ]

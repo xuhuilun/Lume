@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.034" timestamp="2026-11-05T22:30:45.521122+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_sufficiency" name="test_review_generation_cannot_mark_requested_fact_as_inapplicable" time="0.002"><failure message="AssertionError: assert 'not_required' not in ['supported', 'not_required', 'unsupported', 'uncertain']">backend/tests/test_sufficiency.py:293: in test_review_generation_cannot_mark_requested_fact_as_inapplicable
+    await provider.assess_support("连接上限", selected_source())
+backend/src/lume/providers.py:347: in assess_support
+    data = await self._post(
+backend/tests/test_sufficiency.py:289: in response
+    assert "not_required" not in schema["$defs"][fact_name]["properties"]["verdict"]["enum"]
+E   AssertionError: assert 'not_required' not in ['supported', 'not_required', 'unsupported', 'uncertain']</failure></testcase></testsuite></testsuites>

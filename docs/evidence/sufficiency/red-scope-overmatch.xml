@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.036" timestamp="2026-11-05T22:52:45.359530+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_sufficiency" name="test_common_hyphenated_terms_are_not_environment_requirements[test-driven \u5f00\u53d1\u4e3a\u4ec0\u4e48\u5148\u5199\u6d4b\u8bd5\uff1f]" time="0.001"><failure message="AssertionError: assert ['test-driven'] == []&#10;  &#10;  Left contains one more item: 'test-driven'&#10;  Use -v to get more diff">backend/tests/test_sufficiency.py:337: in test_common_hyphenated_terms_are_not_environment_requirements
+    assert scope_constraints(question, selected_source())["required"] == []
+E   AssertionError: assert ['test-driven'] == []
+E     
+E     Left contains one more item: 'test-driven'
+E     Use -v to get more diff</failure></testcase><testcase classname="backend.tests.test_sufficiency" name="test_common_hyphenated_terms_are_not_environment_requirements[run-integration-tests \u5982\u4f55\u8fd0\u884c\uff1f]" time="0.000"><failure message="AssertionError: assert ['run-integration-tests'] == []&#10;  &#10;  Left contains one more item: 'run-integration-tests'&#10;  Use -v to get more diff">backend/tests/test_sufficiency.py:337: in test_common_hyphenated_terms_are_not_environment_requirements
+    assert scope_constraints(question, selected_source())["required"] == []
+E   AssertionError: assert ['run-integration-tests'] == []
+E     
+E     Left contains one more item: 'run-integration-tests'
+E     Use -v to get more diff</failure></testcase></testsuite></testsuites>

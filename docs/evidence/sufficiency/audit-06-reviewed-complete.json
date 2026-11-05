@@ -1,0 +1,1541 @@
+{
+  "scope": "offline development diagnostics against draft labels; no semantic quality scores",
+  "run_source_commit": "977f17363b3c9b7197d207a2fa40274e19863bdf",
+  "state_counts": {
+    "completed": 10,
+    "insufficient": 6
+  },
+  "rows": [
+    {
+      "query_id": "q-dev-001",
+      "question": "CACHE_TTL_17 在 atlas-staging-r3 最后验证的 TTL 和代次键分别是什么？",
+      "category": "fact",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-cache-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "cde1dfabe3b2a7289b46ad46f0dab2b8ab642146a49b5a13675871ee3ffea078",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "f98c29b4475e451593ebceb2daa73077",
+              "observation_id": "807939c4e1694cccbd47de29a1227d84"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "atlas-staging-r3"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-cache-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-cache-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-cache-m3\n合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-002",
+      "question": "梳理 CACHE_TTL_17 的起始现象、最初建议、修订依据及已验证结果，说明结论适用于哪里。",
+      "category": "context",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "3dd280e2a8bf5999c215fa53f75db9d9667ebb624481aa79099fc2574e47239a",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成事件 CACHE_TTL_17：atlas-staging-r3 的配置缓存仍返回旧条目，本地记录显示 TTL 为30秒。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "建议把 TTL 改为90秒来减少刷新；这是尚未执行、尚未验证的建议。",
+                  "source": "S2"
+                },
+                {
+                  "quote": "核查发现旧条目源于缓存代次键未同步。修订方案是切换 generation_key=g17，再把 TTL 设为73秒，不能仅延长 TTL。",
+                  "source": "S3"
+                },
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "3453a072ca6a4bd997fc53b3b281b3b2",
+              "observation_id": "cae9ede866f4489b8ec701cbd635aff9"
+            },
+            {
+              "message_id": "0329e1bb7b01483a8bbbc4a904685d17",
+              "observation_id": "cae9ede866f4489b8ec701cbd635aff9"
+            },
+            {
+              "message_id": "5f6790cfddb14b0bbe96342688a19189",
+              "observation_id": "cae9ede866f4489b8ec701cbd635aff9"
+            },
+            {
+              "message_id": "f98c29b4475e451593ebceb2daa73077",
+              "observation_id": "cae9ede866f4489b8ec701cbd635aff9"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-cache-m0",
+          "d-cache-m1",
+          "d-cache-m2",
+          "d-cache-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-cache-m0\n合成事件 CACHE_TTL_17：atlas-staging-r3 的配置缓存仍返回旧条目，本地记录显示 TTL 为30秒。\n\n2. 消息 d-cache-m1\n建议把 TTL 改为90秒来减少刷新；这是尚未执行、尚未验证的建议。\n\n3. 消息 d-cache-m2\n核查发现旧条目源于缓存代次键未同步。修订方案是切换 generation_key=g17，再把 TTL 设为73秒，不能仅延长 TTL。\n\n4. 消息 d-cache-m3\n合成验证单 DV-C01：atlas-staging-r3 已使用 generation_key=g17、TTL=73秒，指定旧条目用例不再复现；本结论仅覆盖该测试环境。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-003",
+      "question": "在 Atlas cache board 原图中，Canary 卡片的圆点是什么颜色，位于卡片左端还是右端？",
+      "category": "visual",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "observed_image_ids": [
+        "d-cache-panel"
+      ],
+      "cited_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4",
+        "d-cache-panel"
+      ],
+      "selected_evidence_ids": [
+        "d-cache-m4",
+        "d-cache-panel"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "501b1332fcc886e79041490ed3a46ead7aad5640510eeb95c87ece8f1ec06040",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "在 Atlas cache board 原图中，Canary 卡片的圆点是蓝色，位于卡片的左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "在 Atlas cache board 原图中，Canary 卡片的圆点是蓝色，位于卡片的左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "在 Atlas cache board 原图中，Canary 卡片的圆点是蓝色，位于卡片的左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": null,
+              "observation_id": "db4e46b9025c4e5c83b10e4e05683b58"
+            },
+            {
+              "message_id": "738f75accd09432694edc58fd8139cd8",
+              "observation_id": "4a6c798849d94299b80f6f548458e10c"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-cache-m4",
+        "d-cache-panel"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-cache-panel"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 图像观察（模型识别结果，需结合原图核对）\n在 Atlas cache board 原图中，Canary 卡片的圆点是蓝色，位于卡片的左端。\n\n2. 消息 d-cache-m4\nAtlas cache board 是本事件的合成观察面板。请核查图中 Canary 卡片圆点；文字消息不描述其颜色或位置。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-004",
+      "question": "atlas-staging-r3 单实例支持的最大并发请求数是多少？",
+      "category": "unanswerable",
+      "state": "insufficient",
+      "draft_expected_state": "insufficient",
+      "read_message_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": null,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "4e04353b21a79ba636fe67646b29ef9c666163051c6aca73966ba85994fec36b",
+          "accepted": false,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [],
+              "verdict": "unsupported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "status": {
+              "quotes": [],
+              "verdict": "not_required"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "f98c29b4475e451593ebceb2daa73077",
+              "observation_id": "d6281f2814ce4a839d9ca0e222c981d6"
+            },
+            {
+              "message_id": "5f6790cfddb14b0bbe96342688a19189",
+              "observation_id": "d6281f2814ce4a839d9ca0e222c981d6"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "atlas-staging-r3"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-cache-m2",
+        "d-cache-m3"
+      ],
+      "draft_minimal_sets": [],
+      "draft_set_observed": null,
+      "draft_set_cited": null,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-005",
+      "question": "在 harbor-integration-r4，UPLOAD_PART_06 最终验证了多大分片，摘要字段有什么要求？",
+      "category": "fact",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-upload-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "99bc49b095a517e0fe1194ab7dd4d64150a224f0b8cba02f690961929c523f18",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "982695a6bd8043a3bd11b8f55389ee24",
+              "observation_id": "6d8081e0c0844622a901a5e60a7eca37"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "harbor-integration-r4"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-upload-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-upload-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-upload-m3\n合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-006",
+      "question": "UPLOAD_PART_06 为什么不能只沿用最初的扩大片建议？请串起故障、建议、边界修订及验证范围。",
+      "category": "context",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "d6369b88e197b21ae500c92aa3884c5ba26af18df0844c691a870340b9407c93",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "边界用例要求当前链路采用6 MiB分片，并携带 part_digest。问题修订为同时调整分片尺寸和校验字段，不是只扩大分片。",
+                  "source": "S3"
+                },
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "边界用例要求当前链路采用6 MiB分片，并携带 part_digest。问题修订为同时调整分片尺寸和校验字段，不是只扩大分片。",
+                  "source": "S3"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "边界用例要求当前链路采用6 MiB分片，并携带 part_digest。问题修订为同时调整分片尺寸和校验字段，不是只扩大分片。",
+                  "source": "S3"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "572b709b42454147b3590b6d0c3dbb93",
+              "observation_id": "01c50a8e7ee745f8a209a297f69dfdb6"
+            },
+            {
+              "message_id": "469f5f7447d9419592ded5c2ce229b64",
+              "observation_id": "01c50a8e7ee745f8a209a297f69dfdb6"
+            },
+            {
+              "message_id": "0754000801d243bdad09a8db447d3564",
+              "observation_id": "01c50a8e7ee745f8a209a297f69dfdb6"
+            },
+            {
+              "message_id": "982695a6bd8043a3bd11b8f55389ee24",
+              "observation_id": "01c50a8e7ee745f8a209a297f69dfdb6"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-upload-m0",
+          "d-upload-m1",
+          "d-upload-m2",
+          "d-upload-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-upload-m0\n合成事件 UPLOAD_PART_06：harbor-integration-r4 的分片合并校验失败，故障样例使用4 MiB分片。\n\n2. 消息 d-upload-m1\n有人建议统一改成8 MiB分片；该建议尚未通过网关边界用例。\n\n3. 消息 d-upload-m2\n边界用例要求当前链路采用6 MiB分片，并携带 part_digest。问题修订为同时调整分片尺寸和校验字段，不是只扩大分片。\n\n4. 消息 d-upload-m3\n合成验证单 DV-U02：harbor-integration-r4 使用 part_size=6 MiB、part_digest=required，合并后摘要与源文件相同；未测试生产环境。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-007",
+      "question": "请看 Harbor upload board 的 Upload 卡片：圆点为哪种颜色，在卡片内靠左还是靠右？",
+      "category": "visual",
+      "state": "insufficient",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "observed_image_ids": [
+        "d-upload-panel"
+      ],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": false,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "b76639071f248b0b7d59fd20665b86aa6b788183de9d1c67112f92cc1cec2ecf",
+          "accepted": false,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [],
+              "verdict": "unsupported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "status": {
+              "quotes": [],
+              "verdict": "not_required"
+            }
+          },
+          "selections": [
+            {
+              "message_id": null,
+              "observation_id": "94265fbc39d94dcf941e5880e24f2f33"
+            },
+            {
+              "message_id": "9ee05c386c794a37a4a414e1f24a9b79",
+              "observation_id": "6c8ae675dc184b6782b3582a93ea1218"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-upload-m4",
+        "d-upload-panel"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-upload-panel"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": false,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-008",
+      "question": "生产上传网关允许的单文件最大容量是多少 GiB？",
+      "category": "unanswerable",
+      "state": "insufficient",
+      "draft_expected_state": "insufficient",
+      "read_message_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3",
+        "d-upload-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": null,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "69bb435ac127cd6cfc1543b0925dca6185d973456d4870cbba0dd3fa90d33350",
+          "accepted": false,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [],
+              "verdict": "unsupported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "status": {
+              "quotes": [],
+              "verdict": "not_required"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "982695a6bd8043a3bd11b8f55389ee24",
+              "observation_id": "cc661f3e34844444a7a09375f37d6304"
+            },
+            {
+              "message_id": "469f5f7447d9419592ded5c2ce229b64",
+              "observation_id": "cc661f3e34844444a7a09375f37d6304"
+            },
+            {
+              "message_id": "0754000801d243bdad09a8db447d3564",
+              "observation_id": "cc661f3e34844444a7a09375f37d6304"
+            },
+            {
+              "message_id": "572b709b42454147b3590b6d0c3dbb93",
+              "observation_id": "cc661f3e34844444a7a09375f37d6304"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "draft_minimal_sets": [],
+      "draft_set_observed": null,
+      "draft_set_cited": null,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-009",
+      "question": "QUEUE_RETRY_23 在 cedar-qa-r6 通过验证的初始退避时间和最大尝试次数是多少？前提是什么？",
+      "category": "fact",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "a72a6a8f805be9460e286c0719ee5eb57aa956765de0ab9f2dca63444985972b",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "7e8549655e394c4da5c812768ca28c85",
+              "observation_id": "b2d4a15b7b2648baab8d9ff34fc2f417"
+            },
+            {
+              "message_id": "9016855385af43afa7dc3230a9b8e407",
+              "observation_id": "b2d4a15b7b2648baab8d9ff34fc2f417"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "cedar-qa-r6"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-backoff-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-backoff-m3\n合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。\n\n2. 消息 d-backoff-m2\n修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-010",
+      "question": "请说明 QUEUE_RETRY_23 从重复消费到修订验证的过程，区分未执行建议与需要满足的前提。",
+      "category": "context",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "abefaf10d83ea45b62b055a958ac46e83526a12a61403b274eb9f6a85fbf19ad",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成事件 QUEUE_RETRY_23：cedar-qa-r6 的任务在重试时被重复消费；记录中缺少幂等键。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "最初建议固定等待2秒后无限重试。该建议未执行，不是已通过方案。",
+                  "source": "S2"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S3"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S3"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成事件 QUEUE_RETRY_23：cedar-qa-r6 的任务在重试时被重复消费；记录中缺少幂等键。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S4"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "最初建议固定等待2秒后无限重试。该建议未执行，不是已通过方案。",
+                  "source": "S2"
+                },
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S3"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "ea9cf227a025426e895f05d1c843a2f5",
+              "observation_id": "d212ffdfd8754fa5a59fd16af1507949"
+            },
+            {
+              "message_id": "64943826232c44869d0d6c1b1db39025",
+              "observation_id": "d212ffdfd8754fa5a59fd16af1507949"
+            },
+            {
+              "message_id": "9016855385af43afa7dc3230a9b8e407",
+              "observation_id": "d212ffdfd8754fa5a59fd16af1507949"
+            },
+            {
+              "message_id": "7e8549655e394c4da5c812768ca28c85",
+              "observation_id": "d212ffdfd8754fa5a59fd16af1507949"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-backoff-m0",
+          "d-backoff-m1",
+          "d-backoff-m2",
+          "d-backoff-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-backoff-m0\n合成事件 QUEUE_RETRY_23：cedar-qa-r6 的任务在重试时被重复消费；记录中缺少幂等键。\n\n2. 消息 d-backoff-m1\n最初建议固定等待2秒后无限重试。该建议未执行，不是已通过方案。\n\n3. 消息 d-backoff-m2\n修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。\n\n4. 消息 d-backoff-m3\n合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-011",
+      "question": "Cedar retry board 里 Worker 卡片的圆点是什么颜色，位于卡片的哪一端？",
+      "category": "visual",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "observed_image_ids": [
+        "d-backoff-panel"
+      ],
+      "cited_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4",
+        "d-backoff-panel"
+      ],
+      "selected_evidence_ids": [
+        "d-backoff-m4",
+        "d-backoff-panel"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "9c48cc313f3453955becf10a14daf4ad5781dabb8f688f99ea937b8e4eaa6fa1",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "在Cedar retry board的Worker卡片中，圆点是紫色的，位于卡片的左侧。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "在Cedar retry board的Worker卡片中，圆点是紫色的，位于卡片的左侧。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "在Cedar retry board的Worker卡片中，圆点是紫色的，位于卡片的左侧。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": null,
+              "observation_id": "c67bedc7a8604eaea98269c1a302d158"
+            },
+            {
+              "message_id": "499bc55451144e2db4fc93503e9736d2",
+              "observation_id": "534d6c051edf42f7a3d74728e174f413"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-backoff-m4",
+        "d-backoff-panel"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-backoff-panel"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 图像观察（模型识别结果，需结合原图核对）\n在Cedar retry board的Worker卡片中，圆点是紫色的，位于卡片的左侧。\n\n2. 消息 d-backoff-m4\nCedar retry board 是合成面板，Worker 卡片的圆点需从附件原图核查，正文没有颜色说明。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-012",
+      "question": "cedar-prod 的重试初始等待时间已经配置成多少秒？",
+      "category": "unanswerable",
+      "state": "insufficient",
+      "draft_expected_state": "insufficient",
+      "read_message_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": null,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "a00889bdb93b00884da310ef9067655144ed5736dcb344abcda95b22edd81f21",
+          "accepted": false,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "修订采用指数退避，base_delay=3秒、max_attempts=4，并要求 idempotency_key；缺少幂等键时不能套用该结论。",
+                  "source": "S1"
+                },
+                {
+                  "quote": "合成验证单 DV-Q03：cedar-qa-r6 在 idempotency_key 开启条件下，base_delay=3秒、max_attempts=4，重复投递样例只执行一次业务动作。",
+                  "source": "S2"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "9016855385af43afa7dc3230a9b8e407",
+              "observation_id": "391b2ecc2f7a422eb7bdd13c0b984028"
+            },
+            {
+              "message_id": "7e8549655e394c4da5c812768ca28c85",
+              "observation_id": "391b2ecc2f7a422eb7bdd13c0b984028"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [
+              "cedar-prod"
+            ],
+            "required": [
+              "cedar-prod"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "draft_minimal_sets": [],
+      "draft_set_observed": null,
+      "draft_set_cited": null,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-013",
+      "question": "CFG_ROLLOUT_31 在 maple-sandbox-r2 最后确认的发布比例、配置版本和开关是什么？",
+      "category": "fact",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3",
+        "d-config-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3",
+        "d-config-m4"
+      ],
+      "selected_evidence_ids": [
+        "d-config-m3"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "4b182fafddb3b6c455a72aa2b0f7a730d72cd9a97b3063caccd1f44cd35514ce",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "9240375f4d1749ad96c5ea0806f3fbbb",
+              "observation_id": "23ce087a03244232840d83d9d1745bad"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "maple-sandbox-r2"
+            ]
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-config-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-config-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 消息 d-config-m3\n合成验证单 DV-F04：maple-sandbox-r2 使用 cfg_rev=27、rollout_ratio=15%、cfg_gate=true，指定样例均读取修订快照；只涉及合成租户。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-014",
+      "question": "CFG_ROLLOUT_31 最初为什么要排查快照？请连同早期建议、最终修订及验证范围一起回答。",
+      "category": "context",
+      "state": "insufficient",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3",
+        "d-config-m4"
+      ],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": false,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "a41f202cccd0d0f78143b614c075bbab069723859c9e3cfb4d2c68c6050e8038",
+          "accepted": false,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [],
+              "verdict": "unsupported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "status": {
+              "quotes": [],
+              "verdict": "unsupported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": "d5ddf429dc634fadb75174db96595475",
+              "observation_id": "d0613a4622d741ccae07d21e3b6a14eb"
+            },
+            {
+              "message_id": "631190039118471db02050de9fd64a0b",
+              "observation_id": "d0613a4622d741ccae07d21e3b6a14eb"
+            },
+            {
+              "message_id": "7b92194ce36c49139f93c4f26d7108cf",
+              "observation_id": "d0613a4622d741ccae07d21e3b6a14eb"
+            },
+            {
+              "message_id": "9240375f4d1749ad96c5ea0806f3fbbb",
+              "observation_id": "d0613a4622d741ccae07d21e3b6a14eb"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-config-m0",
+          "d-config-m1",
+          "d-config-m2",
+          "d-config-m3"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": false,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-015",
+      "question": "Maple rollout board 的 Beta 卡片圆点是什么颜色，位于左端还是右端？",
+      "category": "visual",
+      "state": "completed",
+      "draft_expected_state": "completed",
+      "read_message_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3",
+        "d-config-m4"
+      ],
+      "observed_image_ids": [
+        "d-config-panel"
+      ],
+      "cited_evidence_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3",
+        "d-config-m4",
+        "d-config-panel"
+      ],
+      "selected_evidence_ids": [
+        "d-config-m4",
+        "d-config-panel"
+      ],
+      "draft_set_selected": true,
+      "support_reviews": [
+        {
+          "valid": true,
+          "issues": [],
+          "binding": "bb0048a6fdd16d7b803a7b62239e40a5b6a13dffc43b2d5b740d6464a302277e",
+          "accepted": true,
+          "contract": "reviewed-excerpts-v1",
+          "assessment": {
+            "fact": {
+              "quotes": [
+                {
+                  "quote": "Maple rollout board 的 Beta 卡片圆点是蓝色，位于左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "unit": {
+              "quotes": [],
+              "verdict": "not_required"
+            },
+            "scope": {
+              "quotes": [
+                {
+                  "quote": "Maple rollout board 的 Beta 卡片圆点是蓝色，位于左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            },
+            "status": {
+              "quotes": [
+                {
+                  "quote": "Maple rollout board 的 Beta 卡片圆点是蓝色，位于左端。",
+                  "source": "S1"
+                }
+              ],
+              "verdict": "supported"
+            }
+          },
+          "selections": [
+            {
+              "message_id": null,
+              "observation_id": "199b804cb2cc4bd59f3a63fa18af0926"
+            },
+            {
+              "message_id": "7e8493705d9045b7972337fea824baf2",
+              "observation_id": "e13d189c52b24456ae62ae95cb3f98eb"
+            }
+          ],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "proposed_evidence_ids": [
+        "d-config-m4",
+        "d-config-panel"
+      ],
+      "draft_minimal_sets": [
+        [
+          "d-config-panel"
+        ]
+      ],
+      "draft_set_observed": true,
+      "draft_set_cited": true,
+      "answer": "已读取的来源依据：\n\n1. 图像观察（模型识别结果，需结合原图核对）\nMaple rollout board 的 Beta 卡片圆点是蓝色，位于左端。\n\n2. 消息 d-config-m4\nMaple rollout board 为合成发布面板，Beta 卡片的圆点由原图表达，不在文字中标注。",
+      "human_semantic_review": "pending"
+    },
+    {
+      "query_id": "q-dev-016",
+      "question": "在本次允许读取的范围中，maple-sandbox-r2 已验证的 cfg_rev 是多少？",
+      "category": "unanswerable",
+      "state": "insufficient",
+      "draft_expected_state": "insufficient",
+      "read_message_ids": [],
+      "observed_image_ids": [],
+      "cited_evidence_ids": [],
+      "selected_evidence_ids": [],
+      "draft_set_selected": null,
+      "support_reviews": [],
+      "proposed_evidence_ids": [],
+      "draft_minimal_sets": [],
+      "draft_set_observed": null,
+      "draft_set_cited": null,
+      "answer": "当前已读资料不足以支持本次问题，无法给出可靠结论。",
+      "human_semantic_review": "pending"
+    }
+  ],
+  "human_reviewed_queries": 0,
+  "quality_scores_computed": false
+}
