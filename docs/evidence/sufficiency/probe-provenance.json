@@ -1,0 +1,34 @@
+{
+  "scope": "development diagnostic replays before immutable application commit; no formal quality scores",
+  "source_base": "5b83fa4d144a4ccb7e136594c2dc82fcd2d7d22a",
+  "working_tree_uncommitted": true,
+  "explanation": "Actual requests contain their full generation schemas and source text. Do not attribute these three probes to the later immutable application commit.",
+  "probes": [
+    {
+      "file": "probe-01.json",
+      "sha256": "c8d02b4bc8efa5635373b4149c961a2ab33863ea6ffd8bb30292d82b66ccf25d",
+      "rows": 8,
+      "accepted": 3,
+      "valid_rejections": 0,
+      "invalid_reviews": 5
+    },
+    {
+      "file": "probe-02.json",
+      "sha256": "7f538eddf818071aad2ae125d7ade5183fe75f6789916d19755f2c1200a2cad7",
+      "rows": 8,
+      "accepted": 4,
+      "valid_rejections": 3,
+      "invalid_reviews": 1
+    },
+    {
+      "file": "probe-03.json",
+      "sha256": "5cd89334a639a6b8877aad6f6e566515102a9dd6133b053c279d4c87b856e465",
+      "rows": 8,
+      "accepted": 4,
+      "valid_rejections": 4,
+      "invalid_reviews": 0
+    }
+  ],
+  "heldout_executed": 0,
+  "human_reviewed": 0
+}

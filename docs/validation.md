@@ -60,3 +60,8 @@ macOS arm64；Python 3.12.13；PostgreSQL 17.11；数据库pgvector扩展0.8.7�
 新增多跳回复、明确标识双路约束、完整原文选择、核图必选字段及墙钟跳变重现后，后端全套82项通过，无跳过；Ruff和27个Python文件格式检查通过。程序及结构检查与开发题输出严格分开。附加自动只读代码复查未发现新增权限/依赖/边界缺陷，不构成语义或人工评审。
 
 run-02保留4道IMAGE_EVIDENCE_REQUIRED失败；run-03保留第14题中断，最后2题未开始；同应用重跑run-04完整16题，15 completed/1 insufficient，仍存在3道资料不足误判及2道视觉位置错误（其中1道还漏颜色）。标签人审0、保留题未执行、未计算正式质量分数，未生成PDF。新协议浏览器、真实QQ、质量/负载仍不因此完成。详细条件、失败及复现见[evidence-backed-answer-validation.md](evidence-backed-answer-validation.md)。
+
+
+## 2026-11-05充分性核查
+
+新增独立核查、精确原文片段、显式环境兜底及执行器恢复检查，全套115项通过，无跳过；Ruff和29个Python文件格式检查通过。完整run-06为10 completed / 6 insufficient，15次核查中10接受/5拒绝，另1题直接不足。3道原始不足误判被阻止，但1道材料齐全过程题仍误拒，1道视觉位置错误仍发布；这不是正式正确率。run-05中断及三次未冻结开发重放均保留。人审0、保留题未运行，无PDF；详见[evidence-sufficiency-validation.md](evidence-sufficiency-validation.md)。
