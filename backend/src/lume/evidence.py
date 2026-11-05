@@ -5,10 +5,10 @@ from .security import DomainError
 INSUFFICIENT_TEXT = "当前已读资料不足以支持本次问题，无法给出可靠结论。"
 
 
-def render_evidence(task_id, selections, observations):
+def selected_sources(task_id, selections, observations):
     if not selections:
         raise DomainError("EVIDENCE_REQUIRED", "正常答案必须选择已读原文依据")
-    blocks, citations, seen = [], [], set()
+    sources, seen = [], set()
     for selection in selections:
         key = (selection.observation_id, selection.message_id)
         if key in seen:
@@ -41,9 +41,24 @@ def render_evidence(task_id, selections, observations):
             heading = "图像观察（模型识别结果，需结合原图核对）"
         else:
             raise DomainError("INVALID_EVIDENCE", "只能选择具体已读消息或实际图像观察")
-        blocks.append(f"{len(blocks) + 1}. {heading}\n{text}")
-        if observation.id not in citations:
-            citations.append(observation.id)
+        sources.append(
+            {
+                "source": f"S{len(sources) + 1}",
+                "observation_id": observation.id,
+                "message_id": selection.message_id,
+                "kind": observation.kind,
+                "heading": heading,
+                "text": text,
+                "sent_at": message.get("sent_at") if selection.message_id else None,
+            }
+        )
+    return sources
+
+
+def render_evidence(task_id, selections, observations):
+    sources = selected_sources(task_id, selections, observations)
+    citations = list(dict.fromkeys(s["observation_id"] for s in sources))
+    blocks = [f"{i}. {s['heading']}\n{s['text']}" for i, s in enumerate(sources, 1)]
     answer = "已读取的来源依据：\n\n" + "\n\n".join(blocks)
     if len(answer) > 12_000:
         raise DomainError("EVIDENCE_TOO_LARGE", "所选原文超出答案长度上限，请减少选择")

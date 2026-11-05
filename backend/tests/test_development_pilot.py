@@ -180,3 +180,27 @@ def test_excerpt_audit_distinguishes_context_container_from_selected_message(tmp
     assert row["draft_set_cited"] is True
     assert row["selected_evidence_ids"] == ["s1"]
     assert row["draft_set_selected"] is False
+
+
+def test_review_observation_is_not_counted_as_cited_source(tmp_path):
+    run = fake_audit_input(tmp_path, "fact", [["s1"]], ["m1"])
+    task = run["tasks"][0]
+    task["task_configuration"] = {"answer_contract": "reviewed-excerpts-v1"}
+    task["status"]["state"] = "insufficient"
+    task["answer"] = {"text": "不足", "citation_ids": []}
+    task["observations"].append(
+        {
+            "id": "review",
+            "kind": "support_review",
+            "content": {
+                "valid": True,
+                "accepted": False,
+                "selections": [{"observation_id": "context", "message_id": "m1"}],
+            },
+        }
+    )
+    row = audit_report(run, tmp_path)["rows"][0]
+    assert row["proposed_evidence_ids"] == ["s1"]
+    assert row["selected_evidence_ids"] == []
+    assert row["cited_evidence_ids"] == []
+    assert row["support_reviews"][0]["accepted"] is False

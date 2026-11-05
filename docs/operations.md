@@ -61,3 +61,11 @@ read_context现返回window对象，含max_messages=12、max_hops=4、truncated�
 
 
 核图专用answer结构必含image_evidence，evidence容纳至多3项额外消息/图像选择；普通answer保持至多4项选择。两者均转换为内部选择后重新绑定持久来源，不能绕过require_image。v3开发运行的图像选择遗漏及失败保留，修正后的最终规则为Ollama v4 / Demo v2。
+
+## 充分性核查升级
+
+最终Ollama规则现为v5，Demo仍v2；answer_contract由服务端冻结为reviewed-excerpts-v1，客户端不能覆盖。已有Ollama安装停API/worker、执行reindex与worker --drain后重启。旧v4任务不会静默采用新核查；本轮实验使用隔离schema，不自动改原数据。
+
+support_review计入模型12次累计额度；额外调用可能增加耗时或触及原90秒期限，失败与limited不能统计为资料不足。合法核查拒绝为insufficient，坏结构或非原文引文为SUPPORT_REVIEW_INVALID/failed；缺少核查、跨任务/错配摘要、未通过核查均不能正常发布。核查观察不是citation来源。显式环境名采用精确匹配，未声明的别名对应关系可能导致保守拒绝。
+
+开发执行日志按purpose区分planning/embedding/vision/support_review；审阅另列提议来源、实际发布来源及四维核查，不能把核查调用增加视为质量提升。保留题未运行、人审0、正式质量与负载仍需后续执行。

@@ -256,7 +256,7 @@ async def test_ollama_contract_is_frozen_server_side(client, system):
         assert response.status_code == 202
         with system.sessions() as session:
             task = session.get(Task, response.json()["id"])
-            assert task.config["answer_contract"] == "source-excerpts-v1"
+            assert task.config["answer_contract"] == "reviewed-excerpts-v1"
         response = await api.post(
             "/api/tasks",
             json={"question": "资料", "space_ids": [system.a], "answer_contract": "legacy"},
