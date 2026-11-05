@@ -61,6 +61,32 @@ class TaskInput(Input):
     require_image: bool = False
 
 
+class EvidenceSelection(Input):
+    observation_id: str = Field(min_length=1, max_length=100)
+    message_id: str | None = Field(default=None, min_length=1, max_length=100)
+
+
+class EvidenceAnswer(Input):
+    kind: Literal["answer"]
+    evidence: list[EvidenceSelection] = Field(min_length=1, max_length=4)
+
+
+class ImageEvidenceAnswer(Input):
+    kind: Literal["answer"]
+    image_evidence: EvidenceSelection
+    evidence: list[EvidenceSelection] = Field(default_factory=list, max_length=3)
+
+    @model_validator(mode="after")
+    def image_has_no_message(self):
+        if self.image_evidence.message_id is not None:
+            raise ValueError("Image evidence must select an image observation")
+        return self
+
+
+class InsufficientAnswer(Input):
+    kind: Literal["insufficient"]
+
+
 class AgentAction(Input):
     kind: Literal["search", "read_context", "inspect_image", "final"]
     query: str | None = Field(default=None, max_length=2000)
@@ -68,6 +94,7 @@ class AgentAction(Input):
     answer: str | None = Field(default=None, max_length=12_000)
     citation_ids: list[str] = Field(default_factory=list, max_length=10)
     insufficient: bool = False
+    evidence: list[EvidenceSelection] = Field(default_factory=list, max_length=4)
 
     @model_validator(mode="after")
     def required_fields(self):

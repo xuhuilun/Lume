@@ -1,0 +1,15 @@
+{
+  "date_local": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "run_02": "No idle-sleep inhibition requested by this task",
+  "run_03": "No idle-sleep inhibition requested by this task; 592.814 second wall/monotonic discrepancy in last task",
+  "run_04": "/usr/bin/caffeinate -i wraps development_pilot process, released when that process exits",
+  "ollama": {
+    "host": "127.0.0.1:11435",
+    "parallel": 1,
+    "max_loaded_models": 1,
+    "context_length": 4096
+  },
+  "application_changed_for_run_04": false,
+  "note": "Host protection differs; this is not a single-variable quality or performance comparison. Sleep/clock cause is inferred, not proven by OS event logs."
+}

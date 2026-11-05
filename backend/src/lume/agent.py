@@ -5,6 +5,7 @@ from datetime import timedelta
 from pydantic import ValidationError
 from sqlalchemy import and_, or_, select
 
+from .evidence import INSUFFICIENT_TEXT, render_evidence
 from .knowledge import current_message, read_context, search
 from .leases import maintain_lease
 from .models import (
@@ -233,8 +234,20 @@ class Runner:
             task = session.get(Task, task_id, with_for_update=True)
             self.guard(task, epoch)
             check_dependencies(session, task.owner_id, dependencies)
+            answer_text, citation_ids = action.answer, action.citation_ids
+            if task.config.get("answer_contract") == "source-excerpts-v1":
+                if action.insufficient:
+                    answer_text, citation_ids = INSUFFICIENT_TEXT, []
+                else:
+                    observations = {
+                        selection.observation_id: session.get(Observation, selection.observation_id)
+                        for selection in action.evidence
+                    }
+                    answer_text, citation_ids = render_evidence(
+                        task_id, action.evidence, observations
+                    )
             image_cited = False
-            for citation_id in action.citation_ids:
+            for citation_id in citation_ids:
                 observation = session.get(Observation, citation_id)
                 if (
                     not observation
@@ -245,15 +258,15 @@ class Runner:
                 image_cited |= observation.kind == "image_observation" and bool(
                     observation.content.get("semantic")
                 )
-            if not action.insufficient and not action.citation_ids:
+            if not action.insufficient and not citation_ids:
                 raise DomainError("INVALID_CITATION", "正常答案需要实际证据引用")
             if task.config.get("require_image") and not action.insufficient and not image_cited:
                 raise DomainError("IMAGE_EVIDENCE_REQUIRED", "本任务需要实际原图观察引用")
             session.add(
                 Answer(
                     task_id=task_id,
-                    text=action.answer,
-                    citation_ids=action.citation_ids,
+                    text=answer_text,
+                    citation_ids=citation_ids,
                     dependencies=dependencies,
                 )
             )

@@ -240,6 +240,9 @@ def create_app(settings=None, sessions=None):
             }
             config["rules_id"] = settings.rules_id
             config["require_image"] = body.require_image
+            config["answer_contract"] = (
+                "source-excerpts-v1" if settings.provider == "ollama" else "legacy"
+            )
             task = Task(
                 owner_id=actor.id,
                 question=body.question,

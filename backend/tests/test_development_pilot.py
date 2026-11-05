@@ -168,3 +168,15 @@ async def test_changed_model_digest_is_rejected_before_inference(tmp_path, monke
     )
     with pytest.raises(ValueError, match="frozen model weights mismatch"):
         await model_metadata("http://127.0.0.1:11435", tmp_path / "models.json")
+
+
+def test_excerpt_audit_distinguishes_context_container_from_selected_message(tmp_path):
+    run = fake_audit_input(tmp_path, "context", [["s1", "s2"]], ["m1", "m2"])
+    run["tasks"][0]["task_configuration"] = {"answer_contract": "source-excerpts-v1"}
+    run["tasks"][0]["model_decisions"] = [
+        {"kind": "final", "evidence": [{"observation_id": "context", "message_id": "m1"}]},
+    ]
+    row = audit_report(run, tmp_path)["rows"][0]
+    assert row["draft_set_cited"] is True
+    assert row["selected_evidence_ids"] == ["s1"]
+    assert row["draft_set_selected"] is False
