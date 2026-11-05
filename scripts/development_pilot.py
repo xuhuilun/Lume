@@ -32,6 +32,7 @@ from lume.models import (
     RuntimeSetting,
     Task,
     TaskEvent,
+    now,
 )
 from lume.processing import Processor
 from lume.security import create_user
@@ -189,6 +190,35 @@ async def model_metadata(url, frozen_manifest):
     ]
 
 
+async def drive_task(runner, sessions, task_id):
+    """Use normal claims after expired leases; never extend deadlines or steal live work."""
+    recoveries = []
+    for _ in range(4):  # Initial claim plus bounded recoveries/exhaustion under existing defaults.
+        await runner.run_once()
+        with sessions() as session:
+            task = session.get(Task, task_id)
+            if task.state in TERMINAL:
+                return recoveries
+            nonterminal = session.scalars(select(Task.id).where(~Task.state.in_(TERMINAL))).all()
+            require(nonterminal == [task_id], "unexpected pending task; recovery refused")
+            require(
+                task.state in {"running", "cancel_requested"}
+                and task.lease_until is not None
+                and task.lease_until <= now(),
+                "cannot recover a nonexpired execution lease",
+            )
+            recoveries.append(
+                {
+                    "observed_at": now().isoformat(),
+                    "epoch": task.epoch,
+                    "model_calls": task.model_calls,
+                    "deadline": task.deadline.isoformat(),
+                    "reason": "expired_lease_normal_reclaim",
+                }
+            )
+    raise ValueError("pilot recovery safety bound exceeded")
+
+
 async def execute(args, report):
     scenarios, queries = load_run_inputs(args.dataset)
     version, models = await model_metadata(args.ollama_url, args.model_manifest)
@@ -341,7 +371,7 @@ async def execute(args, report):
                         response.raise_for_status()
                         task_id = response.json()["id"]
                         row["task_id"] = task_id
-                        await runner.run_once()
+                        row["recovery_observations"] = await drive_task(runner, sessions, task_id)
                         response = await client.get("/api/tasks/" + task_id)
                         response.raise_for_status()
                         row["status"] = response.json()
@@ -391,6 +421,12 @@ async def execute(args, report):
                         row["harness_error"] = type(error).__name__
                         if isinstance(error, httpx.HTTPStatusError):
                             row["http_status"] = error.response.status_code
+                    row["wall_elapsed_seconds"] = round(
+                        (
+                            datetime.now(UTC) - datetime.fromisoformat(row["started_at"])
+                        ).total_seconds(),
+                        3,
+                    )
                     row["elapsed_seconds"] = round(time.monotonic() - started, 3)
                     save(args.output, report)
                     print(

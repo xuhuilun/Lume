@@ -204,3 +204,49 @@ def test_review_observation_is_not_counted_as_cited_source(tmp_path):
     assert row["selected_evidence_ids"] == []
     assert row["cited_evidence_ids"] == []
     assert row["support_reviews"][0]["accepted"] is False
+
+
+async def test_pilot_reclaims_only_expired_work_without_resetting_budget(
+    client, system, monkeypatch
+):
+    import asyncio
+    from datetime import timedelta
+
+    import lume.agent as agent
+    from lume.leases import maintain_lease
+    from lume.models import Task
+
+    import scripts.development_pilot as pilot
+
+    created = await client.post("/api/tasks", json={"question": "资料", "space_ids": [system.a]})
+    task_id = created.json()["id"]
+    clock = [agent.now()]
+    monkeypatch.setattr(agent, "now", lambda: clock[0])
+    monkeypatch.setattr(pilot, "now", lambda: clock[0])
+
+    class PausedProvider:
+        async def plan(self, *args, **kwargs):
+            clock[0] += timedelta(seconds=600)
+            await asyncio.Event().wait()
+
+    async def heartbeat(work, interval, renew):
+        return await maintain_lease(work, 0.01, renew)
+
+    monkeypatch.setattr(agent, "maintain_lease", heartbeat)
+    system.runner.provider = PausedProvider()
+    recoveries = await pilot.drive_task(system.runner, system.sessions, task_id)
+    assert len(recoveries) == 1
+    with system.sessions() as session:
+        task = session.get(Task, task_id)
+        assert task.state == "limited" and task.model_calls == 1
+        assert task.deadline.isoformat() == recoveries[0]["deadline"]
+
+
+async def test_pilot_refuses_to_reclaim_a_live_lease(client, system):
+    from scripts.development_pilot import drive_task
+
+    created = await client.post("/api/tasks", json={"question": "资料", "space_ids": [system.a]})
+    task_id = created.json()["id"]
+    assert system.runner.claim()[0] == task_id
+    with pytest.raises(ValueError, match="nonexpired"):
+        await drive_task(system.runner, system.sessions, task_id)
