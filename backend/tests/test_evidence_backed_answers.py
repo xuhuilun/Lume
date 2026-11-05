@@ -334,3 +334,42 @@ async def test_required_image_wire_selection_is_kept_with_additional_text(monkey
     del decision["image_evidence"]
     with pytest.raises(ValueError):
         await provider.plan("核对原图", [], [], require_image=True)
+
+
+async def test_wall_clock_jump_cancels_stale_work_and_fresh_claim_limits_task(
+    client, system, monkeypatch
+):
+    import asyncio
+    from datetime import timedelta
+
+    import lume.agent as agent
+    from lume.leases import maintain_lease
+
+    created = await client.post("/api/tasks", json={"question": "资料", "space_ids": [system.a]})
+    task_id = created.json()["id"]
+    clock = [agent.now()]
+    cancelled = asyncio.Event()
+    monkeypatch.setattr(agent, "now", lambda: clock[0])
+
+    class PausedProvider:
+        async def plan(self, *args, **kwargs):
+            clock[0] += timedelta(seconds=600)
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+
+    async def fast_heartbeat(coroutine, interval, renew):
+        return await maintain_lease(coroutine, 0.01, renew)
+
+    monkeypatch.setattr(agent, "maintain_lease", fast_heartbeat)
+    system.runner.provider = PausedProvider()
+    assert await system.runner.run_once()
+    assert cancelled.is_set()
+    with system.sessions() as session:
+        task = session.get(Task, task_id)
+        assert task.state == "running" and task.model_calls == 1
+    assert system.runner.claim() == (task_id, None)
+    with system.sessions() as session:
+        task = session.get(Task, task_id)
+        assert task.state == "limited" and task.model_calls == 1

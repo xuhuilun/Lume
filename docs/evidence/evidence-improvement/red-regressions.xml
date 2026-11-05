@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="3" time="0.310" timestamp="2026-11-04T23:54:33.264422+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_evidence_backed_answers" name="test_context_reaches_verification_beyond_the_first_reply" time="0.126"><failure message="AssertionError: assert {'incident', 'proposal'} == {'incident', ...', 'verified'}&#10;  &#10;  Extra items in the right set:&#10;  'verified'&#10;  Use -v to get more diff">client = &lt;httpx.AsyncClient object at 0x10c845bb0&gt;
+system = namespace(settings=Settings(database_url='postgresql+psycopg://lume@127.0.0.1:55439/lume', data_dir=PosixPath('/privat...FPYwM'}, processor=&lt;lume.processing.Processor object at 0x10c814aa0&gt;, runner=&lt;lume.agent.Runner object at 0x10c814e30&gt;)
+
+    async def test_context_reaches_verification_beyond_the_first_reply(client, system):
+        imported = await prepare(
+            client,
+            system,
+            [
+                packet("incident", "BUILD_RETRY_204 初始失败"),
+                packet("proposal", "建议延长重试，未执行", reply_to="incident"),
+                packet("verified", "已验证：使用幂等键，重放只执行一次", reply_to="proposal"),
+                packet("unrelated", "旧环境使用另一方案"),
+            ],
+        )
+        with system.sessions() as session:
+            content, dependencies = read_context(session, system.alice, imported[0]["id"], [system.a])
+&gt;       assert {m["source_id"] for m in content["messages"]} == {"incident", "proposal", "verified"}
+E       AssertionError: assert {'incident', 'proposal'} == {'incident', ...', 'verified'}
+E         
+E         Extra items in the right set:
+E         'verified'
+E         Use -v to get more diff
+
+backend/tests/test_evidence_backed_answers.py:23: AssertionError</failure></testcase><testcase classname="backend.tests.test_evidence_backed_answers" name="test_exact_technical_identifier_excludes_unrelated_candidates" time="0.079"><failure message="AssertionError: assert {'noise', 'target'} == {'target'}&#10;  &#10;  Extra items in the left set:&#10;  'noise'&#10;  Use -v to get more diff">client = &lt;httpx.AsyncClient object at 0x10c96ef60&gt;
+system = namespace(settings=Settings(database_url='postgresql+psycopg://lume@127.0.0.1:55439/lume', data_dir=PosixPath('/privat...7oYdA'}, processor=&lt;lume.processing.Processor object at 0x10c949790&gt;, runner=&lt;lume.agent.Runner object at 0x10c949ca0&gt;)
+
+    async def test_exact_technical_identifier_excludes_unrelated_candidates(client, system):
+        await prepare(
+            client,
+            system,
+            [
+                packet("noise", "其他模块的修订验证与重试建议"),
+                packet("target", "BUILD_RETRY_204 的修订验证记录"),
+            ],
+        )
+        content, _ = await search(
+            system.sessions,
+            system.settings,
+            system.provider,
+            system.alice,
+            "BUILD_RETRY_204 修订验证",
+            [system.a],
+        )
+&gt;       assert {c["source_id"] for c in content["candidates"]} == {"target"}
+E       AssertionError: assert {'noise', 'target'} == {'target'}
+E         
+E         Extra items in the left set:
+E         'noise'
+E         Use -v to get more diff
+
+backend/tests/test_evidence_backed_answers.py:44: AssertionError</failure></testcase><testcase classname="backend.tests.test_evidence_backed_answers" name="test_grounded_contract_rejects_unselected_freeform_numeric_answer" time="0.073"><failure message="Failed: DID NOT RAISE DomainError">client = &lt;httpx.AsyncClient object at 0x10ca372f0&gt;
+system = namespace(settings=Settings(database_url='postgresql+psycopg://lume@127.0.0.1:55439/lume', data_dir=PosixPath('/privat...Rdx4o'}, processor=&lt;lume.processing.Processor object at 0x10c949190&gt;, runner=&lt;lume.agent.Runner object at 0x10c948ce0&gt;)
+
+    async def test_grounded_contract_rejects_unselected_freeform_numeric_answer(client, system):
+        imported = await prepare(client, system, [packet(text="这是未执行建议，没有生产容量记录")])
+        created = await client.post(
+            "/api/tasks", json={"question": "生产容量是多少", "space_ids": [system.a]}
+        )
+        assert created.status_code == 202
+        task_id, epoch = system.runner.claim()
+        dependencies = [{"message_id": imported[0]["id"], "version": 1}]
+        with system.sessions.begin() as session:
+            task = session.get(Task, task_id)
+            task.config = {**task.config, "answer_contract": "source-excerpts-v1"}
+            observation = Observation(
+                task_id=task_id,
+                kind="message_context",
+                content={
+                    "messages": [
+                        {"message_id": imported[0]["id"], "text": "这是未执行建议，没有生产容量记录"}
+                    ]
+                },
+                dependencies=dependencies,
+            )
+            session.add(observation)
+            session.flush()
+&gt;       with pytest.raises(DomainError, match="EVIDENCE_REQUIRED"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE DomainError
+
+backend/tests/test_evidence_backed_answers.py:79: Failed</failure></testcase></testsuite></testsuites>

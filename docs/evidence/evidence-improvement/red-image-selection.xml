@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.032" timestamp="2026-11-05T00:11:25.998790+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_contracts" name="test_required_image_answer_has_a_required_actual_image_selection" time="0.000"><failure message="AssertionError: assert 'image_evidence' in ['kind', 'evidence']">backend/tests/test_contracts.py:244: in test_required_image_answer_has_a_required_actual_image_selection
+    assert "image_evidence" in answer["required"]
+E   AssertionError: assert 'image_evidence' in ['kind', 'evidence']</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,114 @@
+{
+  "scope": "artifact provenance, exact stored excerpt rendering, source scope and image binding only",
+  "runs": [
+    {
+      "file": "run-02-source-excerpts.json",
+      "source_commit": "982b20b4e9c5e30c1acdc54fa01efeb7944f5c3b",
+      "application_baseline": "982b20b4e9c5e30c1acdc54fa01efeb7944f5c3b",
+      "recorded_tasks": 16,
+      "complete_terminal_run": true,
+      "fatal_error": null,
+      "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+      "task_states": {
+        "completed": 11,
+        "failed": 4,
+        "insufficient": 1
+      },
+      "task_errors": {
+        "IMAGE_EVIDENCE_REQUIRED": 4
+      },
+      "calls": 99,
+      "call_states": {
+        "returned": 99
+      },
+      "calls_by_endpoint": {
+        "/api/embed": 40,
+        "/api/chat": 59
+      },
+      "calls_by_phase": {
+        "processing": 28,
+        "task": 71
+      },
+      "maximum_prompt_eval_count": 3810,
+      "scope_consistent_tasks": 16,
+      "published_normal_answers_equal_selected_stored_excerpts": 11,
+      "published_required_image_answers_with_actual_image_selection": 0,
+      "task_elapsed_seconds_sum": 245.435,
+      "maximum_task_elapsed_seconds": 23.287,
+      "schema_removed": true,
+      "executor_snapshot_digest_matches": true
+    },
+    {
+      "file": "run-03-required-image-slot.json",
+      "source_commit": "367dcdae3f741c18c00187747c90ba64961660a3",
+      "application_baseline": "367dcdae3f741c18c00187747c90ba64961660a3",
+      "recorded_tasks": 14,
+      "complete_terminal_run": false,
+      "fatal_error": "ValueError",
+      "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+      "task_states": {
+        "completed": 13,
+        "running": 1
+      },
+      "task_errors": {},
+      "calls": 90,
+      "call_states": {
+        "returned": 89,
+        "cancelled": 1
+      },
+      "calls_by_endpoint": {
+        "/api/embed": 38,
+        "/api/chat": 52
+      },
+      "calls_by_phase": {
+        "processing": 28,
+        "task": 62
+      },
+      "maximum_prompt_eval_count": 3846,
+      "scope_consistent_tasks": 14,
+      "published_normal_answers_equal_selected_stored_excerpts": 13,
+      "published_required_image_answers_with_actual_image_selection": 3,
+      "task_elapsed_seconds_sum": 246.108,
+      "maximum_task_elapsed_seconds": 29.637,
+      "schema_removed": true,
+      "executor_snapshot_digest_matches": true
+    },
+    {
+      "file": "run-04-complete-repeat.json",
+      "source_commit": "b63a895fdfdfd761045e2f9261c561c50bc4510d",
+      "application_baseline": "367dcdae3f741c18c00187747c90ba64961660a3",
+      "recorded_tasks": 16,
+      "complete_terminal_run": true,
+      "fatal_error": null,
+      "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+      "task_states": {
+        "completed": 15,
+        "insufficient": 1
+      },
+      "task_errors": {},
+      "calls": 99,
+      "call_states": {
+        "returned": 99
+      },
+      "calls_by_endpoint": {
+        "/api/embed": 40,
+        "/api/chat": 59
+      },
+      "calls_by_phase": {
+        "processing": 28,
+        "task": 71
+      },
+      "maximum_prompt_eval_count": 3867,
+      "scope_consistent_tasks": 16,
+      "published_normal_answers_equal_selected_stored_excerpts": 15,
+      "published_required_image_answers_with_actual_image_selection": 4,
+      "task_elapsed_seconds_sum": 257.908,
+      "maximum_task_elapsed_seconds": 30.643,
+      "schema_removed": true,
+      "executor_snapshot_digest_matches": true
+    }
+  ],
+  "human_reviewed_queries": 0,
+  "quality_scores_computed": false,
+  "heldout_queries_executed": 0
+}
