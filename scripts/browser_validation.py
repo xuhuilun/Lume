@@ -10,6 +10,7 @@ import base64
 import hashlib
 import io
 import json
+import math
 import os
 import signal
 import socket
@@ -482,6 +483,7 @@ async def validate(args, report):
                             f"/api/spaces/{space_id}/messages",
                             f"/api/answers/{answer_id}",
                         ],
+                        minimum_seconds=args.read_seconds,
                     )
                 with sessions() as session:
                     after_actions = len(session.scalars(select(ActionRecord)).all())
@@ -493,12 +495,15 @@ async def validate(args, report):
                 read_window.update(
                     model_calls_during_window=0,
                     actions_during_window=0,
-                    measured_requests=288,
+                    measured_requests=sum(r["request_count"] for r in read_window["runs"]),
                     note="Synthetic local read-only endpoints; not model/system QPS",
                 )
                 load_path = args.output.with_name(args.output.stem + "-read-load.json")
                 save(load_path, read_window)
                 report["read_load_report"] = load_path.name
+                report["read_windows_satisfied"] = all(
+                    run["window_satisfied"] for run in read_window["runs"]
+                )
                 report["stage"] = "read_window_finished"
                 save(args.output, report)
         finally:
@@ -539,6 +544,7 @@ def main():
     runner.add_argument("--ollama-url", default="http://127.0.0.1:11435")
     runner.add_argument("--application-baseline", required=True)
     runner.add_argument("--port", type=int, default=0)
+    runner.add_argument("--read-seconds", type=float, default=0)
     runner.add_argument("--output", type=Path, required=True)
     for command in ["_serve", "_worker"]:
         child = commands.add_parser(command)
@@ -561,6 +567,10 @@ def main():
         "local Ollama endpoint required",
     )
     require(args.database_url, "LUME_TEST_DATABASE_URL required")
+    require(
+        math.isfinite(args.read_seconds) and args.read_seconds >= 0,
+        "read-seconds must be finite and nonnegative",
+    )
     require((PROJECT / "frontend/dist/index.html").exists(), "build frontend before validation")
     require(
         not subprocess.check_output(
@@ -583,6 +593,7 @@ def main():
             ["git", "rev-parse", "HEAD"], cwd=PROJECT, text=True
         ).strip(),
         "application_baseline": args.application_baseline,
+        "read_minimum_seconds": args.read_seconds,
         "source_dirty": False,
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "browser_spec_sha256": hashlib.sha256(

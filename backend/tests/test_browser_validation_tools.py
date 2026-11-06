@@ -80,6 +80,7 @@ async def test_read_measurement_keeps_error_types_and_respects_concurrency_limit
     assert run["http_status_counts"] == {"200": 4, "503": 2}
     assert run["transport_error_counts"] == {"ReadTimeout": 2}
     assert run["request_count"] == len(run["requests"]) == 8
+    assert run["window_satisfied"] and not run["safety_cap_triggered"]
     assert run["successful_2xx_requests"] == 4
     assert run["p50_seconds"] <= run["p95_seconds"]
     assert len(report["warmup"]) == 4
@@ -111,3 +112,66 @@ def test_browser_entry_does_not_read_an_unrelated_dotenv_file(tmp_path):
     )
     assert result.returncode == 0
     assert result.stdout.strip() == "safe-import"
+
+
+async def test_sustained_read_window_requires_duration_after_minimum_count(monkeypatch):
+    import scripts.read_load_validation as load
+
+    clock = [0.0]
+    monkeypatch.setattr(load, "monotonic", lambda: clock[0])
+
+    async def transport(request):
+        clock[0] += 0.1
+        return httpx.Response(200)
+
+    async with httpx.AsyncClient(
+        base_url="http://local", transport=httpx.MockTransport(transport)
+    ) as client:
+        report = await load.measure_reads(
+            client,
+            ["/api/health"],
+            levels=(1,),
+            request_count=2,
+            minimum_seconds=0.35,
+            max_requests=8,
+        )
+    run = report["runs"][0]
+    assert run["request_count"] == 4  # The two-request minimum alone would stop too early.
+    assert run["monotonic_elapsed_seconds"] >= 0.35
+    assert run["window_satisfied"] and not run["safety_cap_triggered"]
+    assert [r["sequence"] for r in run["requests"]] == [1, 2, 3, 4]
+
+
+async def test_sustained_read_window_reports_safety_cap_without_waiting_it_out(monkeypatch):
+    import scripts.read_load_validation as load
+
+    clock = [0.0]
+    monkeypatch.setattr(load, "monotonic", lambda: clock[0])
+
+    async def transport(request):
+        clock[0] += 0.1
+        return httpx.Response(200)
+
+    async with httpx.AsyncClient(
+        base_url="http://local", transport=httpx.MockTransport(transport)
+    ) as client:
+        report = await load.measure_reads(
+            client,
+            ["/api/health"],
+            levels=(1,),
+            request_count=2,
+            minimum_seconds=10,
+            max_requests=5,
+        )
+    run = report["runs"][0]
+    assert run["request_count"] == 5
+    assert run["maximum_requests_reached"] and run["safety_cap_triggered"]
+    assert not run["window_satisfied"] and not report["all_windows_satisfied"]
+    assert run["monotonic_elapsed_seconds"] < 10
+
+
+@pytest.mark.parametrize("seconds", [-1, float("nan"), float("inf")])
+async def test_sustained_duration_must_be_finite_and_nonnegative(seconds):
+    async with httpx.AsyncClient() as client:
+        with pytest.raises(ValueError, match="finite nonnegative"):
+            await measure_reads(client, ["/api/health"], minimum_seconds=seconds)

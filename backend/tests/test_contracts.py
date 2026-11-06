@@ -251,3 +251,34 @@ def test_required_image_answer_has_a_required_actual_image_selection():
     variants = answer["properties"]["image_evidence"]["oneOf"]
     assert all(v["properties"]["observation_id"]["const"] == "visual" for v in variants)
     assert all(v["properties"]["message_id"]["type"] == "null" for v in variants)
+
+
+async def test_planner_receives_visual_facts_without_internal_measurement_payload(monkeypatch):
+    provider = OllamaProvider(Settings(_env_file=None))
+    observations = [
+        {
+            "id": "image-observation",
+            "kind": "image_observation",
+            "content": {
+                "image_id": "image-1",
+                "text": "Target标记为蓝色，在组件右侧。",
+                "semantic": True,
+                "grounding": {
+                    "selected": {"mean_rgb": [0, 0, 255]},
+                    "label_anchor": {"confidence": 95},
+                },
+            },
+        }
+    ]
+
+    async def reply(endpoint, payload):
+        content = json.loads(payload["messages"][1]["content"])
+        assert content["observations"][0]["content"] == {
+            "image_id": "image-1",
+            "text": "Target标记为蓝色，在组件右侧。",
+            "semantic": True,
+        }
+        return {"message": {"content": '{"kind":"insufficient"}'}}
+
+    monkeypatch.setattr(provider, "_post", reply)
+    await provider.plan("Target标记什么颜色？", observations, [], require_image=True)

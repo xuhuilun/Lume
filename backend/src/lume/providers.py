@@ -244,6 +244,11 @@ class OllamaProvider:
                         {"id": image["id"], "filename": image.get("filename", "")}
                         for image in message["images"]
                     ]
+            elif observation["kind"] == "image_observation":
+                # Runtime receipts retain pixel/OCR details; the planner only needs measured facts.
+                observation["content"] = {
+                    k: observation["content"][k] for k in ["image_id", "text", "semantic"]
+                }
         if any(o["kind"] == "message_context" for o in observations):
             progress = (
                 "本任务已经执行search和read_context。现有消息上下文可直接阅读，"
@@ -358,7 +363,11 @@ class OllamaProvider:
             "supported必须选择相应S标签的程序提供原文片段；quote只能从允许片段中选择，不能改写或拼接。"
             "没有明确要求某维度时可not_required且quotes为空，fact绝不能not_required。"
             "明确要求但无记录为unsupported，不能确定为uncertain；这两种均不得正常发布。"
-            "图像观察是模型识别文字，只判断文字是否完整覆盖所问细节，不能声称验证了像素。"
+            "image_observation是本任务已执行的原图读取结果；核查只判断其内容是否覆盖问题，"
+            "不承担再次识别像素或外部事实真实性的工作。"
+            "问题只询问图中颜色、位置或文字时，已读图像观察是直接来源，"
+            "不能因为它不是原始消息文字，或没有重复图片标题/事件ID而判不足；"
+            "但若缺少所问颜色、位置等任一细节，仍应判不足。"
             "图像内容列举或字段读取问题，fact核查已读图像观察是否给出了所问文字或数值。"
             "来源与附件关联由执行层校验，不能要求图片文字必须复述消息事件ID、附件标题或包含生产验证结论。"
             "不要将读取可见字段误当成验证部署状态；只有问题确实询问实际部署、生产效果或验证结果时才要求对应证据。"
