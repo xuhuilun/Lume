@@ -384,6 +384,3 @@ def create_app(settings=None, sessions=None):
     if distribution.is_dir():
         app.mount("/", StaticFiles(directory=distribution, html=True), name="workbench")
     return app
-
-
-app = create_app()

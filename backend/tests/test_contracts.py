@@ -1,3 +1,4 @@
+import base64
 import json
 import math
 
@@ -208,7 +209,12 @@ async def test_empty_vision_response_is_not_a_usable_image_observation(monkeypat
 
     monkeypatch.setattr(provider, "_post", empty)
     with pytest.raises(ValueError, match="Empty vision response"):
-        await provider.vision("synthetic question", b"synthetic-image")
+        await provider.vision(
+            "synthetic question",
+            base64.b64decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aKX0AAAAASUVORK5CYII="
+            ),
+        )
 
 
 def test_required_image_answer_has_a_required_actual_image_selection():
