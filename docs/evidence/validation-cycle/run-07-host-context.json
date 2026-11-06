@@ -1,0 +1,29 @@
+{
+  "run_started_at": "2026-11-06T07:57:01.480020+00:00",
+  "run_finished_at": "2026-11-06T08:04:29.954848+00:00",
+  "ollama_context_length": 4096,
+  "truncation_warnings_during_run": 5,
+  "matching_warning_timestamps": [
+    {
+      "time": "2026-11-06T15:58:30.505000+08:00",
+      "in_run_07_window": true
+    },
+    {
+      "time": "2026-11-06T15:59:56.709000+08:00",
+      "in_run_07_window": true
+    },
+    {
+      "time": "2026-11-06T16:00:01.627000+08:00",
+      "in_run_07_window": true
+    },
+    {
+      "time": "2026-11-06T16:02:01.871000+08:00",
+      "in_run_07_window": true
+    },
+    {
+      "time": "2026-11-06T16:04:15.117000+08:00",
+      "in_run_07_window": true
+    }
+  ],
+  "scope": "Counts from service log timestamp window only; no raw prompts, environment dump or service logs exported."
+}

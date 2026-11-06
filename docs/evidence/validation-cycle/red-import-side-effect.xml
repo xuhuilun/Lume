@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.249" timestamp="2026-11-06T10:17:38.349906+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_api_import" name="test_importing_api_does_not_construct_implicit_runtime_settings" time="0.223"><failure message="AssertionError: Traceback (most recent call last):&#10;    File &quot;&lt;string&gt;&quot;, line 8, in &lt;module&gt;&#10;    File &quot;/Users/alexander/Documents/Codex/2026-10-29/https-github-com-xuhuilun-ustc-software-2/Lume/backend/src/lume/api.py&quot;, line 389, in &lt;module&gt;&#10;      app = create_app()&#10;            ^^^^^^^^^^^^&#10;    File &quot;/Users/alexander/Documents/Codex/2026-10-29/https-github-com-xuhuilun-ustc-software-2/Lume/backend/src/lume/api.py&quot;, line 68, in create_app&#10;      settings = settings or Settings()&#10;[+6 more lines; full report in element text]">backend/tests/test_api_import.py:15: in test_importing_api_does_not_construct_implicit_runtime_settings
+    assert result.returncode==0,result.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "&lt;string&gt;", line 8, in &lt;module&gt;
+E       File "/Users/alexander/Documents/Codex/2026-10-29/https-github-com-xuhuilun-ustc-software-2/Lume/backend/src/lume/api.py", line 389, in &lt;module&gt;
+E         app = create_app()
+E               ^^^^^^^^^^^^
+E       File "/Users/alexander/Documents/Codex/2026-10-29/https-github-com-xuhuilun-ustc-software-2/Lume/backend/src/lume/api.py", line 68, in create_app
+E         settings = settings or Settings()
+E                                ^^^^^^^^^^
+E       File "&lt;string&gt;", line 5, in forbidden
+E     RuntimeError: Implicit settings construction during import
+E     
+E   assert 1 == 0
+E    +  where 1 = CompletedProcess(args=['/Users/alexander/Documents/Codex/2026-10-29/https-github-com-xuhuilun-ustc-software-2/Lume/.ve...    ^^^^^^^^^^\n  File "&lt;string&gt;", line 5, in forbidden\nRuntimeError: Implicit settings construction during import\n').returncode</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.096" timestamp="2026-11-06T10:28:43.594985+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_grounding_safety" name="test_candidate_cap_does_not_hide_another_marker_in_selected_container" time="0.044"><failure message="assert True is False">backend/tests/test_grounding_safety.py:41: in test_candidate_cap_does_not_hide_another_marker_in_selected_container
+    assert observation["semantic"] is False
+E   assert True is False</failure></testcase><testcase classname="backend.tests.test_grounding_safety" name="test_fully_transparent_hidden_regions_cannot_produce_visible_pixel_facts" time="0.021"><failure message="assert True is False">backend/tests/test_grounding_safety.py:61: in test_fully_transparent_hidden_regions_cannot_produce_visible_pixel_facts
+    assert observation["semantic"] is False
+E   assert True is False</failure></testcase></testsuite></testsuites>

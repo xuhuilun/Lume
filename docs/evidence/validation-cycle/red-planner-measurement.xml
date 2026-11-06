@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.036" timestamp="2026-11-06T16:07:26.743057+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_contracts" name="test_planner_receives_visual_facts_without_internal_measurement_payload" time="0.001"><failure message="AssertionError: assert {'image_id': ...idence': 95}}} == {'image_id': ...mantic': True}&#10;  &#10;  Omitting 3 identical items, use -vv to show&#10;  Left contains 1 more item:&#10;  {'grounding': {'label_anchor': {'confidence': 95},&#10;                 'selected': {'mean_rgb': [0, 0, 255]}}}&#10;  Use -v to get more diff">backend/tests/test_contracts.py:267: in test_planner_receives_visual_facts_without_internal_measurement_payload
+    await provider.plan("Target标记什么颜色？",observations,[],require_image=True)
+backend/src/lume/providers.py:283: in plan
+    data = await self._post(
+backend/tests/test_contracts.py:263: in reply
+    assert content["observations"][0]["content"]=={
+E   AssertionError: assert {'image_id': ...idence': 95}}} == {'image_id': ...mantic': True}
+E     
+E     Omitting 3 identical items, use -vv to show
+E     Left contains 1 more item:
+E     {'grounding': {'label_anchor': {'confidence': 95},
+E                    'selected': {'mean_rgb': [0, 0, 255]}}}
+E     Use -v to get more diff</failure></testcase></testsuite></testsuites>
