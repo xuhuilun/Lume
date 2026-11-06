@@ -1,0 +1,543 @@
+{
+  "scope": "captured artifact identity, source rendering, review binding and budget consistency only",
+  "source_commit": "d6a5500bfb1390f8e8b149e3ba23fe59ae798732",
+  "application_baseline": "d6a5500bfb1390f8e8b149e3ba23fe59ae798732",
+  "dataset_manifest_sha256": "410134ca19cd3e8e14bbb411771698612d7bd1b3cf9ebdb666d83c604b6d60c2",
+  "complete_terminal_run": true,
+  "task_states": {
+    "completed": 12,
+    "insufficient": 4
+  },
+  "calls": 114,
+  "calls_by_purpose": {
+    "embedding": 40,
+    "vision": 8,
+    "planning": 51,
+    "support_review": 15
+  },
+  "call_states": {
+    "returned": 114
+  },
+  "maximum_prompt_eval_count": 3853,
+  "maximum_task_elapsed_seconds": 56.156,
+  "checks": {
+    "valid_review_acceptances": 12,
+    "normal_answers_equal_selected_stored_sources": 12,
+    "valid_review_rejections": 3,
+    "insufficient_after_valid_review": 3,
+    "planner_declared_insufficient_without_review": 1
+  },
+  "per_task": [
+    {
+      "query_id": "q-dev-001",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-cache-m3"
+      ],
+      "published_evidence_ids": [
+        "d-cache-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "atlas-staging-r3"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-002",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3"
+      ],
+      "published_evidence_ids": [
+        "d-cache-m0",
+        "d-cache-m1",
+        "d-cache-m2",
+        "d-cache-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-003",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-cache-m4",
+        "d-cache-panel"
+      ],
+      "published_evidence_ids": [
+        "d-cache-m4",
+        "d-cache-panel"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "image_calls": 1,
+      "image_selected_in_published_answer": true,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-004",
+      "state": "insufficient",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-cache-m3",
+        "d-cache-m4"
+      ],
+      "published_evidence_ids": [],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": false,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "atlas-staging-r3"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-005",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "published_evidence_ids": [
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "harbor-integration-r4"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-006",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "published_evidence_ids": [
+        "d-upload-m0",
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-007",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-upload-m4",
+        "d-upload-panel"
+      ],
+      "published_evidence_ids": [
+        "d-upload-m4",
+        "d-upload-panel"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "image_calls": 1,
+      "image_selected_in_published_answer": true,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-008",
+      "state": "insufficient",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-upload-m1",
+        "d-upload-m2",
+        "d-upload-m3"
+      ],
+      "published_evidence_ids": [],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": false,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-009",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "published_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m3",
+        "d-backoff-m4"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "cedar-qa-r6"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-010",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "published_evidence_ids": [
+        "d-backoff-m0",
+        "d-backoff-m1",
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-011",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-backoff-m4",
+        "d-backoff-panel"
+      ],
+      "published_evidence_ids": [
+        "d-backoff-m4",
+        "d-backoff-panel"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "image_calls": 1,
+      "image_selected_in_published_answer": true,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-012",
+      "state": "insufficient",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-backoff-m2",
+        "d-backoff-m3"
+      ],
+      "published_evidence_ids": [],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": false,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [
+              "cedar-prod"
+            ],
+            "required": [
+              "cedar-prod"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-013",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-config-m3"
+      ],
+      "published_evidence_ids": [
+        "d-config-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": [
+              "maple-sandbox-r2"
+            ]
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-014",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3"
+      ],
+      "published_evidence_ids": [
+        "d-config-m0",
+        "d-config-m1",
+        "d-config-m2",
+        "d-config-m3"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-015",
+      "state": "completed",
+      "error": null,
+      "proposed_evidence_ids": [
+        "d-config-m4",
+        "d-config-panel"
+      ],
+      "published_evidence_ids": [
+        "d-config-m4",
+        "d-config-panel"
+      ],
+      "review_actions_in_model_budget": 1,
+      "review_http_calls": 1,
+      "review_verdicts": [
+        {
+          "valid": true,
+          "accepted": true,
+          "issues": [],
+          "scope_constraints": {
+            "missing": [],
+            "required": []
+          }
+        }
+      ],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "image_calls": 1,
+      "image_selected_in_published_answer": true,
+      "reserved_model_attempts_without_recorded_http": 0
+    },
+    {
+      "query_id": "q-dev-016",
+      "state": "insufficient",
+      "error": null,
+      "proposed_evidence_ids": [],
+      "published_evidence_ids": [],
+      "review_actions_in_model_budget": 0,
+      "review_http_calls": 0,
+      "review_verdicts": [],
+      "model_calls": 3,
+      "tool_calls": 1,
+      "image_calls": 0,
+      "image_selected_in_published_answer": false,
+      "reserved_model_attempts_without_recorded_http": 0
+    }
+  ],
+  "executor_snapshot_digest_matches": true,
+  "imported_helpers_match_frozen_application": true,
+  "human_reviewed_queries": 0,
+  "heldout_queries_executed": 0,
+  "quality_scores_computed": false,
+  "limits": [
+    "Task/observation ownership is checked from per-task SQL report grouping; no cleaned live database is queried.",
+    "Exact quotes and literal environment veto do not prove semantic entailment or correct pixels.",
+    "No reference labels or heldout files are read; human review and quality scores are not performed.",
+    "Call budget accounting is checked against logged persisted actions, not an independent HTTP capture."
+  ]
+}

@@ -124,3 +124,6 @@ LUME_UI_SECOND_TOKEN_FILE=../.runtime/browser-bob-token \
 首版尚无SSO、密码/会话登录、自动孤立文件清理、近似向量索引、检索单路降级或完整运行管理界面；历史回用通过API显式传入`history_ids`，首版界面每次独立提问。实现与论文方案的差异需要保留，后续以实际代码及测试改写对应章节。
 
 发布前核查的设计、调用预算及失败边界见[实施计划](docs/evidence-sufficiency-plan.md)与[实际验证](docs/evidence-sufficiency-validation.md)。
+
+
+2026-11-06继续验证：151项程序/工具回归及2项子检查通过；最终16题开发运行12 completed/4 insufficient，仍无人审、无正式质量分数。真实浏览器三类用例通过；本机GET持续窗口记录20097请求，但不代表模型QPS或完整负载验收。原图目标标记采用OCR标签与可见像素绑定，限特定界面图，不称通用视觉理解。详见[本轮实际记录](docs/retrieval-validation-cycle-results.md)及[正式实验前置条件](docs/formal-evaluation-readiness.md)。

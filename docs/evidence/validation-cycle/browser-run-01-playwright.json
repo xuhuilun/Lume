@@ -1,0 +1,242 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.13.0/bin/node",
+      "<workspace>/frontend/node_modules/.bin/playwright",
+      "test",
+      "tests/reviewed-workbench.spec.ts",
+      "--reporter=json"
+    ],
+    "configFile": "<workspace>/frontend/playwright.config.ts",
+    "rootDir": "<workspace>/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "<workspace>/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "<workspace>/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 40000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "<workspace>/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "<workspace>/frontend/tests",
+        "snapshotDir": "<workspace>/frontend/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 40000,
+        "use": {
+          "baseURL": "http://127.0.0.1:64552",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1440,
+            "height": 960
+          },
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "reviewed-workbench.spec.ts",
+      "file": "reviewed-workbench.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reviewed workbench fact through real HTTP and worker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T02:34:20.270Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a3c6f00c13bc988628c8-968fbcb9411b0aafdb8b",
+          "file": "reviewed-workbench.spec.ts",
+          "line": 32,
+          "column": 3
+        },
+        {
+          "title": "reviewed workbench insufficient through real HTTP and worker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T02:34:39.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a3c6f00c13bc988628c8-231edaec553d30330a15",
+          "file": "reviewed-workbench.spec.ts",
+          "line": 32,
+          "column": 3
+        },
+        {
+          "title": "reviewed workbench image through real HTTP and worker",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 95225,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.state')\nExpected: \u001b[32m\"查证完成\"\u001b[39m\nReceived: \u001b[31m\"依据不足\"\u001b[39m\nTimeout:  95000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.state') with timeout 95000ms\u001b[22m\n\u001b[2m  - waiting for locator('.state')\u001b[22m\n\u001b[2m    5 × locator resolved to <span class=\"state queued\">等待执行</span>\u001b[22m\n\u001b[2m      - unexpected value \"等待执行\"\u001b[22m\n\u001b[2m    51 × locator resolved to <span class=\"state running\">正在查证</span>\u001b[22m\n\u001b[2m       - unexpected value \"正在查证\"\u001b[22m\n\u001b[2m    136 × locator resolved to <span class=\"state insufficient\">依据不足</span>\u001b[22m\n\u001b[2m        - unexpected value \"依据不足\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.state')\nExpected: \u001b[32m\"查证完成\"\u001b[39m\nReceived: \u001b[31m\"依据不足\"\u001b[39m\nTimeout:  95000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.state') with timeout 95000ms\u001b[22m\n\u001b[2m  - waiting for locator('.state')\u001b[22m\n\u001b[2m    5 × locator resolved to <span class=\"state queued\">等待执行</span>\u001b[22m\n\u001b[2m      - unexpected value \"等待执行\"\u001b[22m\n\u001b[2m    51 × locator resolved to <span class=\"state running\">正在查证</span>\u001b[22m\n\u001b[2m       - unexpected value \"正在查证\"\u001b[22m\n\u001b[2m    136 × locator resolved to <span class=\"state insufficient\">依据不足</span>\u001b[22m\n\u001b[2m        - unexpected value \"依据不足\"\u001b[22m\n\n    at <workspace>/frontend/tests/reviewed-workbench.spec.ts:69:42",
+                    "location": {
+                      "file": "<workspace>/frontend/tests/reviewed-workbench.spec.ts",
+                      "column": 42,
+                      "line": 69
+                    },
+                    "snippet": "  67 |     );\n  68 |     const taskId = (await response.json()).id as string;\n> 69 |     await expect(page.locator(\".state\")).toHaveText(item.state, {\n     |                                          ^\n  70 |       timeout: 95_000,\n  71 |     });\n  72 |     await expect(page.locator(\".answer-text\")).toContainText(item.expected);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "<workspace>/frontend/tests/reviewed-workbench.spec.ts",
+                        "column": 42,
+                        "line": 69
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.state')\nExpected: \u001b[32m\"查证完成\"\u001b[39m\nReceived: \u001b[31m\"依据不足\"\u001b[39m\nTimeout:  95000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.state') with timeout 95000ms\u001b[22m\n\u001b[2m  - waiting for locator('.state')\u001b[22m\n\u001b[2m    5 × locator resolved to <span class=\"state queued\">等待执行</span>\u001b[22m\n\u001b[2m      - unexpected value \"等待执行\"\u001b[22m\n\u001b[2m    51 × locator resolved to <span class=\"state running\">正在查证</span>\u001b[22m\n\u001b[2m       - unexpected value \"正在查证\"\u001b[22m\n\u001b[2m    136 × locator resolved to <span class=\"state insufficient\">依据不足</span>\u001b[22m\n\u001b[2m        - unexpected value \"依据不足\"\u001b[22m\n\n\n  67 |     );\n  68 |     const taskId = (await response.json()).id as string;\n> 69 |     await expect(page.locator(\".state\")).toHaveText(item.state, {\n     |                                          ^\n  70 |       timeout: 95_000,\n  71 |     });\n  72 |     await expect(page.locator(\".answer-text\")).toContainText(item.expected);\n    at <workspace>/frontend/tests/reviewed-workbench.spec.ts:69:42"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T02:34:55.429Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "<workspace>/frontend/test-results/reviewed-workbench-reviewe-80e44-hrough-real-HTTP-and-worker/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "<workspace>/frontend/tests/reviewed-workbench.spec.ts",
+                    "column": 42,
+                    "line": 69
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a3c6f00c13bc988628c8-8ca76bf3f855386b691f",
+          "file": "reviewed-workbench.spec.ts",
+          "line": 32,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-06T02:34:20.071Z",
+    "duration": 130621.99,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

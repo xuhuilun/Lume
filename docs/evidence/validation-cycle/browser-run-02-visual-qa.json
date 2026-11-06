@@ -1,0 +1,22 @@
+{
+  "scope": "assistant visual inspection of captured browser UI regions, not reference-label human review",
+  "source_commit": "db900d9bb3b5782d2a0058c56bb777cd86ef054b",
+  "status": "captured_regions_readable",
+  "files": {
+    "fact-desktop.png": "8425fbeede98bcd4bbc8bfc1fee29b3c691a1132197b6d40f9d98e0e864d3e44",
+    "insufficient-desktop.png": "bdfae026220c683ad48f6f70cc8141abbbd4290e99fc3a47dd9b1527fd11958c",
+    "image-desktop.png": "88e0e0bf97d703c4969c035af40278baff0babc43d21d295fadb48e982da6126",
+    "image-mobile.png": "bc48cd5f9e481a4073c3649bdd5b75795e75f3984278b9b1378ca213cf60914b"
+  },
+  "observations": [
+    "Desktop: question, answer state and source panels are readable; no obvious control overlap or horizontal clipping in captured regions.",
+    "Image desktop: original-image panel is decoded and visible beside the actual model observation; the synthetic disclaimer is visible.",
+    "Mobile 390px: question wraps, require-image checkbox and composer remain readable; original image and observation are visible below the main panel.",
+    "Long answers use an internal scrolling region. The full-page screenshot does not show every long-answer paragraph or all citation buttons simultaneously; this capture is not proof that all content is expanded."
+  ],
+  "human_reference_labels_reviewed": 0,
+  "semantic_quality_scored": false,
+  "limits": [
+    "Screenshots alone do not prove all interactive states, accessibility or pixel-level model correctness."
+  ]
+}

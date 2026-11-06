@@ -1,0 +1,146 @@
+{
+  "scope": "development image pixel and captured grounding consistency only, not semantic or human scoring",
+  "source_commit": "d6a5500bfb1390f8e8b149e3ba23fe59ae798732",
+  "application_baseline": "d6a5500bfb1390f8e8b149e3ba23fe59ae798732",
+  "complete_terminal_run": true,
+  "valid_grounded_observations_checked": 4,
+  "invalid_grounded_observations": [],
+  "other_image_observations": 0,
+  "development_pngs_recomputed": [
+    "d-backoff-panel",
+    "d-cache-panel",
+    "d-config-panel",
+    "d-upload-panel"
+  ],
+  "rows": [
+    {
+      "query_id": "q-dev-003",
+      "observation_id": "7e2deb37b8e44031871a246f26958cf3",
+      "asset_id": "d-cache-panel",
+      "image_sha256": "a97979262184a5e83164a66405d9c13e14717c6076f5c6a6794cc70dbd55c131",
+      "marker_id": "C1",
+      "container_id": "R1",
+      "marker_count_before_truncation": 1,
+      "pixel_color": "蓝色",
+      "position": "左侧",
+      "horizontal_ratio": 0.1197,
+      "label_anchor": {
+        "box": [
+          88.54166666666667,
+          430.7692307692308,
+          192.70833333333334,
+          486.53846153846155
+        ],
+        "text": "Canary",
+        "center": [
+          140.625,
+          458.65384615384613
+        ],
+        "confidence": 96.321007
+      },
+      "pixel_fields_equal": true,
+      "label_question_and_container_binding_equal": true
+    },
+    {
+      "query_id": "q-dev-007",
+      "observation_id": "31b3ddec04d74b229dad3dcacc7e4514",
+      "asset_id": "d-upload-panel",
+      "image_sha256": "64d02a8ea304b047415ae83246ae4f1f83a5c50cc6771dbd14ab6f11a93dbcf3",
+      "marker_id": "C1",
+      "container_id": "R1",
+      "marker_count_before_truncation": 1,
+      "pixel_color": "橙色",
+      "position": "右侧",
+      "horizontal_ratio": 0.8803,
+      "label_anchor": {
+        "box": [
+          90.625,
+          426.9230769230769,
+          193.75,
+          486.53846153846155
+        ],
+        "text": "Upload",
+        "center": [
+          142.1875,
+          456.7307692307692
+        ],
+        "confidence": 96.569984
+      },
+      "pixel_fields_equal": true,
+      "label_question_and_container_binding_equal": true
+    },
+    {
+      "query_id": "q-dev-011",
+      "observation_id": "f305e0cb121a474ea58a954760b134c2",
+      "asset_id": "d-backoff-panel",
+      "image_sha256": "20bc96e4129cb655db1aaf85e265dbea2cd08d1f8eed10484203dc6d48d4e44a",
+      "marker_id": "C1",
+      "container_id": "R1",
+      "marker_count_before_truncation": 1,
+      "pixel_color": "紫色",
+      "position": "左侧",
+      "horizontal_ratio": 0.1197,
+      "label_anchor": {
+        "box": [
+          88.54166666666667,
+          419.2307692307692,
+          196.875,
+          494.2307692307692
+        ],
+        "text": "Worker",
+        "center": [
+          142.70833333333331,
+          456.7307692307692
+        ],
+        "confidence": 96.785866
+      },
+      "pixel_fields_equal": true,
+      "label_question_and_container_binding_equal": true
+    },
+    {
+      "query_id": "q-dev-015",
+      "observation_id": "13f199d6ace74ae398af618d0c092677",
+      "asset_id": "d-config-panel",
+      "image_sha256": "466a458d825d5ea242a301f6de122c43139f2db9d81f5db99bede83edae8b2fe",
+      "marker_id": "C1",
+      "container_id": "R1",
+      "marker_count_before_truncation": 1,
+      "pixel_color": "蓝色",
+      "position": "右侧",
+      "horizontal_ratio": 0.8803,
+      "label_anchor": {
+        "box": [
+          90.625,
+          430.7692307692308,
+          153.125,
+          475.0
+        ],
+        "text": "Beta",
+        "center": [
+          121.875,
+          452.88461538461536
+        ],
+        "confidence": 96.534096
+      },
+      "pixel_fields_equal": true,
+      "label_question_and_container_binding_equal": true
+    }
+  ],
+  "helpers_match_frozen_source": true,
+  "helper_sha256": {
+    "backend/src/lume/evidence.py": "245a9dc66b7619c9a7e3fbb209ebc7fdbdbc3fe9d74b37deb7765c6ab774f4b0",
+    "backend/src/lume/sufficiency.py": "22c584e57cbbf2af2e86850243972a0104b367e847be2909fa832d36fc258901",
+    "backend/src/lume/visual_grounding.py": "0a04bc9ab33bba87772f174819d44d9d7c95aea9db954124c68ffc4a17ca451f",
+    "backend/src/lume/visual_labels.py": "be6dd109dfa9dfdbbcab0e4cf4cea59c7a3cc29633acd9a850cb7b945e5250cc"
+  },
+  "human_reviewed_queries": 0,
+  "heldout_queries_executed": 0,
+  "quality_scores_computed": false,
+  "limits": [
+    "Only the four development PNG paths are opened; no questions or reference-label files are read.",
+    "The stored OCR anchor is checked against question tokens and region geometry; OCR is not rerun.",
+    "Recomputed pixel candidates and exact binding do not establish correct linguistic target semantics.",
+    "The frozen helper code and current installed Pillow version define the measurement algorithm.",
+    "Reference labels, heldout data, model endpoints and live database state are not consulted."
+  ]
+}

@@ -57,7 +57,7 @@ class Settings(BaseSettings):
 
     @property
     def rules_id(self) -> str:
-        protocol = "v5" if self.provider == "ollama" else "v2"
+        protocol = "v8" if self.provider == "ollama" else "v2"
         return (
             f"{protocol}:{self.provider}:{self.embed_model}:{self.chat_model}:{self.vision_model}:"
             f"{self.model_revision}:ocr={self.ocr_lang}"

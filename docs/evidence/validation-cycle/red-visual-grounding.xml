@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.035" timestamp="2026-11-06T10:08:40.715014+08:00" hostname="AlexanderdeMacBook-Air.local"><testcase classname="backend.tests.test_visual_grounding" name="test_marker_measurement_uses_pixels_and_component_relative_geometry" time="0.006"><failure message="KeyError: 'grounding'">backend/tests/test_visual_grounding.py:24: in test_marker_measurement_uses_pixels_and_component_relative_geometry
+    assert observation["grounding"]["selected"]["color"]=="橙色"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'grounding'</failure></testcase></testsuite></testsuites>

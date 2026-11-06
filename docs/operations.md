@@ -69,3 +69,9 @@ read_context现返回window对象，含max_messages=12、max_hops=4、truncated�
 support_review计入模型12次累计额度；额外调用可能增加耗时或触及原90秒期限，失败与limited不能统计为资料不足。合法核查拒绝为insufficient，坏结构或非原文引文为SUPPORT_REVIEW_INVALID/failed；缺少核查、跨任务/错配摘要、未通过核查均不能正常发布。核查观察不是citation来源。显式环境名采用精确匹配，未声明的别名对应关系可能导致保守拒绝。
 
 开发执行日志按purpose区分planning/embedding/vision/support_review；审阅另列提议来源、实际发布来源及四维核查，不能把核查调用增加视为质量提升。保留题未运行、人审0、正式质量与负载仍需后续执行。
+
+## v6图像标记与显式服务工厂
+
+Ollama规则升v6、Demo保持v2。标记颜色/相对位置问题采用本次原图的OCR标签锚定、可见像素边框/色块候选及模型配对核查，颜色与位置由像素/组件几何计算。只适用于可识别显式标签、边框与高饱和标记的界面图；无唯一标签、边框、标记或存在歧义时semantic=false，不能回退文字猜测。general仍支持其他图像文字/数值问题。OCR是本次原图读取的一部分，不是将索引描述冒充原图。候选显示上限16，但歧义统计使用截断前全部合格候选；透明和半透明像素不提供颜色/边框事实。
+
+API导入不再创建默认应用或读取当前目录.env。正常启动继续使用`lume serve`，其显式传入已创建配置与会话；直接使用Uvicorn时入口为`uvicorn lume.api:create_app --factory`，旧`lume.api:app`入口不再提供。隔离测试显式传Settings(_env_file=None)，不得借测试读取原项目配置。升级仍按停服务、reindex、处理派生后重启流程。

@@ -65,3 +65,10 @@ run-02保留4道IMAGE_EVIDENCE_REQUIRED失败；run-03保留第14题中断，最
 ## 2026-11-05充分性核查
 
 新增独立核查、精确原文片段、显式环境兜底及执行器恢复检查，全套115项通过，无跳过；Ruff和29个Python文件格式检查通过。完整run-06为10 completed / 6 insufficient，15次核查中10接受/5拒绝，另1题直接不足。3道原始不足误判被阻止，但1道材料齐全过程题仍误拒，1道视觉位置错误仍发布；这不是正式正确率。run-05中断及三次未冻结开发重放均保留。人审0、保留题未运行，无PDF；详见[evidence-sufficiency-validation.md](evidence-sufficiency-validation.md)。
+
+
+## 2026-11-06持续验证
+
+本轮程序/工具回归151 passed、另2 subtests passed，无跳过；Ruff/40文件格式、TypeScript/Vite、Prettier通过。最终冻结d6a5500（Ollama v8）的run08为12 completed/4 insufficient、114 RPC全返回；4个像素观测一致性检查与12个原文绑定检查通过，但标签人审0，保留32题未执行，没有正式质量分数。先前run07两图误拒与5次截断告警、browser01核图误拒均保留。
+
+最终真实浏览器3项通过；读取窗口1/4/8并发各至少10秒，共20097 GET全部200，模型/动作新增0，仅是本机读取测量而非系统/模型QPS或完整P-01。48题人工审阅包机械导出，1025链接/锚点通过，不计作人工验收。真实QQ未准备，不生成PDF。完整条件和缺口见[retrieval-validation-cycle-results.md](retrieval-validation-cycle-results.md)。

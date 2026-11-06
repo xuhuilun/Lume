@@ -131,7 +131,11 @@ def main():
         asyncio.run(work(sessions, settings, 1000 if args.drain else None))
     else:
         # The QQ callback URL contains a registration credential: do not emit access paths.
-        uvicorn.run("lume.api:app", host="127.0.0.1", port=args.port, access_log=False)
+        from .api import create_app
+
+        uvicorn.run(
+            create_app(settings, sessions), host="127.0.0.1", port=args.port, access_log=False
+        )
 
 
 if __name__ == "__main__":

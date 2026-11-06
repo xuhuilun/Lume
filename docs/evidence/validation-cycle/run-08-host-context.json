@@ -1,0 +1,11 @@
+{
+  "ollama_context_length": 4096,
+  "parallel": 1,
+  "max_loaded_models": 1,
+  "idle_sleep_guard": "caffeinate -i",
+  "truncation_warnings_before": 5,
+  "note": "Only count matching warnings; no raw service logs or environment dump exported.",
+  "truncation_warnings_after": 5,
+  "truncation_warning_delta": 0,
+  "maximum_prompt_eval_count": 3853
+}

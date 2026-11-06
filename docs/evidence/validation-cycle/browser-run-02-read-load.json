@@ -1,0 +1,1545 @@
+{
+  "scope": "local read-only Web API window; no model/system capacity conclusion",
+  "started_at": "2026-11-06T07:56:01.797717+00:00",
+  "request_timeout_seconds": 10,
+  "percentile_method": "nearest rank: sorted[ceil(p*n)-1], p=0.50/0.95",
+  "latency_population": "all completed attempts, including HTTP/transport errors",
+  "latency_timing": "semaphore admission to response/error; client queue excluded",
+  "paths": [
+    "/api/health",
+    "/api/spaces",
+    "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+    "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680"
+  ],
+  "warmup": [
+    {
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "path": "/api/spaces",
+      "status": 200
+    },
+    {
+      "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+      "status": 200
+    },
+    {
+      "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+      "status": 200
+    }
+  ],
+  "runs": [
+    {
+      "concurrency": 1,
+      "request_count": 96,
+      "http_status_counts": {
+        "200": 96
+      },
+      "transport_error_counts": {},
+      "path_request_counts": {
+        "/api/health": 24,
+        "/api/spaces": 24,
+        "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages": 24,
+        "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680": 24
+      },
+      "wall_elapsed_seconds": 0.288556,
+      "monotonic_elapsed_seconds": 0.288487,
+      "p50_seconds": 0.0029763750499114394,
+      "p95_seconds": 0.004595833015628159,
+      "completed_requests_per_second": 332.77048330971775,
+      "successful_2xx_requests": 96,
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0015899999998509884
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002763124997727573
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0052998330211266875
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004739792086184025
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0012665410758927464
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0029763750499114394
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004913083976134658
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004730166052468121
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0009646249236539006
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002412291942164302
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004595833015628159
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004440083052031696
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.001099665998481214
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002396375057287514
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004142416990362108
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004151624976657331
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010448340326547623
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0021487080957740545
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003967166994698346
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0037852090317755938
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.001034958055242896
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002125791972503066
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004045583074912429
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004319667001254857
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010127500863745809
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002225707983598113
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004398458055220544
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004549499950371683
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010619170498102903
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0020710830576717854
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0040029160445556045
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.003917875001206994
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010169169399887323
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002103292034007609
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003876625094562769
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0043319170363247395
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010452920105308294
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0016525830142199993
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003974332939833403
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004128250060603023
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010139589430764318
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.00207912502810359
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003924167016521096
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.003904624958522618
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010177079821005464
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0020988750038668513
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0039327910635620356
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004202749929390848
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010296660475432873
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0020880410447716713
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004029750009067357
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004149125074036419
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010024580406025052
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0020737089216709137
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.00411429104860872
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.003965083975344896
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010248750913888216
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002030499977990985
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003968416014686227
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004437749972566962
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010174160124734044
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0022218339145183563
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004034499987028539
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004094333038665354
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010162920225411654
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.00208745792042464
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004009208059869707
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004217624897137284
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010185830760747194
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0021080420119687915
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003870291984640062
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004257042077369988
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0009918749565258622
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0018576669972389936
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003482458065263927
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.003590584034100175
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0009162499336525798
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0018268750282004476
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0034529169788584113
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0036180829629302025
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0009298339718952775
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0018323749536648393
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0033330830046907067
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.003555416944436729
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0009940830059349537
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0019075830932706594
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003943333053030074
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004104332998394966
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010123749962076545
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002065250067971647
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003966249991208315
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0036972499219700694
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0010590420570224524
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002052416908554733
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.003969791927374899
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0037993339356034994
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "request_count": 96,
+      "http_status_counts": {
+        "200": 96
+      },
+      "transport_error_counts": {},
+      "path_request_counts": {
+        "/api/health": 24,
+        "/api/spaces": 24,
+        "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages": 24,
+        "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680": 24
+      },
+      "wall_elapsed_seconds": 0.111055,
+      "monotonic_elapsed_seconds": 0.111036,
+      "p50_seconds": 0.004452291061170399,
+      "p95_seconds": 0.006529625039547682,
+      "completed_requests_per_second": 864.5834858698295,
+      "successful_2xx_requests": 96,
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0018385830335319042
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004536084015853703
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.018736541969701648
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.007273291004821658
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0020317499293014407
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0030289579881355166
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004963874933309853
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.00501320802140981
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0016455840086564422
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.002781708026304841
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0047444169176742435
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005451707984320819
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0017392908921465278
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004008790943771601
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0056183330016210675
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006126874941401184
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.002410292043350637
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004249167046509683
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005992833059281111
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006412375019863248
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0023480410454794765
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0037620000075548887
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0061604579677805305
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006107124965637922
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.001539291930384934
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.003932250081561506
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005775457946583629
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006760500022210181
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0018445829628035426
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.003525167005136609
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.00615079200360924
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006083250045776367
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.002062042010948062
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.003398000029847026
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005548416986130178
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006529625039547682
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0019254169892519712
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0032346670050174
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.00629866705276072
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005997959058731794
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0022704590810462832
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004264708026312292
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.006242666044272482
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006264958996325731
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0016304999589920044
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0038864590460434556
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005886416998691857
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006264291936531663
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0023141249548643827
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004209249978885055
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005502416985109448
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005517125013284385
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0027769169537350535
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0038971250178292394
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.006018207990564406
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005912915919907391
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.001373915933072567
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.00403129099868238
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.0068530000280588865
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0059650830226019025
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0015605000080540776
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0038854170124977827
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.006211207946762443
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006399667006917298
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0017143749864771962
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004480791976675391
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005735499900765717
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005854959017597139
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0024465000024065375
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.003307207953184843
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005401999922469258
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0055536250583827496
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.002153499983251095
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004452291061170399
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.006193291046656668
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.005689000012353063
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0020461250096559525
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.003909416031092405
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005405667005106807
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006377791985869408
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0017005419358611107
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0035915409680455923
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005792708019725978
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006117957993410528
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0020148339681327343
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0041632079519331455
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005942124989815056
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.00619829201605171
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0018977090949192643
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004065667046234012
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.005530957947485149
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.00572870799805969
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.002505708020180464
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.004158750060014427
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.004281249945051968
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.004088499932549894
+        }
+      ]
+    },
+    {
+      "concurrency": 8,
+      "request_count": 96,
+      "http_status_counts": {
+        "200": 96
+      },
+      "transport_error_counts": {},
+      "path_request_counts": {
+        "/api/health": 24,
+        "/api/spaces": 24,
+        "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages": 24,
+        "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680": 24
+      },
+      "wall_elapsed_seconds": 0.128324,
+      "monotonic_elapsed_seconds": 0.1283,
+      "p50_seconds": 0.010171041009016335,
+      "p95_seconds": 0.01709049998316914,
+      "completed_requests_per_second": 748.2436269240264,
+      "successful_2xx_requests": 96,
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0028441250324249268
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0037178340135142207
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.02274266700260341
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.012716458062641323
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.003889958024956286
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.012385624926537275
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.017173125059343874
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.006642000051215291
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.006666333065368235
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.012919583008624613
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.015244083013385534
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.01709049998316914
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004245250020176172
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.010171041009016335
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.015097666997462511
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.012938666972331703
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005496875033713877
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.00964937498793006
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.013608541921712458
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.014222958940081298
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004448292078450322
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0077309999614953995
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.01521829201374203
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013518166961148381
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004152416018769145
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.010141207952983677
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.014438541955314577
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.014688250026665628
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0038902079686522484
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007564665982499719
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.014262583921663463
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.014577625086531043
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.003951332997530699
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0072727499064058065
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.015545791015028954
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.01539316598791629
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.003759582992643118
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007502874941565096
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.013649375061504543
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013400083058513701
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.00457649992313236
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007339125033468008
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.015477999928407371
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.015379666001535952
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004838375025428832
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007387917023152113
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.01497437502257526
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013556209043599665
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004842165973968804
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.009067332954145968
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.012206458020955324
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013886749977245927
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005557500058785081
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007490416988730431
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.017537625040858984
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013428125064820051
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004057749989442527
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007917083101347089
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.014657584019005299
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.015775375068187714
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.00400233396794647
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.0099815420107916
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.015183250070549548
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013990124920383096
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005765874986536801
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.008373000076971948
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.011894332943484187
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.015399415977299213
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005571832996793091
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.008696333039551973
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.010768124950118363
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.015830166987143457
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005021749995648861
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.010888541000895202
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.012629291042685509
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.015046917018480599
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0047525420086458325
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.006742832949385047
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.018020000075921416
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.01539979106746614
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.004941958002746105
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.005901749944314361
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.01512375008314848
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.01273733307607472
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.0035321670584380627
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.009678500005975366
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.01316774997394532
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.013202999951317906
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005696250009350479
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.006634666933678091
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.010489874985069036
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.011124541983008385
+        },
+        {
+          "path": "/api/health",
+          "status": 200,
+          "elapsed_seconds": 0.005667750025168061
+        },
+        {
+          "path": "/api/spaces",
+          "status": 200,
+          "elapsed_seconds": 0.007226582965813577
+        },
+        {
+          "path": "/api/spaces/a8078bf68cff43848afa24550ac5fe08/messages",
+          "status": 200,
+          "elapsed_seconds": 0.009731624973937869
+        },
+        {
+          "path": "/api/answers/a957c3d3a9874eaea6b8e82aab1a8680",
+          "status": 200,
+          "elapsed_seconds": 0.0069025419652462006
+        }
+      ]
+    }
+  ],
+  "finished_at": "2026-11-06T07:56:02.343339+00:00",
+  "model_calls_during_window": 0,
+  "actions_during_window": 0,
+  "measured_requests": 288,
+  "note": "Synthetic local read-only endpoints; not model/system QPS"
+}
